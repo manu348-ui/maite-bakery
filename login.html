@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Acceso Privado - Maité Bakery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&amp;family=Work+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-fixed-variant": "#574333",
+            "on-secondary-container": "#775f2b",
+            "tertiary-fixed-dim": "#c8c6c3",
+            "on-secondary": "#ffffff",
+            "surface-variant": "#e4e2e1",
+            "outline-variant": "#d2c4bb",
+            "tertiary-fixed": "#e4e2de",
+            "secondary-fixed-dim": "#e2c384",
+            "surface-container": "#f0eded",
+            "surface": "#fbf9f8",
+            "primary-fixed-dim": "#dec1ac",
+            "secondary-fixed": "#ffdf9e",
+            "surface-dim": "#dcd9d9",
+            "inverse-on-surface": "#f3f0f0",
+            "primary": "#322214",
+            "on-background": "#1b1c1c",
+            "surface-container-high": "#eae8e7",
+            "outline": "#80756d",
+            "on-surface": "#1b1c1c",
+            "inverse-primary": "#dec1ac",
+            "inverse-surface": "#303030",
+            "on-secondary-fixed": "#261a00",
+            "on-error": "#ffffff",
+            "on-surface-variant": "#4e453e",
+            "primary-container": "#4a3728",
+            "on-primary": "#ffffff",
+            "tertiary": "#252623",
+            "tertiary-container": "#3b3b39",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-container": "#a6a5a2",
+            "on-tertiary-fixed": "#1b1c1a",
+            "on-tertiary": "#ffffff",
+            "secondary": "#725b27",
+            "surface-tint": "#705a49",
+            "error-container": "#ffdad6",
+            "surface-container-low": "#f6f3f2",
+            "secondary-container": "#fcdc9b",
+            "background": "#fbf9f8",
+            "error": "#ba1a1a",
+            "on-primary-fixed": "#28180b",
+            "primary-fixed": "#fbddc7",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#bba08c",
+            "surface-bright": "#fbf9f8",
+            "on-secondary-fixed-variant": "#594411",
+            "surface-container-highest": "#e4e2e1",
+            "on-tertiary-fixed-variant": "#474744"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "md": "24px",
+            "xs": "4px",
+            "xl": "80px",
+            "container-max": "1200px",
+            "base": "8px",
+            "gutter": "24px",
+            "sm": "12px",
+            "lg": "48px"
+          },
+          "fontFamily": {
+            "body-md": ["Work Sans"],
+            "headline-lg": ["Libre Caslon Text"],
+            "body-lg": ["Work Sans"],
+            "headline-md": ["Libre Caslon Text"],
+            "display-lg-mobile": ["Libre Caslon Text"],
+            "caption": ["Work Sans"],
+            "display-lg": ["Libre Caslon Text"],
+            "label-md": ["Work Sans"]
+          },
+          "fontSize": {
+            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "400"}],
+            "display-lg-mobile": ["36px", {"lineHeight": "44px", "fontWeight": "400"}],
+            "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+            "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+            "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #fbf9f8;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(229, 198, 135, 0.05) 0, transparent 50%), 
+        radial-gradient(at 50% 0%, rgba(74, 55, 40, 0.02) 0, transparent 50%);
+    }
+    
+    .ambient-shadow {
+      box-shadow: 0 16px 24px -8px rgba(74, 55, 40, 0.06);
+    }
+
+    .input-focus-transition {
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="font-body-md text-on-surface flex flex-col min-h-screen">
+<!-- Shell Visibility: Suppressed Navigation for transactional/focused login page -->
+<main class="flex-grow flex items-center justify-center px-gutter py-xl">
+<div class="w-full max-w-[400px] bg-surface-container-lowest p-lg ambient-shadow border border-outline-variant/30 text-center flex flex-col items-center">
+<!-- Brand Identity Minimal -->
+<div class="mb-lg">
+<h1 class="font-headline-md text-headline-md text-primary mb-xs">Maité Bakery</h1>
+<div class="w-8 h-[1px] bg-secondary-fixed-dim mx-auto"></div>
+</div>
+<!-- Login Content -->
+<header class="mb-lg">
+<h2 class="font-headline-sm text-headline-sm text-on-surface opacity-90">Acceso Administrador</h2>
+</header>
+<div class="w-full mb-md">
+  <button class="w-full flex items-center justify-center border border-outline-variant py-sm px-lg hover:bg-surface-container transition-colors duration-300 active:scale-[0.98] group">
+    <svg class="w-5 h-5 mr-sm" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+    </svg>
+    <span class="font-label-md text-label-md text-on-surface-variant group-hover:text-primary">CONTINUAR CON GOOGLE</span>
+  </button>
+  <div class="flex items-center my-md">
+    <div class="flex-grow h-[1px] bg-outline-variant/30"></div>
+    <span class="px-sm font-caption text-caption text-outline-variant uppercase tracking-widest">o</span>
+    <div class="flex-grow h-[1px] bg-outline-variant/30"></div>
+  </div>
+</div><form action="#" class="w-full space-y-md">
+<div class="relative group">
+<label class="sr-only" for="password">Contraseña</label>
+<div class="flex items-center border-b border-outline-variant group-focus-within:border-secondary transition-colors duration-300">
+<span class="material-symbols-outlined text-outline-variant mr-sm group-focus-within:text-secondary">lock</span>
+<input class="w-full py-sm bg-transparent border-none focus:ring-0 font-body-md text-on-surface placeholder:text-outline-variant/60" id="password" name="password" placeholder="Contraseña" required="" type="password">
+</div>
+</div>
+<div class="pt-sm">
+<button class="w-full bg-primary-container text-on-primary font-label-md text-label-md py-md px-lg hover:bg-primary transition-colors duration-300 tracking-widest uppercase active:scale-[0.98]" type="submit">
+            INICIAR SESIÓN
+          </button>
+</div>
+<div class="pt-md">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200 opacity-70" href="/">
+            Regresar a la tienda
+          </a>
+</div>
+</form>
+</div><div class="mt-md text-center">
+  <p class="font-caption text-caption text-on-surface-variant opacity-70">
+    Administrador principal: <span class="font-semibold">manu348@gmail.com</span>
+  </p>
+</div>
+</main>
+<!-- Footer Suppression: Simplified version for focused flow -->
+<footer class="w-full py-md text-center">
+<p class="font-caption text-caption text-on-surface-variant opacity-50">
+      © 2024 Maité Bakery. Hecho a mano diariamente.
+    </p>
+</footer>
+<script>
+    // Micro-interaction for the password field
+    const passwordInput = document.getElementById('password');
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', (e) => {
+      // Basic aesthetic feedback for the "Success" feel without actual backend
+      const btn = form.querySelector('button');
+      const originalText = btn.innerText;
+      
+      if(passwordInput.value.length > 0) {
+        e.preventDefault();
+        btn.innerText = 'VERIFICANDO...';
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+        
+        setTimeout(() => {
+          btn.innerText = 'ACCESO CONCEDIDO';
+          btn.classList.remove('bg-primary-container');
+          btn.classList.add('bg-secondary');
+          
+          // Mimic redirection
+          setTimeout(() => {
+            window.location.href = '#admin-dashboard';
+            btn.innerText = originalText;
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            btn.classList.add('bg-primary-container');
+            btn.classList.remove('bg-secondary');
+          }, 1000);
+        }, 1500);
+      }
+    });
+  </script>
+
+
+</body></html>

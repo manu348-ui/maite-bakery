@@ -1,9 +1,11 @@
-<!DOCTYPE html><html class="light" lang="es"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<!DOCTYPE html>
+
+<html class="light" lang="es" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&amp;family=Work+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&amp;family=Work+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
@@ -118,15 +120,14 @@
 <header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-md">
 <nav class="flex justify-between items-center px-lg py-md max-w-container-max mx-auto w-full">
 <div class="flex items-center gap-md">
-<a class="font-headline-md text-headline-md text-primary tracking-tight" href="#">Maité Bakery</a>
+<a class="font-headline-md text-headline-md text-primary tracking-tight" href="index.html">Maité Bakery</a>
 </div>
 <div class="hidden md:flex items-center gap-lg">
 <a class="font-label-md text-label-md uppercase tracking-widest text-primary border-b border-primary/20 pb-1 hover:opacity-100 hover:text-primary transition-opacity duration-300" href="index.html">Nuestros Panes</a>
-<a class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant opacity-80 hover:opacity-100 hover:text-primary transition-opacity duration-300" href="login.html">Admin</a>
 </div>
 <div class="flex items-center gap-md text-primary">
-<button class="material-symbols-outlined hover:opacity-70 transition-all">shopping_basket</button>
-<a href="login.html" class="material-symbols-outlined hover:opacity-70 transition-all">account_circle</a>
+<button class="material-symbols-outlined hover:opacity-70 transition-all text-primary" onclick="document.getElementById('cart-sidebar').classList.remove('hidden')">shopping_basket</button>
+<a class="material-symbols-outlined hover:opacity-70 transition-all" href="login.html">account_circle</a>
 </div>
 </nav>
 </header>
@@ -134,7 +135,7 @@
 <!-- Hero Section -->
 <section class="relative h-[85vh] flex items-end overflow-hidden">
 <div class="absolute inset-0 z-0">
-<img alt="Maité Bakery Hero" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtIs2J4WxbR3y1lnutjZ2Ok2bmak9XB4dBLWjTUr_vZAaMlg3dNxw7ObNsaNGno0_LJi4yU1wYYns_ea48tIc5YnYiAjIUSsMB4vzA9OUjLSvkeHKKzzQjoMKERwoypa0HDu-GEKjYa6EvBZd26Wl4I3K0SrUQnW1uA79EavxcF4pe70dQe3mw8UTYaovy9pCqzHq3qaU3a-mPNGhEq_S5prOwAeiQjibSypoXjNErzTtyL5ajP3nXOu_I">
+<img alt="Maité Bakery Hero" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtIs2J4WxbR3y1lnutjZ2Ok2bmak9XB4dBLWjTUr_vZAaMlg3dNxw7ObNsaNGno0_LJi4yU1wYYns_ea48tIc5YnYiAjIUSsMB4vzA9OUjLSvkeHKKzzQjoMKERwoypa0HDu-GEKjYa6EvBZd26Wl4I3K0SrUQnW1uA79EavxcF4pe70dQe3mw8UTYaovy9pCqzHq3qaU3a-mPNGhEq_S5prOwAeiQjibSypoXjNErzTtyL5ajP3nXOu_I"/>
 <div class="absolute inset-0 hero-gradient"></div>
 </div>
 <div class="relative z-10 w-full max-w-container-max mx-auto px-md pb-xl">
@@ -166,9 +167,9 @@
 <!-- Bento Grid Catalog -->
 <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter mt-lg">
 <!-- Feature Card (Large) -->
-<div class="md:col-span-8 group cursor-pointer" onclick="window.location.href='detalle.html'">
+<div class="md:col-span-8 group cursor-pointer" onclick="window.location.href='detalle.html'" style="transform: translateY(0px);">
 <div class="relative aspect-[16/9] overflow-hidden bg-surface-container mb-md">
-<img alt="Baguette de Tradición" class="w-full h-full object-cover transition-custom group-hover:scale-105" src="https://lh3.googleusercontent.com/aida/AP1WRLtv6Tl4f5QR6dXq-0jiZEFKKedtoTE5S63Gk-B6vA7yaQFccr9-xM1x7ow6uWPd9WgLq7HOzVphCRAi9daUPITFRCIOL6Vp0njYPk2vfFyLZHci5j2iRY9Dyd1_G-TNlJG8U8B3_qslW-ERSR5LmiZgT0kB5CKzmVeuz1qEv3kvHkvpHLm1_eyR3JpiHeVbr9vgU-brASoorlaXppYZkPJtntPYZ2ARZAHDeJkgqoL3hRh1E4oYa7qhH3Q">
+<img alt="Baguette de Tradición" class="w-full h-full object-cover transition-custom group-hover:scale-105" src="https://lh3.googleusercontent.com/aida/AP1WRLtv6Tl4f5QR6dXq-0jiZEFKKedtoTE5S63Gk-B6vA7yaQFccr9-xM1x7ow6uWPd9WgLq7HOzVphCRAi9daUPITFRCIOL6Vp0njYPk2vfFyLZHci5j2iRY9Dyd1_G-TNlJG8U8B3_qslW-ERSR5LmiZgT0kB5CKzmVeuz1qEv3kvHkvpHLm1_eyR3JpiHeVbr9vgU-brASoorlaXppYZkPJtntPYZ2ARZAHDeJkgqoL3hRh1E4oYa7qhH3Q"/>
 <div class="absolute top-md left-md bg-secondary-container/90 px-sm py-xs backdrop-blur-sm">
 <span class="font-label-md text-caption text-on-secondary-container uppercase">Firma</span>
 </div>
@@ -179,55 +180,55 @@
 <p class="font-body-md text-body-md text-on-surface-variant mt-xs max-w-md">Nuestra emblemática baguette de masa madre con 24 horas de fermentación, corteza crujiente y harina premium de molienda fina.</p>
 </div>
 <span class="font-headline-md text-headline-md text-primary">$6.50</span>
-</div>
+<button class="ml-md bg-secondary text-on-secondary font-label-md text-caption uppercase px-sm py-xs tracking-widest hover:bg-on-secondary-container transition-colors">Añadir</button></div>
 </div>
 <!-- Small Card 1 -->
-<div class="md:col-span-4 group cursor-pointer" onclick="window.location.href='detalle.html'">
+<div class="md:col-span-4 group cursor-pointer" onclick="window.location.href='detalle.html'" style="transform: translateY(0px);">
 <div class="relative aspect-square overflow-hidden bg-surface-container mb-md">
-<img alt="Centeno Nórdico Oscuro" class="w-full h-full object-cover transition-custom group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRzSvPbgN-4k9KeTIfY95eO6FT-MOeXsO1dJpIMnAWhg5e1folA4Z8JR_bloR-5ODGbAPVMVmXJIKw4foPRcslnOX1Gyc9fvW-ogbsmaoKGz8Dv3nGF6ZnwLkm5YHwXlcYMQU9doO0EBHYyKE3c55Ie64HDHVsJpBuU5NWFS2N6InwR3FgZsza8VGpHTu6vduZ82Z--f1idDeRq2ARsPv1AEOi4pmYNOc_5tWP9CAFMwJVWu530F4hG9T9QCWfa7mqKxRdH_nOdpU">
+<img alt="Centeno Nórdico Oscuro" class="w-full h-full object-cover transition-custom group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRzSvPbgN-4k9KeTIfY95eO6FT-MOeXsO1dJpIMnAWhg5e1folA4Z8JR_bloR-5ODGbAPVMVmXJIKw4foPRcslnOX1Gyc9fvW-ogbsmaoKGz8Dv3nGF6ZnwLkm5YHwXlcYMQU9doO0EBHYyKE3c55Ie64HDHVsJpBuU5NWFS2N6InwR3FgZsza8VGpHTu6vduZ82Z--f1idDeRq2ARsPv1AEOi4pmYNOc_5tWP9CAFMwJVWu530F4hG9T9QCWfa7mqKxRdH_nOdpU"/>
 </div>
 <div class="flex justify-between items-start">
 <div>
 <h3 class="font-headline-md text-headline-md text-primary">Centeno Nórdico</h3>
 <p class="font-body-md text-body-md text-on-surface-variant mt-xs">Masa madre de centeno puro, denso y aromático con semillas orgánicas.</p>
 </div>
-</div>
+<button class="ml-md bg-secondary text-on-secondary font-label-md text-caption uppercase px-sm py-xs tracking-widest hover:bg-on-secondary-container transition-colors">Añadir</button></div>
 </div>
 <!-- Small Card 2 -->
 <div class="md:col-span-4 group cursor-pointer" onclick="window.location.href='detalle.html'">
 <div class="relative aspect-square overflow-hidden bg-surface-container mb-md">
-<img alt="Masa Madre Silvestre" class="w-full h-full object-cover transition-custom group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACrDN5xnk5egRkuPFXjHdKceA-LsFs3nJzvPkcNqQ5l9qQ5aTcV2OOnRJIhZBol8JF9Sla7h1rCABfsxCUUfI-ecqvj3qgr7bHE4nmyeDPM9nyMUoM1WLmG-WVuP_rscgQA5eJ4nl4jacoO-hC50kiRgq7KcEng4pwUPJhTBUukuaNj3wYviCR1QM9GciOTcXkKAfzBczdNH1ea5Hvg4K4YHJX2P6vsT6cSD0f41aSIHyEdDuah4Xq40LjU3Z9mDHl2Cq_pfjfb2g">
+<img alt="Masa Madre Silvestre" class="w-full h-full object-cover transition-custom group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACrDN5xnk5egRkuPFXjHdKceA-LsFs3nJzvPkcNqQ5l9qQ5aTcV2OOnRJIhZBol8JF9Sla7h1rCABfsxCUUfI-ecqvj3qgr7bHE4nmyeDPM9nyMUoM1WLmG-WVuP_rscgQA5eJ4nl4jacoO-hC50kiRgq7KcEng4pwUPJhTBUukuaNj3wYviCR1QM9GciOTcXkKAfzBczdNH1ea5Hvg4K4YHJX2P6vsT6cSD0f41aSIHyEdDuah4Xq40LjU3Z9mDHl2Cq_pfjfb2g"/>
 </div>
 <div class="flex justify-between items-start">
 <div>
 <h3 class="font-headline-md text-headline-md text-primary">Masa Madre Silvestre</h3>
 <p class="font-body-md text-body-md text-on-surface-variant mt-xs">Cultivo salvaje de 36 horas para un perfil de sabor complejo y nutrición superior.</p>
 </div>
-</div>
+<button class="ml-md bg-secondary text-on-secondary font-label-md text-caption uppercase px-sm py-xs tracking-widest hover:bg-on-secondary-container transition-colors">Añadir</button></div>
 </div>
 <!-- Mid Card -->
-<div class="md:col-span-4 group cursor-pointer" onclick="window.location.href='detalle.html'">
+<div class="md:col-span-4 group cursor-pointer" onclick="window.location.href='detalle.html'" style="transform: translateY(0px);">
 <div class="relative aspect-square overflow-hidden bg-surface-container mb-md">
-<img alt="Cruasán de Mantequilla" class="w-full h-full object-cover transition-custom group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhfkdpm3kwK3qNLLmRf8YCRWSHkK7mF8jqsLqkdzdYhRs7LhgyjAnLf0iAdTexI5HXL5JHRhwoxZ5o4BLzvqmkH_teQg15pzFkzuF69Y5sVMXA9-2AXQ3DMR3HR8JpDY_gOViGWQngk7p3WrE3ENOophxm6kLTpifLslRlP-vRcudXue2adgpLuXhXutAESMSop2r_JmXwiFBNJzDyVDWYGFFLbMEuK68uLu2JSK2FZmckOYrH32e5q_kaERfy21k0_Y_FW3hpJrg">
+<img alt="Cruasán de Mantequilla" class="w-full h-full object-cover transition-custom group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhfkdpm3kwK3qNLLmRf8YCRWSHkK7mF8jqsLqkdzdYhRs7LhgyjAnLf0iAdTexI5HXL5JHRhwoxZ5o4BLzvqmkH_teQg15pzFkzuF69Y5sVMXA9-2AXQ3DMR3HR8JpDY_gOViGWQngk7p3WrE3ENOophxm6kLTpifLslRlP-vRcudXue2adgpLuXhXutAESMSop2r_JmXwiFBNJzDyVDWYGFFLbMEuK68uLu2JSK2FZmckOYrH32e5q_kaERfy21k0_Y_FW3hpJrg"/>
 </div>
 <div class="flex justify-between items-start">
 <div>
 <h3 class="font-headline-md text-headline-md text-primary">Cruasán Premium</h3>
 <p class="font-body-md text-body-md text-on-surface-variant mt-xs">Hojaldrado artesanal con mantequilla francesa AOP y fermentación en frío.</p>
 </div>
-</div>
+<button class="ml-md bg-secondary text-on-secondary font-label-md text-caption uppercase px-sm py-xs tracking-widest hover:bg-on-secondary-container transition-colors">Añadir</button></div>
 </div>
 <!-- Small Card 3 -->
-<div class="md:col-span-4 group cursor-pointer" onclick="window.location.href='detalle.html'">
+<div class="md:col-span-4 group cursor-pointer" onclick="window.location.href='detalle.html'" style="transform: translateY(0px);">
 <div class="relative aspect-square overflow-hidden bg-surface-container mb-md">
-<img alt="Oliva Kalamata" class="w-full h-full object-cover transition-custom group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSf12-XUnTfMoovD8o4UHpJ5_UaQViSCCinUadYK6TAoFAFzsB8j723S52_rialrKpL5R5H49ul8OiVpW0aztEfyz1RHLbJ2VT-rBtZTWTauwC3N3s7pmAx5bjWdcSpvntkAUYtyWd-YWYTmL7_zo1qtv650sLo5gMIiOlZHFFpKMvaJXCsRzNBSDg2ABiTPXOKi41pzlVJiuKT83vFntJfuB38vujphjjm4XL7q_xwDw57zfpgldiCEFje_CSC7yYnPzwfNbxlW8">
+<img alt="Oliva Kalamata" class="w-full h-full object-cover transition-custom group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSf12-XUnTfMoovD8o4UHpJ5_UaQViSCCinUadYK6TAoFAFzsB8j723S52_rialrKpL5R5H49ul8OiVpW0aztEfyz1RHLbJ2VT-rBtZTWTauwC3N3s7pmAx5bjWdcSpvntkAUYtyWd-YWYTmL7_zo1qtv650sLo5gMIiOlZHFFpKMvaJXCsRzNBSDg2ABiTPXOKi41pzlVJiuKT83vFntJfuB38vujphjjm4XL7q_xwDw57zfpgldiCEFje_CSC7yYnPzwfNbxlW8"/>
 </div>
 <div class="flex justify-between items-start">
 <div>
 <h3 class="font-headline-md text-headline-md text-primary">Oliva y Romero</h3>
 <p class="font-body-md text-body-md text-on-surface-variant mt-xs">Focaccia de masa madre con aceitunas Kalamata y hierbas frescas de huerto.</p>
 </div>
-</div>
+<button class="ml-md bg-secondary text-on-secondary font-label-md text-caption uppercase px-sm py-xs tracking-widest hover:bg-on-secondary-container transition-colors">Añadir</button></div>
 </div>
 </div>
 </section>
@@ -236,7 +237,7 @@
 <div class="max-w-container-max mx-auto px-md grid md:grid-cols-2 gap-lg items-center">
 <div class="relative">
 <div class="aspect-[4/5] bg-surface overflow-hidden ambient-shadow">
-<img alt="Manos del panadero en Maité" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzaX2_WLe-04D9p4psWYOmJ5OiFh9VCBi2mU5UXLTUkmbUuVt8x193aCt2yJn4Bfu4hBVgzDi-z9-dgWp2Dc4nDfRZHGs7IQTZohZ0HLjoD5iPefK1QgtyDj8LkYiKOp4gB4nu3tYkD85Uaec4IG_CrKwP9gVZQY1zxnT1YsxxwocXlsPKXKvX6ZlZ5bAMWEEk-HAS5yl_KUG2vX-DGDs6gTaayCKamg75SBMwB7dc09kfEjJvrcWv3coGKvN5EK1Wegieo5xNYhM">
+<img alt="Manos del panadero en Maité" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzaX2_WLe-04D9p4psWYOmJ5OiFh9VCBi2mU5UXLTUkmbUuVt8x193aCt2yJn4Bfu4hBVgzDi-z9-dgWp2Dc4nDfRZHGs7IQTZohZ0HLjoD5iPefK1QgtyDj8LkYiKOp4gB4nu3tYkD85Uaec4IG_CrKwP9gVZQY1zxnT1YsxxwocXlsPKXKvX6ZlZ5bAMWEEk-HAS5yl_KUG2vX-DGDs6gTaayCKamg75SBMwB7dc09kfEjJvrcWv3coGKvN5EK1Wegieo5xNYhM"/>
 </div>
 <div class="absolute -bottom-md -right-md w-32 h-32 bg-secondary-fixed-dim/20 backdrop-blur-md p-md flex items-center justify-center text-center hidden md:flex">
 <span class="font-label-md text-caption text-primary leading-tight">MAESTROS DE LA MASA MADRE</span>
@@ -267,7 +268,7 @@
 <h2 class="font-headline-lg text-headline-lg mb-sm">Recién salido del horno de Maité</h2>
 <p class="font-body-md text-body-md text-on-primary-container mb-md">Suscríbete para recibir noticias sobre nuestras hornadas especiales de masa madre y ediciones limitadas.</p>
 <form class="flex flex-col md:flex-row gap-xs">
-<input class="flex-1 bg-on-primary/10 border-on-primary/20 text-on-primary placeholder:text-on-primary/40 focus:ring-secondary focus:border-secondary py-md px-md" placeholder="Dirección de correo electrónico" type="email">
+<input class="flex-1 bg-on-primary/10 border-on-primary/20 text-on-primary placeholder:text-on-primary/40 focus:ring-secondary focus:border-secondary py-md px-md" placeholder="Dirección de correo electrónico" type="email"/>
 <button class="bg-secondary text-on-secondary font-label-md text-label-md uppercase px-lg py-md tracking-widest transition-custom hover:bg-on-secondary-container">Suscribirse</button>
 </form>
 </div>
@@ -278,7 +279,7 @@
 <footer class="bg-surface-container-low dark:bg-surface-container-highest">
 <div class="flex flex-col md:flex-row justify-between items-center px-lg py-xl max-w-container-max mx-auto w-full gap-gutter">
 <div class="text-center md:text-left">
-<a href="index.html" class="font-headline-sm text-headline-sm text-primary">Maité Bakery</a>
+<a class="font-headline-sm text-headline-sm text-primary" href="index.html">Maité Bakery</a>
 <p class="font-body-md text-body-md text-on-surface-variant mt-xs opacity-70">© 2024 Maité Bakery. Auténtica masa madre y panadería artesanal.</p>
 </div>
 <div class="flex flex-wrap justify-center gap-md">
@@ -313,6 +314,30 @@
       });
     });
   </script>
-
-
-</body></html>
+<div class="fixed inset-0 z-[100] hidden" id="cart-sidebar">
+<div class="absolute inset-0 bg-primary/40 backdrop-blur-sm" onclick="document.getElementById('cart-sidebar').classList.add('hidden')"></div>
+<div class="absolute right-0 top-0 h-full w-full max-w-md bg-surface shadow-xl flex flex-col">
+<div class="p-md border-b border-outline-variant/30 flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-primary">Tu Carrito</h2>
+<button class="material-symbols-outlined text-primary" onclick="document.getElementById('cart-sidebar').classList.add('hidden')">close</button>
+</div>
+<div class="flex-1 overflow-y-auto p-md space-y-md">
+<div class="space-y-md" id="cart-items-container">
+<p class="text-on-surface-variant text-center py-lg">Tu carrito está vacío</p>
+</div>
+</div>
+<div class="p-md bg-surface-container-low border-t border-outline-variant/30">
+<form class="space-y-md">
+<div>
+<label class="block font-label-md text-label-md text-primary mb-xs uppercase">Nombre</label>
+<input class="w-full bg-surface border-outline-variant focus:ring-secondary focus:border-secondary p-sm" placeholder="Tu nombre completo" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-primary mb-xs uppercase">Teléfono</label>
+<input class="w-full bg-surface border-outline-variant focus:ring-secondary focus:border-secondary p-sm" placeholder="Tu número de contacto" type="tel"/>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md uppercase py-md tracking-widest hover:opacity-90 transition-custom" type="button">Comprar</button>
+</form>
+</div>
+</div>
+</div></body></html>

@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-
-<html class="light" lang="es" style=""><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -112,24 +110,21 @@
         .ambient-shadow {
             box-shadow: 0 16px 24px -8px rgba(74, 55, 40, 0.08);
         }
-        [v-cloak] { display: none; }
     </style>
 </head>
 <body class="bg-surface text-on-surface font-body-md selection:bg-secondary-container">
 <!-- TopNavBar -->
 <nav class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30">
 <div class="flex justify-between items-center px-lg py-md max-w-container-max mx-auto w-full">
-<a class="font-headline-md text-headline-md text-primary italic" href="index.html">Maité Bakery</a>
+<div class="font-headline-md text-headline-md text-primary italic">Maité Bakery</div>
 <div class="hidden md:flex gap-lg items-center">
-<a class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant opacity-80 hover:opacity-100 hover:text-primary transition-opacity duration-300" href="index.html">Nuestros Panes</a>
-<a class="font-label-md text-label-md uppercase tracking-widest text-primary border-b-2 border-primary/40 pb-1" href="admin.html">Panel Administrativo</a>
+<a class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant opacity-80 hover:opacity-100 hover:text-primary transition-opacity duration-300" href="#">Nuestros Panes</a>
+<a class="font-label-md text-label-md uppercase tracking-widest text-primary border-b-2 border-primary/40 pb-1 hover:opacity-100 transition-opacity duration-300" href="#">Admin</a><a class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant opacity-80 hover:opacity-100 hover:text-primary transition-opacity duration-300 ml-lg" href="#">Gestión de Accesos</a>
 </div>
 <div class="flex items-center gap-md text-primary">
-<button class="hover:opacity-70 transition-all" title="Gestión de Accesos">
-<span class="material-symbols-outlined">admin_panel_settings</span>
-</button>
-<a class="hover:opacity-70 transition-all" href="login.html" title="Cerrar sesión"><span class="material-symbols-outlined">account_circle</span></a>
-<a class="flex items-center gap-xs font-label-md text-label-md uppercase tracking-widest hover:opacity-70 transition-all" href="index.html" title="Cerrar sesión"><span class="material-symbols-outlined">logout</span><span class="hidden md:inline">Cerrar Sesión</span></a></div>
+<button class="hover:opacity-70 transition-all"><span class="material-symbols-outlined">shopping_basket</span></button>
+<button class="hover:opacity-70 transition-all"><span class="material-symbols-outlined">account_circle</span></button>
+<a href="index.html" class="hover:opacity-70 transition-all flex items-center gap-xs" title="Cerrar Sesión"><span class="material-symbols-outlined">logout</span><span class="hidden md:block font-label-md text-label-md uppercase tracking-widest">Cerrar Sesión</span></a></div>
 </div>
 </nav>
 <main class="pt-xl pb-xl max-w-container-max mx-auto px-md md:px-lg mt-16">
@@ -138,158 +133,108 @@
 <div>
 <span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-xs block">Maité Bakery Artisan Panel</span>
 <h1 class="font-headline-lg text-headline-lg text-primary">Gestión de Inventario</h1>
-<p class="text-on-surface-variant mt-2 max-w-xl">Administra los productos de panadería artesanal que se muestran en el catálogo público.</p>
 </div>
-<div class="flex flex-col sm:flex-row gap-sm">
-<a class="flex items-center justify-center gap-xs px-md py-md border border-outline-variant text-outline hover:text-primary hover:border-primary transition-all font-label-md text-label-md uppercase tracking-widest" href="#access-management">
-<span class="material-symbols-outlined">group</span>
-                    Gestión de Accesos
-                </a>
-<button class="bg-[#4a3728] text-on-primary px-lg py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary transition-colors duration-300 ambient-shadow flex items-center justify-center gap-base" onclick="toggleModal('add-bread-modal')">
+<button class="bg-primary text-on-primary px-lg py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors duration-300 ambient-shadow flex items-center gap-base" onclick="toggleModal('add-bread-modal')">
 <span class="material-symbols-outlined">add</span>
-                    AÑADIR NUEVO PAN
-                </button>
-</div>
+                AÑADIR NUEVO PAN
+            </button>
 </div>
 <!-- Inventory List -->
 <div class="grid grid-cols-1 gap-gutter">
 <!-- Table Header (Desktop) -->
 <div class="hidden md:grid grid-cols-12 px-md py-sm border-b border-outline-variant font-label-md text-label-md uppercase tracking-widest text-outline">
-<div class="col-span-3">Producto</div>
-<div class="col-span-4">Descripción</div>
-<div class="col-span-1 text-center">Precio</div>
-<div class="col-span-2 text-center">Estado</div>
-<div class="col-span-2 text-right">Acciones</div>
+<div class="col-span-2">PRODUCTO</div>
+<div class="col-span-4">DESCRIPCIÓN</div>
+<div class="col-span-2 text-center">PRECIO</div>
+<div class="col-span-2 text-center">ESTADO</div>
+<div class="col-span-2 text-right">ACCIONES</div>
 </div>
-<!-- Dynamic Container for SheetDB Rows -->
-<div class="space-y-gutter" id="inventory-container">
-<div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-all duration-300 group animate-fade-in opacity-100 translate-y-0">
-<div class="col-span-3 flex items-center gap-md mb-sm md:mb-0">
-<div class="w-16 h-16 bg-surface-variant rounded overflow-hidden flex-shrink-0">
-<img alt="Masa Madre Tradicional" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMcyBk9WoHX7diTAwrcJoQwO2bI6mJObxnOlYUbsHGQz8dHgV96-3dni8n6WvgWXBpTv0rvgjqP41anwg9V3rAtr3rk6LDnVmvmcwNgtY0nGjhlr0MATVUry5DLK-G7NE2Y63fgU0NNPk0Td4lJONdmt5hBrYqfjc6VNEILCcljUwvnbm9sCSc_SUWhDK6kFatOkLYTDUAp3zDl37ro1EpXIh6UJ3tinHbc2CE90LYMlqHbY1RSh15BS6bDHdCufY84HYbpHhA0X8"/>
+<!-- Bread Item 1 -->
+<div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors duration-200 group transition-all duration-700 opacity-100 translate-y-0">
+<div class="col-span-2 flex items-center gap-md mb-sm md:mb-0">
+<div class="w-16 h-16 bg-surface-variant rounded overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Masa Madre Tradicional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMcyBk9WoHX7diTAwrcJoQwO2bI6mJObxnOlYUbsHGQz8dHgV96-3dni8n6WvgWXBpTv0rvgjqP41anwg9V3rAtr3rk6LDnVmvmcwNgtY0nGjhlr0MATVUry5DLK-G7NE2Y63fgU0NNPk0Td4lJONdmt5hBrYqfjc6VNEILCcljUwvnbm9sCSc_SUWhDK6kFatOkLYTDUAp3zDl37ro1EpXIh6UJ3tinHbc2CE90LYMlqHbY1RSh15BS6bDHdCufY84HYbpHhA0X8">
 </div>
-<span class="font-body-md font-semibold text-primary leading-tight">Masa Madre Tradicional</span>
+<span class="font-body-md font-semibold text-primary">Masa Madre Tradicional</span>
 </div>
 <div class="col-span-4 text-on-surface-variant text-body-md pr-md mb-sm md:mb-0">
-                            Fermentación natural de 24 horas, trigo orgánico, sal marina.
-                        </div>
-<div class="col-span-1 text-center text-primary font-medium mb-sm md:mb-0">
-                            $8.50
-                        </div>
+                    Fermentación natural de 24 horas, trigo orgánico, sal marina.
+                </div>
+<div class="col-span-2 text-center text-primary font-medium mb-sm md:mb-0">
+                    $8.50
+                </div>
 <div class="col-span-2 text-center mb-sm md:mb-0">
-<span class="bg-secondary-container/30 text-secondary px-sm py-xs rounded-full font-label-md text-caption uppercase tracking-wider">
-                                EN STOCK
-                            </span>
+<span class="bg-secondary-container/30 text-secondary px-sm py-xs rounded-full font-label-md text-caption uppercase">EN STOCK</span>
 </div>
 <div class="col-span-2 flex justify-end gap-md">
-<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs" title="Editar">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs">
 <span class="material-symbols-outlined">edit</span>
 <span class="md:hidden">Editar</span>
 </button>
-<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-xs" title="Eliminar">
+<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-xs">
 <span class="material-symbols-outlined">delete</span>
 <span class="md:hidden">Eliminar</span>
 </button>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-all duration-300 group animate-fade-in opacity-100 translate-y-0">
-<div class="col-span-3 flex items-center gap-md mb-sm md:mb-0">
-<div class="w-16 h-16 bg-surface-variant rounded overflow-hidden flex-shrink-0">
-<img alt="Cruasán de Mantequilla" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaxemaIfOgyS2l8XWtF2un0vBrF2Yyx1-1gjf4-dZAMxMkdPi-Otd46KL98h4933YF7THl_EHWC8RovvLBE3ULU5ijmCOxotYWOh4h5G0oHXDHHzBEoxjOjudyexj4CGzYQ8N9hUQxkFwLH1g0albr7AyL4qCSmPGRnBOZ_Fo_n4tQNJUnqWLNk8DrPGx9M6EaWyav3dPv5pL-ZwnyjhTR5AuNDA4TntWgxiHqabn60GqkDrUMYX0XORmyVIlkXB6lI0Wga_Ahea8"/>
+<!-- Bread Item 2 -->
+<div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors duration-200 group transition-all duration-700 opacity-100 translate-y-0">
+<div class="col-span-2 flex items-center gap-md mb-sm md:mb-0">
+<div class="w-16 h-16 bg-surface-variant rounded overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Cruasán de Mantequilla" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaxemaIfOgyS2l8XWtF2un0vBrF2Yyx1-1gjf4-dZAMxMkdPi-Otd46KL98h4933YF7THl_EHWC8RovvLBE3ULU5ijmCOxotYWOh4h5G0oHXDHHzBEoxjOjudyexj4CGzYQ8N9hUQxkFwLH1g0albr7AyL4qCSmPGRnBOZ_Fo_n4tQNJUnqWLNk8DrPGx9M6EaWyav3dPv5pL-ZwnyjhTR5AuNDA4TntWgxiHqabn60GqkDrUMYX0XORmyVIlkXB6lI0Wga_Ahea8">
 </div>
-<span class="font-body-md font-semibold text-primary leading-tight">Cruasán de Mantequilla</span>
+<span class="font-body-md font-semibold text-primary">Cruasán de Mantequilla</span>
 </div>
 <div class="col-span-4 text-on-surface-variant text-body-md pr-md mb-sm md:mb-0">
-                            Hojaldre de 72 capas elaborado con mantequilla francesa.
-                        </div>
-<div class="col-span-1 text-center text-primary font-medium mb-sm md:mb-0">
-                            $4.25
-                        </div>
+                    Hojaldre de 72 capas elaborado con mantequilla francesa.
+                </div>
+<div class="col-span-2 text-center text-primary font-medium mb-sm md:mb-0">
+                    $4.25
+                </div>
 <div class="col-span-2 text-center mb-sm md:mb-0">
-<span class="bg-secondary-container/30 text-secondary px-sm py-xs rounded-full font-label-md text-caption uppercase tracking-wider">
-                                EN STOCK
-                            </span>
+<span class="bg-secondary-container/30 text-secondary px-sm py-xs rounded-full font-label-md text-caption uppercase">EN STOCK</span>
 </div>
 <div class="col-span-2 flex justify-end gap-md">
-<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs" title="Editar">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs">
 <span class="material-symbols-outlined">edit</span>
 <span class="md:hidden">Editar</span>
 </button>
-<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-xs" title="Eliminar">
+<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-xs">
 <span class="material-symbols-outlined">delete</span>
 <span class="md:hidden">Eliminar</span>
 </button>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-all duration-300 group animate-fade-in opacity-100 translate-y-0">
-<div class="col-span-3 flex items-center gap-md mb-sm md:mb-0">
-<div class="w-16 h-16 bg-surface-variant rounded overflow-hidden flex-shrink-0">
-<img alt="Baguette Rústica" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrrNboevfTpBuBeShdxRoZWb5_AvKFrb9Pt68dGvvKkFNE4SuBzYqXoO9ZTVGmEK6mhCgEZ7wtMUDP0ujkdZLz-gWq52x0P2eZPmysXwVCSbGLZHcFejHwBqBOGXPhIrbEWwrqw5G6k0_Y72JQShMdUEazI8SomBTfPcRK5tMsPkEFF7pnoy04kTKIMmTRGYtJlnx8vFVzWM4T0cg8cXsvzHyU5sy_gRuP1uQvi8zU_cRWh9mUnafzpwJsCXjHXqrgCRbB5NP8HUI"/>
+<!-- Bread Item 3 -->
+<div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors duration-200 group transition-all duration-700 opacity-100 translate-y-0">
+<div class="col-span-2 flex items-center gap-md mb-sm md:mb-0">
+<div class="w-16 h-16 bg-surface-variant rounded overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Baguette Rústica" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrrNboevfTpBuBeShdxRoZWb5_AvKFrb9Pt68dGvvKkFNE4SuBzYqXoO9ZTVGmEK6mhCgEZ7wtMUDP0ujkdZLz-gWq52x0P2eZPmysXwVCSbGLZHcFejHwBqBOGXPhIrbEWwrqw5G6k0_Y72JQShMdUEazI8SomBTfPcRK5tMsPkEFF7pnoy04kTKIMmTRGYtJlnx8vFVzWM4T0cg8cXsvzHyU5sy_gRuP1uQvi8zU_cRWh9mUnafzpwJsCXjHXqrgCRbB5NP8HUI">
 </div>
-<span class="font-body-md font-semibold text-primary leading-tight">Baguette Rústica</span>
+<span class="font-body-md font-semibold text-primary">Baguette Rústica</span>
 </div>
 <div class="col-span-4 text-on-surface-variant text-body-md pr-md mb-sm md:mb-0">
-                            Corteza crujiente, miga aireada. Perfecto para cada día.
-                        </div>
-<div class="col-span-1 text-center text-primary font-medium mb-sm md:mb-0">
-                            $3.50
-                        </div>
+                    Corteza crujiente, miga aireada. Perfecto para cada día.
+                </div>
+<div class="col-span-2 text-center text-primary font-medium mb-sm md:mb-0">
+                    $3.50
+                </div>
 <div class="col-span-2 text-center mb-sm md:mb-0">
-<span class="bg-surface-dim text-outline px-sm py-xs rounded-full font-label-md text-caption uppercase tracking-wider">
-                                AGOTADO
-                            </span>
+<span class="bg-surface-dim text-outline px-sm py-xs rounded-full font-label-md text-caption uppercase">AGOTADO</span>
 </div>
 <div class="col-span-2 flex justify-end gap-md">
-<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs" title="Editar">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs">
 <span class="material-symbols-outlined">edit</span>
 <span class="md:hidden">Editar</span>
 </button>
-<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-xs" title="Eliminar">
+<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-xs">
 <span class="material-symbols-outlined">delete</span>
 <span class="md:hidden">Eliminar</span>
 </button>
 </div>
 </div>
 </div>
-</div>
-<!-- Access Management Placeholder Section -->
-<section class="mt-xl pt-xl border-t border-outline-variant/30" id="access-management">
-<div class="bg-surface-container-low p-lg border border-outline-variant/20 rounded">
-<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md mb-lg">
-<div>
-<h2 class="font-headline-md text-headline-md text-primary">Gestión de Accesos</h2>
-<p class="text-on-surface-variant text-body-md">Controla quién tiene permisos para editar el inventario artesanal.</p>
-</div>
-<button class="text-secondary border-b border-secondary hover:text-primary hover:border-primary transition-all font-label-md text-label-md uppercase tracking-widest">
-                        Configurar Permisos
-                    </button>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
-<div class="bg-white p-md border border-outline-variant/10 shadow-sm">
-<div class="flex items-center gap-sm mb-sm text-primary">
-<span class="material-symbols-outlined">person</span>
-<span class="font-semibold">Maestro Panadero</span>
-</div>
-<p class="text-caption text-on-surface-variant">Acceso total a recetas e inventario diario.</p>
-</div>
-<div class="bg-white p-md border border-outline-variant/10 shadow-sm">
-<div class="flex items-center gap-sm mb-sm text-primary">
-<span class="material-symbols-outlined">storefront</span>
-<span class="font-semibold">Atención al Cliente</span>
-</div>
-<p class="text-caption text-on-surface-variant">Solo lectura de stock y marcado de agotados.</p>
-</div>
-<div class="bg-white p-md border border-outline-variant/10 shadow-sm">
-<div class="flex items-center gap-sm mb-sm text-primary">
-<span class="material-symbols-outlined">analytics</span>
-<span class="font-semibold">Administración</span>
-</div>
-<p class="text-caption text-on-surface-variant">Gestión de precios, costos y usuarios.</p>
-</div>
-</div>
-</div>
-</section>
-</main>
+<section class="mt-xl pt-xl border-t border-outline-variant/30"><div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl"><div><span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-xs block">Seguridad y Permisos</span><h2 class="font-headline-lg text-headline-lg text-primary">Gestión de Accesos</h2></div><button class="bg-primary text-on-primary px-lg py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors duration-300 ambient-shadow flex items-center gap-base"><span class="material-symbols-outlined">person_add</span>AÑADIR USUARIO</button></div><div class="grid grid-cols-1 gap-gutter"><div class="hidden md:grid grid-cols-12 px-md py-sm border-b border-outline-variant font-label-md text-label-md uppercase tracking-widest text-outline"><div class="col-span-5">EMAIL</div><div class="col-span-3 text-center">ESTADO</div><div class="col-span-4 text-right">ACCIONES</div></div><div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors duration-200 group transition-all duration-700 opacity-100 translate-y-0"><div class="col-span-5 flex items-center gap-md mb-sm md:mb-0"><span class="font-body-md font-semibold text-primary">manu348@gmail.com</span><span class="bg-primary text-on-primary px-sm py-xs rounded-full font-label-md text-caption uppercase">Administrador Principal</span></div><div class="col-span-3 text-center mb-sm md:mb-0"><span class="bg-secondary-container/30 text-secondary px-sm py-xs rounded-full font-label-md text-caption uppercase">ACTIVO</span></div><div class="col-span-4 flex justify-end gap-md"><button class="text-secondary hover:opacity-70 transition-colors flex items-center gap-xs font-label-md text-caption uppercase"><span class="material-symbols-outlined">verified_user</span>Habilitar nuevas cuentas</button><button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">edit</span></button><button class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">delete</span></button></div></div><div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors duration-200 group transition-all duration-700 opacity-100 translate-y-0"><div class="col-span-5 flex items-center gap-md mb-sm md:mb-0"><span class="font-body-md text-on-surface-variant">panadero.artesano@maite.com</span></div><div class="col-span-3 text-center mb-sm md:mb-0"><span class="bg-surface-dim text-outline px-sm py-xs rounded-full font-label-md text-caption uppercase">INACTIVO</span></div><div class="col-span-4 flex justify-end gap-md"><button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">edit</span></button><button class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">delete</span></button></div></div></div></section></main>
 <!-- Modal: Add New Bread -->
 <div class="hidden fixed inset-0 z-[60] flex items-center justify-center p-md" id="add-bread-modal">
 <div class="modal-overlay absolute inset-0" onclick="toggleModal('add-bread-modal')"></div>
@@ -300,31 +245,33 @@
 <span class="material-symbols-outlined">close</span>
 </button>
 </div>
-<form class="space-y-md" id="bread-form" onsubmit="handleFormSubmit(event)">
+<form class="space-y-md" id="bread-form">
 <div class="space-y-xs">
-<label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Nombre del Pan (Producto)</label>
-<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors" name="Producto" placeholder="ej. Focaccia de Oliva y Romero" required="" type="text"/>
+<label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Nombre del Pan</label>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors" placeholder="ej. Focaccia de Oliva y Romero" type="text">
 </div>
 <div class="space-y-xs">
 <label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Descripción</label>
-<textarea class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors resize-none" name="Descripcion" placeholder="Describe los ingredientes y el proceso..." required="" rows="2"></textarea>
+<textarea class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors resize-none" placeholder="Describe los ingredientes y el proceso..." rows="3"></textarea>
 </div>
 <div class="flex gap-gutter">
 <div class="flex-1 space-y-xs">
 <label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Precio ($)</label>
-<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors" name="Precio" placeholder="0.00" required="" step="0.01" type="number"/>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors" placeholder="0.00" step="0.01" type="number">
 </div>
 <div class="flex-1 space-y-xs">
-<label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Estado</label>
-<select class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 cursor-pointer" name="Estado">
-<option value="En Stock">En Stock</option>
-<option value="Agotado">Agotado</option>
-<option value="Por Encargo">Por Encargo</option>
-</select>
+<label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Subir Imagen</label>
+<div class="relative group h-full">
+<input class="absolute inset-0 opacity-0 cursor-pointer z-20" type="file">
+<div class="w-full border-b border-outline-variant group-hover:border-secondary flex items-center gap-xs py-sm text-outline group-hover:text-secondary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">upload_file</span>
+<span class="text-body-md">Seleccionar archivo...</span>
+</div>
+</div>
 </div>
 </div>
 <div class="pt-lg flex flex-col md:flex-row gap-md">
-<button class="flex-1 bg-[#4a3728] text-on-primary py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary transition-colors duration-300" type="submit">Guardar Pan en Sistema</button>
+<button class="flex-1 bg-primary text-on-primary py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors duration-300" type="button">Guardar Pan</button>
 <button class="flex-1 border border-outline-variant text-outline py-md font-label-md text-label-md uppercase tracking-widest hover:border-primary hover:text-primary transition-colors duration-300" onclick="toggleModal('add-bread-modal')" type="button">Cancelar</button>
 </div>
 </form>
@@ -333,9 +280,9 @@
 <!-- Footer -->
 <footer class="bg-surface-container-low dark:bg-surface-container-highest mt-xl border-t border-outline-variant/20">
 <div class="flex flex-col md:flex-row justify-between items-center px-lg py-xl max-w-container-max mx-auto w-full gap-gutter">
-<a class="font-headline-sm text-headline-sm text-primary italic" href="index.html">Maité Bakery</a>
+<div class="font-headline-sm text-headline-sm text-primary italic">Maité Bakery</div>
 <div class="flex flex-wrap justify-center gap-md">
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="index.html">Procedencia</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Procedencia</a>
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Sostenibilidad</a>
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Venta al por mayor</a>
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Contacto</a>
@@ -346,101 +293,6 @@
 </div>
 </footer>
 <script>
-        // SHEETDB INTEGRATION
-        const API_ENDPOINT = 'https://sheetdb.io/api/v1/abcd123'; // Reemplazar con ID real de SheetDB
-
-        async function fetchInventory() {
-            const container = document.getElementById('inventory-container');
-            
-            try {
-                // Simulación de fetch (Placeholder para integración real)
-                // const response = await fetch(API_ENDPOINT);
-                // const data = await response.json();
-                
-                // Demo Data for visualization matching requested headers: Producto, Descripcion, Precio, Estado, Acciones
-                const demoData = [
-                    { Producto: "Masa Madre Tradicional", Descripcion: "Fermentación natural de 24 horas, trigo orgánico, sal marina.", Precio: "8.50", Estado: "EN STOCK", Imagen: "https://lh3.googleusercontent.com/aida-public/AB6AXuCMcyBk9WoHX7diTAwrcJoQwO2bI6mJObxnOlYUbsHGQz8dHgV96-3dni8n6WvgWXBpTv0rvgjqP41anwg9V3rAtr3rk6LDnVmvmcwNgtY0nGjhlr0MATVUry5DLK-G7NE2Y63fgU0NNPk0Td4lJONdmt5hBrYqfjc6VNEILCcljUwvnbm9sCSc_SUWhDK6kFatOkLYTDUAp3zDl37ro1EpXIh6UJ3tinHbc2CE90LYMlqHbY1RSh15BS6bDHdCufY84HYbpHhA0X8" },
-                    { Producto: "Cruasán de Mantequilla", Descripcion: "Hojaldre de 72 capas elaborado con mantequilla francesa.", Precio: "4.25", Estado: "EN STOCK", Imagen: "https://lh3.googleusercontent.com/aida-public/AB6AXuBaxemaIfOgyS2l8XWtF2un0vBrF2Yyx1-1gjf4-dZAMxMkdPi-Otd46KL98h4933YF7THl_EHWC8RovvLBE3ULU5ijmCOxotYWOh4h5G0oHXDHHzBEoxjOjudyexj4CGzYQ8N9hUQxkFwLH1g0albr7AyL4qCSmPGRnBOZ_Fo_n4tQNJUnqWLNk8DrPGx9M6EaWyav3dPv5pL-ZwnyjhTR5AuNDA4TntWgxiHqabn60GqkDrUMYX0XORmyVIlkXB6lI0Wga_Ahea8" },
-                    { Producto: "Baguette Rústica", Descripcion: "Corteza crujiente, miga aireada. Perfecto para cada día.", Precio: "3.50", Estado: "AGOTADO", Imagen: "https://lh3.googleusercontent.com/aida-public/AB6AXuBrrNboevfTpBuBeShdxRoZWb5_AvKFrb9Pt68dGvvKkFNE4SuBzYqXoO9ZTVGmEK6mhCgEZ7wtMUDP0ujkdZLz-gWq52x0P2eZPmysXwVCSbGLZHcFejHwBqBOGXPhIrbEWwrqw5G6k0_Y72JQShMdUEazI8SomBTfPcRK5tMsPkEFF7pnoy04kTKIMmTRGYtJlnx8vFVzWM4T0cg8cXsvzHyU5sy_gRuP1uQvi8zU_cRWh9mUnafzpwJsCXjHXqrgCRbB5NP8HUI" }
-                ];
-
-                container.innerHTML = demoData.map(item => `
-                    <div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-all duration-300 group opacity-0 translate-y-4 animate-fade-in">
-                        <div class="col-span-3 flex items-center gap-md mb-sm md:mb-0">
-                            <div class="w-16 h-16 bg-surface-variant rounded overflow-hidden flex-shrink-0">
-                                <img class="w-full h-full object-cover" src="${item.Imagen}" alt="${item.Producto}"/>
-                            </div>
-                            <span class="font-body-md font-semibold text-primary leading-tight">${item.Producto}</span>
-                        </div>
-                        <div class="col-span-4 text-on-surface-variant text-body-md pr-md mb-sm md:mb-0">
-                            ${item.Descripcion}
-                        </div>
-                        <div class="col-span-1 text-center text-primary font-medium mb-sm md:mb-0">
-                            $${item.Precio}
-                        </div>
-                        <div class="col-span-2 text-center mb-sm md:mb-0">
-                            <span class="${item.Estado === 'AGOTADO' ? 'bg-surface-dim text-outline' : 'bg-secondary-container/30 text-secondary'} px-sm py-xs rounded-full font-label-md text-caption uppercase tracking-wider">
-                                ${item.Estado}
-                            </span>
-                        </div>
-                        <div class="col-span-2 flex justify-end gap-md">
-                            <button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs" title="Editar">
-                                <span class="material-symbols-outlined">edit</span>
-                                <span class="md:hidden">Editar</span>
-                            </button>
-                            <button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-xs" title="Eliminar">
-                                <span class="material-symbols-outlined">delete</span>
-                                <span class="md:hidden">Eliminar</span>
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
-
-                // Apply animation after render
-                setTimeout(() => {
-                    document.querySelectorAll('.animate-fade-in').forEach(el => {
-                        el.classList.remove('opacity-0', 'translate-y-4');
-                        el.classList.add('opacity-100', 'translate-y-0');
-                    });
-                }, 100);
-
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                container.innerHTML = `
-                    <div class="p-lg text-center bg-error-container text-on-error-container rounded border border-error/20">
-                        <span class="material-symbols-outlined block mb-sm">error</span>
-                        <p class="font-semibold">Error al cargar el inventario</p>
-                        <p class="text-sm">Por favor, verifique la conexión con SheetDB (abcd123).</p>
-                    </div>
-                `;
-            }
-        }
-
-        function handleFormSubmit(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const data = Object.fromEntries(formData.entries());
-            
-            console.log('Sending to SheetDB:', data);
-            
-            /* 
-            // Placeholder for real POST
-            fetch(API_ENDPOINT, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            }).then(() => {
-                toggleModal('add-bread-modal');
-                fetchInventory();
-            });
-            */
-            
-            // UI Visual Feedback only for demo
-            alert('Producto "' + data.Producto + '" enviado a SheetDB (Simulado)');
-            toggleModal('add-bread-modal');
-            event.target.reset();
-        }
-
         function toggleModal(id) {
             const modal = document.getElementById(id);
             if (modal.classList.contains('hidden')) {
@@ -452,9 +304,27 @@
             }
         }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchInventory();
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.grid-cols-1.md\\:grid-cols-12').forEach(el => {
+            // Avoid adding animation classes to the header
+            if (!el.classList.contains('border-b')) {
+                el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-4');
+                observer.observe(el);
+            }
         });
     </script>
+
+
 </body></html>

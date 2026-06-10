@@ -1,0 +1,267 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Checkout - Maité Bakery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Work+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#1b1c1c",
+                        "surface-container-high": "#eae8e7",
+                        "inverse-surface": "#303030",
+                        "tertiary-fixed-dim": "#c8c6c3",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#1b1c1a",
+                        "primary": "#322214",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#fcdc9b",
+                        "on-primary-fixed": "#28180b",
+                        "background": "#fbf9f8",
+                        "surface": "#fbf9f8",
+                        "surface-container-low": "#f6f3f2",
+                        "on-secondary-container": "#775f2b",
+                        "on-primary-container": "#bba08c",
+                        "primary-fixed": "#fbddc7",
+                        "on-secondary-fixed": "#261a00",
+                        "surface-dim": "#dcd9d9",
+                        "surface-container": "#f0eded",
+                        "tertiary": "#252623",
+                        "primary-fixed-dim": "#dec1ac",
+                        "surface-tint": "#705a49",
+                        "on-primary": "#ffffff",
+                        "secondary": "#725b27",
+                        "on-primary-fixed-variant": "#574333",
+                        "primary-container": "#4a3728",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1b1c1c",
+                        "secondary-fixed-dim": "#e2c384",
+                        "outline-variant": "#d2c4bb",
+                        "on-secondary": "#ffffff",
+                        "outline": "#80756d",
+                        "on-surface-variant": "#4e453e",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#f3f0f0",
+                        "on-tertiary-container": "#a6a5a2",
+                        "on-secondary-fixed-variant": "#594411",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#3b3b39",
+                        "on-tertiary-fixed-variant": "#474744",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#e4e2de",
+                        "surface-container-highest": "#e4e2e1",
+                        "secondary-fixed": "#ffdf9e",
+                        "surface-variant": "#e4e2e1",
+                        "surface-bright": "#fbf9f8",
+                        "inverse-primary": "#dec1ac"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "gutter": "24px",
+                        "lg": "48px",
+                        "xl": "80px",
+                        "xs": "4px",
+                        "base": "8px",
+                        "md": "24px",
+                        "container-max": "1200px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Libre Caslon Text"],
+                        "display-lg": ["Libre Caslon Text"],
+                        "headline-md": ["Libre Caslon Text"],
+                        "display-lg-mobile": ["Libre Caslon Text"],
+                        "caption": ["Work Sans"],
+                        "label-md": ["Work Sans"],
+                        "body-md": ["Work Sans"],
+                        "body-lg": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "display-lg-mobile": ["36px", { "lineHeight": "44px", "fontWeight": "400" }],
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .ambient-shadow {
+            box-shadow: 0 16px 24px rgba(74, 55, 40, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        input:focus {
+            outline: none;
+            border-color: #E5C687 !important;
+            box-shadow: 0 1px 0 0 #E5C687 !important;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar (Suppressed for transactional Checkout flow per guidelines, but keeping a minimal brand anchor) -->
+<header class="w-full top-0 left-0 sticky bg-background dark:bg-background flat no shadows py-md px-gutter flex justify-center items-center z-50">
+<div class="font-display-lg text-display-lg text-primary dark:text-primary-fixed-dim">
+            Maité Bakery
+        </div>
+</header>
+<main class="flex-grow max-w-container-max mx-auto w-full px-gutter py-xl flex flex-col lg:flex-row gap-xl">
+<!-- Left Column: Checkout Form -->
+<section class="flex-1 space-y-xl">
+<div>
+<a class="inline-flex items-center gap-base text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md uppercase tracking-wider mb-lg" href="index.html">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                    Volver a la tienda
+                </a>
+<h1 class="font-headline-lg text-headline-lg text-primary mb-sm">Finalizar Compra</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Por favor, ingresa tus datos de contacto para completar el pedido. Esta información se guardará de forma segura.</p>
+</div>
+<form class="space-y-lg" id="checkout-form">
+<div class="space-y-md">
+<h2 class="font-headline-md text-headline-md text-primary border-b border-outline-variant pb-base">Datos de Contacto</h2>
+<div class="space-y-sm">
+<label class="block font-label-md text-label-md text-on-surface uppercase tracking-wider" for="nombre">Nombre Completo</label>
+<input class="w-full bg-surface-bright border-0 border-b border-outline-variant py-sm px-0 text-body-lg font-body-lg text-on-surface placeholder:text-outline focus:ring-0 transition-colors bg-transparent" id="nombre" name="nombre" placeholder="Ej. María García" required="" type="text">
+</div>
+<div class="space-y-sm">
+<label class="block font-label-md text-label-md text-on-surface uppercase tracking-wider" for="telefono">Número de Teléfono</label>
+<input class="w-full bg-surface-bright border-0 border-b border-outline-variant py-sm px-0 text-body-lg font-body-lg text-on-surface placeholder:text-outline focus:ring-0 transition-colors bg-transparent" id="telefono" name="telefono" placeholder="+34 600 000 000" required="" type="tel">
+</div>
+</div>
+<div class="space-y-md pt-lg">
+<h2 class="font-headline-md text-headline-md text-primary border-b border-outline-variant pb-base">Método de Entrega</h2>
+<div class="space-y-sm">
+<label class="flex items-center gap-md p-md bg-surface-container-low rounded-lg border border-transparent cursor-pointer hover:bg-surface-container transition-colors">
+<input checked="" class="text-primary focus:ring-primary h-5 w-5 border-outline-variant bg-transparent" name="entrega" type="radio" value="recogida">
+<div>
+<span class="block font-label-md text-label-md text-on-surface uppercase tracking-wider">Recogida en tienda</span>
+<span class="block font-caption text-caption text-on-surface-variant mt-xs">Gratis • Maité Bakery, Calle Principal 123</span>
+</div>
+</label>
+</div>
+</div>
+<div class="pt-xl">
+<button class="w-full bg-primary-container text-on-primary py-md px-lg font-label-md text-label-md uppercase tracking-wider hover:bg-primary transition-colors flex justify-center items-center gap-sm" type="submit" onclick="window.location.href='confirmacion.html'; return false;">
+                        Confirmar Pedido
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="font-caption text-caption text-on-surface-variant text-center mt-md">
+                        Al confirmar, aceptas nuestros términos y condiciones.
+                    </p>
+</div>
+</form>
+</section>
+<!-- Right Column: Order Summary -->
+<aside class="w-full lg:w-[400px] shrink-0">
+<div class="bg-surface-bright border border-[#E5C687]/30 rounded-lg p-lg ambient-shadow sticky top-xl">
+<h2 class="font-headline-md text-headline-md text-primary mb-lg">Resumen de Pedido</h2>
+<div class="space-y-md mb-lg" id="order-items">
+<!-- Item 1 -->
+<div class="flex items-start gap-md">
+<div class="w-20 h-20 rounded bg-surface-container overflow-hidden shrink-0">
+<img alt="Baguette de Tradición" class="w-full h-full object-cover" data-alt="A close-up shot of a freshly baked, crusty artisanal baguette resting on a rustic wooden board. The warm morning light highlights the golden-brown crust and dusting of flour. The setting is a minimalist, serene bakery environment reflecting a high-end, organic aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASSBD7YlbQLuMejL1z9H76Hs9P_eIdkAA0QzFacauLwugvy0lXIR4nMDXa-so6hqlaJjCRe3DDp-0lSmEuLsvZD4K3xnpuc7339-e6vpR_GKzPo0-_HPJ0vk3LVZfUa8wL-Zn1OMdjLn4hWNHQk5w24Ka_YgCutFmEGIH1QNHrs1fPVVwaoV-k3mhdkywN0zAyvddOwl4U2ib8eLC3V4qQEytR8iZJmRWA8cGtM_9BWlO5w66LvY8epakUGRdBi4xRPu9haVXf1rI">
+</div>
+<div class="flex-grow">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Baguette de Tradición</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-xs mb-sm">Fermentación lenta, 24h</p>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">x2</span>
+<span class="font-body-lg text-body-lg text-primary">€7.00</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-start gap-md">
+<div class="w-20 h-20 rounded bg-surface-container overflow-hidden shrink-0">
+<img alt="Masa Madre Silvestre" class="w-full h-full object-cover" data-alt="A beautifully scored, round sourdough loaf with a dark, caramelized crust sitting on a clean, light-colored marble surface. The lighting is soft and natural, casting subtle shadows that emphasize the bread's texture. The mood is calm and artisanal, fitting a premium bakery aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAa1SRjxSaLnF7aZDAxLGPM_umvwRnvKaFf6AyzX9pfPntUN2S7kKOhBBrwkM4U7PJBDFUlrWjpK8BQpnPC0EJXs99In68UQkscpdKydF0PVyeVtXRjzvSRtsZ4H-9tR7Zs_ljNjDwqEGoRIM0jmRAZ1f5aQeVnA2N3JZ1j_BVD2O6XVuLqqFhc-bzhcOD5e_fZvNgwVq-KPGt3uFb6BXeuBF7lGBfP6i9qoZXp1dECr1TrA-XS5ENWHpryuznlFlJLpgf3CD4dB-w">
+</div>
+<div class="flex-grow">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Masa Madre Silvestre</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-xs mb-sm">Mezcla de centeno y trigo</p>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">x1</span>
+<span class="font-body-lg text-body-lg text-primary">€6.50</span>
+</div>
+</div>
+</div>
+</div>
+<div class="border-t border-outline-variant/50 pt-md space-y-sm mb-md">
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span class="">Subtotal</span>
+<span class="">€13.50</span>
+</div>
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span class="">Impuestos (10%)</span>
+<span class="">€1.35</span>
+</div>
+</div>
+<div class="border-t border-primary/20 pt-md flex justify-between items-center">
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Total</span>
+<span class="font-headline-md text-headline-md text-primary">€14.85</span>
+</div>
+</div>
+</aside>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-xl bg-surface-container-low dark:bg-surface-container-low border-t border-outline-variant dark:border-outline-variant">
+<div class="max-w-container-max mx-auto px-gutter py-lg flex flex-col md:flex-row justify-between items-center gap-md">
+<div class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim">
+                Maité Bakery
+            </div>
+<div class="font-caption text-caption text-on-surface dark:text-on-surface">
+                © 2024 Maité Bakery. Crafted with patience.
+            </div>
+<nav class="flex gap-md font-caption text-caption text-on-surface-variant dark:text-on-surface-variant">
+<a class="hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="index.html">Sustainability</a>
+<a class="hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="index.html">Wholesale</a>
+<a class="hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="index.html">Contact</a>
+<a class="hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="index.html">Terms</a>
+</nav>
+</div>
+</footer>
+<script>
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            
+            // Simple interaction feedback
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Procesando...';
+            btn.disabled = true;
+            btn.classList.add('opacity-70');
+
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined">check</span> Pedido Confirmado';
+                btn.classList.remove('bg-primary-container');
+                btn.classList.add('bg-[#4a3728]'); // Darker state for success
+                
+                // Simulate redirect after brief success state
+                setTimeout(() => {
+                    alert('Pedido procesado. En una implementación real, esto limpiaría el carrito en localStorage y redirigiría a la página de éxito.');
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-70', 'bg-[#4a3728]');
+                    btn.classList.add('bg-primary-container');
+                }, 1500);
+            }, 1000);
+        });
+    </script>
+
+
+</body></html>

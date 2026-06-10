@@ -98,7 +98,18 @@ Ver `.env.example`. Las clave:
 - [ ] Si se usa contraseña, generar `ADMIN_PASSWORD_HASH` y no commitear el `.env`.
 - [ ] (Opcional recomendado) Compilar Tailwind con el CLI en vez del CDN.
 
+## Gestión de Accesos (administradores)
+
+El panel permite al **administrador principal** autorizar/quitar correos que pueden
+entrar con Google. La lista se guarda en PostgreSQL:
+
+- En Render, `render.yaml` crea la base `maite-bakery-db` e inyecta `DATABASE_URL`
+  automáticamente. Tras un push, hacé **Manual Sync** del Blueprint para que cree la DB.
+- En local, si no hay `DATABASE_URL`, se usa `data/admins.json` (no persistente en prod).
+- Los correos de `ADMIN_EMAILS` se siembran como `primary` (no se pueden borrar/desactivar).
+- API (todo detrás de sesión; modificar requiere ser `primary`): `GET/POST/PATCH/DELETE /api/admins`.
+
 ## Pendiente (necesita backend adicional)
 
-Las acciones del panel (crear/editar/eliminar pan, gestionar usuarios) son maquetas:
-guardan en el frontend pero no persisten. Requieren endpoints + base de datos.
+Las acciones de **inventario de panes** (crear/editar/eliminar) siguen siendo maquetas:
+no persisten. Requieren endpoints + tabla en la misma base.

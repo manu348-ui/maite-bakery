@@ -6,6 +6,7 @@ import { OAuth2Client } from 'google-auth-library';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import { initAdminStore, adminStore, isValidEmail } from './lib/adminStore.js';
 
 dotenv.config();
 
@@ -54,10 +55,6 @@ app.disable('x-powered-by');
 app.use(express.json({ limit: '16kb' }));
 app.use(cookieParser());
 
-function isAllowedEmail(email) {
-  return !!email && ADMIN_EMAILS.includes(email.toLowerCase());
-}
-
 function issueSession(res, email) {
   const token = jwt.sign({ email }, SESSION_SECRET, {
     expiresIn: `${SESSION_TTL_HOURS}h`,
@@ -89,6 +86,25 @@ function clearSession(res) {
 function requireAuthPage(req, res, next) {
   if (getSession(req)) return next();
   return res.redirect('/login.html');
+}
+
+// Guard for API endpoints: 401 when not authenticated.
+function requireAuth(req, res, next) {
+  const session = getSession(req);
+  if (!session) return res.status(401).json({ error: 'No autenticado.' });
+  req.session = session;
+  next();
+}
+
+// Only a primary admin may manage the access list.
+async function requirePrimary(req, res, next) {
+  try {
+    const me = await adminStore().get((req.session?.email || '').toLowerCase());
+    if (me && me.role === 'primary') return next();
+    return res.status(403).json({ error: 'Solo el administrador principal puede gestionar accesos.' });
+  } catch (err) {
+    next(err);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -128,10 +144,11 @@ app.post('/api/auth/google', async (req, res) => {
     if (!payload?.email_verified) {
       return res.status(403).json({ error: 'El correo de Google no está verificado.' });
     }
-    if (!isAllowedEmail(payload.email)) {
+    const email = payload.email.toLowerCase();
+    if (!(await adminStore().isAllowed(email))) {
       return res.status(403).json({ error: `Acceso no autorizado para ${payload.email}.` });
     }
-    issueSession(res, payload.email.toLowerCase());
+    issueSession(res, email);
     return res.json({ ok: true, email: payload.email });
   } catch (err) {
     console.error('Error verificando token de Google:', err.message);
@@ -159,10 +176,46 @@ app.post('/api/logout', (req, res) => {
   res.json({ ok: true });
 });
 
-app.get('/api/me', (req, res) => {
+app.get('/api/me', async (req, res) => {
   const session = getSession(req);
   if (!session) return res.status(401).json({ authenticated: false });
-  res.json({ authenticated: true, email: session.email });
+  let role = 'admin';
+  try {
+    const me = await adminStore().get((session.email || '').toLowerCase());
+    if (me) role = me.role;
+  } catch {
+    /* store not ready — default role */
+  }
+  res.json({ authenticated: true, email: session.email, role });
+});
+
+// ---------------------------------------------------------------------------
+// Access management API (admin allowlist)
+// ---------------------------------------------------------------------------
+app.get('/api/admins', requireAuth, async (req, res) => {
+  res.json(await adminStore().list());
+});
+
+app.post('/api/admins', requireAuth, requirePrimary, async (req, res) => {
+  const email = (req.body?.email || '').trim().toLowerCase();
+  if (!isValidEmail(email)) return res.status(400).json({ error: 'Correo electrónico inválido.' });
+  await adminStore().add(email);
+  res.json({ ok: true, list: await adminStore().list() });
+});
+
+app.patch('/api/admins/:email', requireAuth, requirePrimary, async (req, res) => {
+  const email = decodeURIComponent(req.params.email).toLowerCase();
+  const active = !!req.body?.active;
+  const ok = await adminStore().setActive(email, active);
+  if (!ok) return res.status(400).json({ error: 'No se pudo actualizar (el principal no se puede desactivar).' });
+  res.json({ ok: true, list: await adminStore().list() });
+});
+
+app.delete('/api/admins/:email', requireAuth, requirePrimary, async (req, res) => {
+  const email = decodeURIComponent(req.params.email).toLowerCase();
+  const ok = await adminStore().remove(email);
+  if (!ok) return res.status(400).json({ error: 'No se pudo eliminar (el administrador principal no se puede borrar).' });
+  res.json({ ok: true, list: await adminStore().list() });
 });
 
 // ---------------------------------------------------------------------------
@@ -203,10 +256,22 @@ app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Maité Bakery escuchando en http://localhost:${PORT}`);
-  console.log(`Admins autorizados: ${ADMIN_EMAILS.join(', ')}`);
-  if (!ADMIN_PASSWORD_HASH) {
-    console.log('Acceso por contraseña: deshabilitado (define ADMIN_PASSWORD_HASH para activarlo).');
-  }
+async function start() {
+  await initAdminStore({
+    databaseUrl: process.env.DATABASE_URL,
+    primaryEmails: ADMIN_EMAILS,
+  });
+
+  app.listen(PORT, () => {
+    console.log(`Maité Bakery escuchando en http://localhost:${PORT}`);
+    console.log(`Administrador(es) principal(es): ${ADMIN_EMAILS.join(', ')}`);
+    if (!ADMIN_PASSWORD_HASH) {
+      console.log('Acceso por contraseña: deshabilitado (define ADMIN_PASSWORD_HASH para activarlo).');
+    }
+  });
+}
+
+start().catch((err) => {
+  console.error('FATAL: no se pudo iniciar el servidor:', err.message);
+  process.exit(1);
 });

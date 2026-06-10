@@ -242,7 +242,26 @@
 </div>
 </div>
 </div>
-<section class="mt-xl pt-xl border-t border-outline-variant/30"><div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl"><div><span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-xs block">Seguridad y Permisos</span><h2 class="font-headline-lg text-headline-lg text-primary">Gestión de Accesos</h2></div><button class="bg-primary text-on-primary px-lg py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors duration-300 ambient-shadow flex items-center gap-base"><span class="material-symbols-outlined">person_add</span>AÑADIR USUARIO</button></div><div class="grid grid-cols-1 gap-gutter"><div class="hidden md:grid grid-cols-12 px-md py-sm border-b border-outline-variant font-label-md text-label-md uppercase tracking-widest text-outline"><div class="col-span-5">EMAIL</div><div class="col-span-3 text-center">ESTADO</div><div class="col-span-4 text-right">ACCIONES</div></div><div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors duration-200 group"><div class="col-span-5 flex items-center gap-md mb-sm md:mb-0"><span class="font-body-md font-semibold text-primary">manu348@gmail.com</span><span class="bg-primary text-on-primary px-sm py-xs rounded-full font-label-md text-caption uppercase">Administrador Principal</span></div><div class="col-span-3 text-center mb-sm md:mb-0"><span class="bg-secondary-container/30 text-secondary px-sm py-xs rounded-full font-label-md text-caption uppercase">ACTIVO</span></div><div class="col-span-4 flex justify-end gap-md"><button class="text-secondary hover:opacity-70 transition-colors flex items-center gap-xs font-label-md text-caption uppercase"><span class="material-symbols-outlined">verified_user</span>Habilitar nuevas cuentas</button><button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">edit</span></button><button class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">delete</span></button></div></div><div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors duration-200 group"><div class="col-span-5 flex items-center gap-md mb-sm md:mb-0"><span class="font-body-md text-on-surface-variant">panadero.artesano@maite.com</span></div><div class="col-span-3 text-center mb-sm md:mb-0"><span class="bg-surface-dim text-outline px-sm py-xs rounded-full font-label-md text-caption uppercase">INACTIVO</span></div><div class="col-span-4 flex justify-end gap-md"><button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">edit</span></button><button class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">delete</span></button></div></div></div></section></main>
+<section id="access-section" class="mt-xl pt-xl border-t border-outline-variant/30">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl">
+<div>
+<span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-xs block">Seguridad y Permisos</span>
+<h2 class="font-headline-lg text-headline-lg text-primary">Gestión de Accesos</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs max-w-xl">Los correos activos pueden iniciar sesión en el panel con su cuenta de Google. Solo el administrador principal puede modificar esta lista.</p>
+</div>
+<button id="add-admin-btn" onclick="toggleModal('add-admin-modal')" class="bg-primary text-on-primary px-lg py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors duration-300 ambient-shadow flex items-center gap-base"><span class="material-symbols-outlined">person_add</span>AÑADIR USUARIO</button>
+</div>
+<div class="grid grid-cols-1 gap-gutter">
+<div class="hidden md:grid grid-cols-12 px-md py-sm border-b border-outline-variant font-label-md text-label-md uppercase tracking-widest text-outline">
+<div class="col-span-5">EMAIL</div>
+<div class="col-span-3 text-center">ESTADO</div>
+<div class="col-span-4 text-right">ACCIONES</div>
+</div>
+<div id="admins-list" class="grid grid-cols-1 gap-gutter">
+<div class="p-md text-on-surface-variant font-body-md">Cargando…</div>
+</div>
+</div>
+</section></main>
 <!-- Modal: Add New Bread -->
 <div class="hidden fixed inset-0 z-[60] flex items-center justify-center p-md" id="add-bread-modal">
 <div class="modal-overlay absolute inset-0" onclick="toggleModal('add-bread-modal')"></div>
@@ -281,6 +300,27 @@
 <div class="pt-lg flex flex-col md:flex-row gap-md">
 <button class="flex-1 bg-primary text-on-primary py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors duration-300" type="button">Guardar Pan</button>
 <button class="flex-1 border border-outline-variant text-outline py-md font-label-md text-label-md uppercase tracking-widest hover:border-primary hover:text-primary transition-colors duration-300" onclick="toggleModal('add-bread-modal')" type="button">Cancelar</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Modal: Add Admin -->
+<div class="hidden fixed inset-0 z-[60] flex items-center justify-center p-md" id="add-admin-modal">
+<div class="modal-overlay absolute inset-0" onclick="toggleModal('add-admin-modal')"></div>
+<div class="bg-surface w-full max-w-md relative z-10 ambient-shadow border border-outline-variant p-lg">
+<div class="flex justify-between items-start mb-lg">
+<h2 class="font-headline-md text-headline-md text-primary">Autorizar nuevo acceso</h2>
+<button class="text-outline hover:text-primary transition-colors" onclick="toggleModal('add-admin-modal')"><span class="material-symbols-outlined">close</span></button>
+</div>
+<form class="space-y-md" id="add-admin-form">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Correo de Google</label>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors" id="new-admin-email" type="email" placeholder="persona@gmail.com" required autocomplete="off"/>
+</div>
+<div class="hidden text-error font-body-md text-body-md" id="add-admin-error"></div>
+<div class="pt-md flex flex-col md:flex-row gap-md">
+<button class="flex-1 bg-primary text-on-primary py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors duration-300" type="submit">Autorizar</button>
+<button class="flex-1 border border-outline-variant text-outline py-md font-label-md text-label-md uppercase tracking-widest hover:border-primary hover:text-primary transition-colors duration-300" type="button" onclick="toggleModal('add-admin-modal')">Cancelar</button>
 </div>
 </form>
 </div>
@@ -343,5 +383,116 @@
             try { await fetch('/api/logout', { method: 'POST' }); } catch (e) {}
             window.location.href = '/index.html';
         }
+
+        // ----- Gestión de Accesos -----
+        let currentRole = 'admin';
+
+        function esc(s) {
+            return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        function renderAdmins(list) {
+            const cont = document.getElementById('admins-list');
+            const canManage = currentRole === 'primary';
+            document.getElementById('add-admin-btn').style.display = canManage ? '' : 'none';
+            if (!list.length) {
+                cont.innerHTML = '<div class="p-md text-on-surface-variant font-body-md">No hay administradores.</div>';
+                return;
+            }
+            cont.innerHTML = list.map((a) => {
+                const primary = a.role === 'primary';
+                const status = a.active
+                    ? '<span class="bg-secondary-container/30 text-secondary px-sm py-xs rounded-full font-label-md text-caption uppercase">ACTIVO</span>'
+                    : '<span class="bg-surface-dim text-outline px-sm py-xs rounded-full font-label-md text-caption uppercase">INACTIVO</span>';
+                const roleBadge = primary
+                    ? '<span class="bg-primary text-on-primary px-sm py-xs rounded-full font-label-md text-caption uppercase">Administrador Principal</span>'
+                    : '';
+                let actions = '';
+                if (primary) {
+                    actions = '<span class="material-symbols-outlined text-outline" title="El principal no se puede modificar">lock</span>';
+                } else if (canManage) {
+                    const tIcon = a.active ? 'toggle_on' : 'toggle_off';
+                    const tLabel = a.active ? 'Desactivar' : 'Activar';
+                    actions =
+                        '<button data-action="toggle" data-email="' + esc(a.email) + '" data-active="' + (!a.active) + '" title="' + tLabel + '" class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">' + tIcon + '</span></button>' +
+                        '<button data-action="remove" data-email="' + esc(a.email) + '" title="Eliminar" class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">delete</span></button>';
+                }
+                return '<div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors duration-200">' +
+                    '<div class="col-span-5 flex items-center gap-md mb-sm md:mb-0"><span class="font-body-md ' + (primary ? 'font-semibold text-primary' : 'text-on-surface-variant') + '">' + esc(a.email) + '</span>' + roleBadge + '</div>' +
+                    '<div class="col-span-3 text-center mb-sm md:mb-0">' + status + '</div>' +
+                    '<div class="col-span-4 flex justify-end items-center gap-md">' + actions + '</div>' +
+                    '</div>';
+            }).join('');
+        }
+
+        async function loadAdmins() {
+            const cont = document.getElementById('admins-list');
+            try {
+                const r = await fetch('/api/admins');
+                if (!r.ok) throw new Error();
+                renderAdmins(await r.json());
+            } catch (e) {
+                cont.innerHTML = '<div class="p-md text-error font-body-md">No se pudo cargar la lista de accesos.</div>';
+            }
+        }
+
+        async function removeAdmin(email) {
+            if (!confirm('¿Quitar el acceso de ' + email + '?')) return;
+            try {
+                const r = await fetch('/api/admins/' + encodeURIComponent(email), { method: 'DELETE' });
+                const d = await r.json().catch(() => ({}));
+                if (r.ok && d.ok) { renderAdmins(d.list); return; }
+                alert(d.error || 'No se pudo eliminar.');
+            } catch (e) { alert('Error de conexión.'); }
+        }
+
+        async function toggleAdmin(email, active) {
+            try {
+                const r = await fetch('/api/admins/' + encodeURIComponent(email), {
+                    method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ active }),
+                });
+                const d = await r.json().catch(() => ({}));
+                if (r.ok && d.ok) { renderAdmins(d.list); return; }
+                alert(d.error || 'No se pudo actualizar.');
+            } catch (e) { alert('Error de conexión.'); }
+        }
+
+        document.getElementById('admins-list').addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-action]');
+            if (!btn) return;
+            const email = btn.getAttribute('data-email');
+            if (btn.getAttribute('data-action') === 'remove') removeAdmin(email);
+            else toggleAdmin(email, btn.getAttribute('data-active') === 'true');
+        });
+
+        document.getElementById('add-admin-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('new-admin-email');
+            const errEl = document.getElementById('add-admin-error');
+            errEl.classList.add('hidden');
+            try {
+                const r = await fetch('/api/admins', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: input.value.trim() }),
+                });
+                const d = await r.json().catch(() => ({}));
+                if (r.ok && d.ok) {
+                    input.value = '';
+                    toggleModal('add-admin-modal');
+                    renderAdmins(d.list);
+                    return;
+                }
+                errEl.textContent = d.error || 'No se pudo autorizar.';
+                errEl.classList.remove('hidden');
+            } catch (err) {
+                errEl.textContent = 'Error de conexión.';
+                errEl.classList.remove('hidden');
+            }
+        });
+
+        (async () => {
+            try { const r = await fetch('/api/me'); if (r.ok) { currentRole = (await r.json()).role || 'admin'; } } catch (e) {}
+            loadAdmins();
+        })();
     </script>
 </body></html>

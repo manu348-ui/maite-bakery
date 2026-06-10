@@ -2,6 +2,9 @@ node_modules/
 .env
 npm-debug.log*
 
+# Datos locales (fallback sin DB)
+data/
+
 # Herramientas locales / artefactos que no son parte del sitio
 .claude/
 .playwright-mcp/

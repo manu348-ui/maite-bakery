@@ -142,7 +142,7 @@
 <span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-xs block">Maité Bakery Artisan Panel</span>
 <h1 class="font-headline-lg text-headline-lg text-primary">Gestión de Inventario</h1>
 </div>
-<button class="bg-primary text-on-primary px-lg py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors duration-300 ambient-shadow flex items-center gap-base" onclick="toggleModal('add-bread-modal')">
+<button class="bg-primary text-on-primary px-lg py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors duration-300 ambient-shadow flex items-center gap-base" onclick="openBreadModal()">
 <span class="material-symbols-outlined">add</span>
                 AÑADIR NUEVO PAN
             </button>
@@ -157,89 +157,8 @@
 <div class="col-span-2 text-center">ESTADO</div>
 <div class="col-span-2 text-right">ACCIONES</div>
 </div>
-<!-- Bread Item 1 -->
-<div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors duration-200 group">
-<div class="col-span-2 flex items-center gap-md mb-sm md:mb-0">
-<div class="w-16 h-16 bg-surface-variant rounded overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="Masa Madre Tradicional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMcyBk9WoHX7diTAwrcJoQwO2bI6mJObxnOlYUbsHGQz8dHgV96-3dni8n6WvgWXBpTv0rvgjqP41anwg9V3rAtr3rk6LDnVmvmcwNgtY0nGjhlr0MATVUry5DLK-G7NE2Y63fgU0NNPk0Td4lJONdmt5hBrYqfjc6VNEILCcljUwvnbm9sCSc_SUWhDK6kFatOkLYTDUAp3zDl37ro1EpXIh6UJ3tinHbc2CE90LYMlqHbY1RSh15BS6bDHdCufY84HYbpHhA0X8"/>
-</div>
-<span class="font-body-md font-semibold text-primary">Masa Madre Tradicional</span>
-</div>
-<div class="col-span-4 text-on-surface-variant text-body-md pr-md mb-sm md:mb-0">
-                    Fermentación natural de 24 horas, trigo orgánico, sal marina.
-                </div>
-<div class="col-span-2 text-center text-primary font-medium mb-sm md:mb-0">
-                    $8.50
-                </div>
-<div class="col-span-2 text-center mb-sm md:mb-0">
-<span class="bg-secondary-container/30 text-secondary px-sm py-xs rounded-full font-label-md text-caption uppercase">EN STOCK</span>
-</div>
-<div class="col-span-2 flex justify-end gap-md">
-<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs">
-<span class="material-symbols-outlined">edit</span>
-<span class="md:hidden">Editar</span>
-</button>
-<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-xs">
-<span class="material-symbols-outlined">delete</span>
-<span class="md:hidden">Eliminar</span>
-</button>
-</div>
-</div>
-<!-- Bread Item 2 -->
-<div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors duration-200 group">
-<div class="col-span-2 flex items-center gap-md mb-sm md:mb-0">
-<div class="w-16 h-16 bg-surface-variant rounded overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="Cruasán de Mantequilla" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaxemaIfOgyS2l8XWtF2un0vBrF2Yyx1-1gjf4-dZAMxMkdPi-Otd46KL98h4933YF7THl_EHWC8RovvLBE3ULU5ijmCOxotYWOh4h5G0oHXDHHzBEoxjOjudyexj4CGzYQ8N9hUQxkFwLH1g0albr7AyL4qCSmPGRnBOZ_Fo_n4tQNJUnqWLNk8DrPGx9M6EaWyav3dPv5pL-ZwnyjhTR5AuNDA4TntWgxiHqabn60GqkDrUMYX0XORmyVIlkXB6lI0Wga_Ahea8"/>
-</div>
-<span class="font-body-md font-semibold text-primary">Cruasán de Mantequilla</span>
-</div>
-<div class="col-span-4 text-on-surface-variant text-body-md pr-md mb-sm md:mb-0">
-                    Hojaldre de 72 capas elaborado con mantequilla francesa.
-                </div>
-<div class="col-span-2 text-center text-primary font-medium mb-sm md:mb-0">
-                    $4.25
-                </div>
-<div class="col-span-2 text-center mb-sm md:mb-0">
-<span class="bg-secondary-container/30 text-secondary px-sm py-xs rounded-full font-label-md text-caption uppercase">EN STOCK</span>
-</div>
-<div class="col-span-2 flex justify-end gap-md">
-<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs">
-<span class="material-symbols-outlined">edit</span>
-<span class="md:hidden">Editar</span>
-</button>
-<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-xs">
-<span class="material-symbols-outlined">delete</span>
-<span class="md:hidden">Eliminar</span>
-</button>
-</div>
-</div>
-<!-- Bread Item 3 -->
-<div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors duration-200 group">
-<div class="col-span-2 flex items-center gap-md mb-sm md:mb-0">
-<div class="w-16 h-16 bg-surface-variant rounded overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="Baguette Rústica" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrrNboevfTpBuBeShdxRoZWb5_AvKFrb9Pt68dGvvKkFNE4SuBzYqXoO9ZTVGmEK6mhCgEZ7wtMUDP0ujkdZLz-gWq52x0P2eZPmysXwVCSbGLZHcFejHwBqBOGXPhIrbEWwrqw5G6k0_Y72JQShMdUEazI8SomBTfPcRK5tMsPkEFF7pnoy04kTKIMmTRGYtJlnx8vFVzWM4T0cg8cXsvzHyU5sy_gRuP1uQvi8zU_cRWh9mUnafzpwJsCXjHXqrgCRbB5NP8HUI"/>
-</div>
-<span class="font-body-md font-semibold text-primary">Baguette Rústica</span>
-</div>
-<div class="col-span-4 text-on-surface-variant text-body-md pr-md mb-sm md:mb-0">
-                    Corteza crujiente, miga aireada. Perfecto para cada día.
-                </div>
-<div class="col-span-2 text-center text-primary font-medium mb-sm md:mb-0">
-                    $3.50
-                </div>
-<div class="col-span-2 text-center mb-sm md:mb-0">
-<span class="bg-surface-dim text-outline px-sm py-xs rounded-full font-label-md text-caption uppercase">AGOTADO</span>
-</div>
-<div class="col-span-2 flex justify-end gap-md">
-<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs">
-<span class="material-symbols-outlined">edit</span>
-<span class="md:hidden">Editar</span>
-</button>
-<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-xs">
-<span class="material-symbols-outlined">delete</span>
-<span class="md:hidden">Eliminar</span>
-</button>
-</div>
+<div id="breads-list" class="grid grid-cols-1 gap-gutter">
+<div class="p-md text-on-surface-variant font-body-md">Cargando…</div>
 </div>
 </div>
 <section id="access-section" class="mt-xl pt-xl border-t border-outline-variant/30">
@@ -267,38 +186,41 @@
 <div class="modal-overlay absolute inset-0" onclick="toggleModal('add-bread-modal')"></div>
 <div class="bg-surface w-full max-w-xl relative z-10 ambient-shadow border border-outline-variant p-lg">
 <div class="flex justify-between items-start mb-lg">
-<h2 class="font-headline-md text-headline-md text-primary">Añadir Nuevo Pan</h2>
+<h2 class="font-headline-md text-headline-md text-primary" id="bread-modal-title">Añadir Nuevo Pan</h2>
 <button class="text-outline hover:text-primary transition-colors" onclick="toggleModal('add-bread-modal')">
 <span class="material-symbols-outlined">close</span>
 </button>
 </div>
 <form class="space-y-md" id="bread-form">
+<input type="hidden" id="bread-id"/>
 <div class="space-y-xs">
 <label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Nombre del Pan</label>
-<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors" placeholder="ej. Focaccia de Oliva y Romero" type="text"/>
+<input id="bread-name" required class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors" placeholder="ej. Focaccia de Oliva y Romero" type="text"/>
 </div>
 <div class="space-y-xs">
 <label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Descripción</label>
-<textarea class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors resize-none" placeholder="Describe los ingredientes y el proceso..." rows="3"></textarea>
+<textarea id="bread-desc" class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors resize-none" placeholder="Describe los ingredientes y el proceso..." rows="3"></textarea>
 </div>
-<div class="flex gap-gutter">
+<div class="flex flex-col md:flex-row gap-gutter">
 <div class="flex-1 space-y-xs">
 <label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Precio ($)</label>
-<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors" placeholder="0.00" step="0.01" type="number"/>
+<input id="bread-price" required min="0" class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors" placeholder="0.00" step="0.01" type="number"/>
 </div>
 <div class="flex-1 space-y-xs">
-<label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Subir Imagen</label>
-<div class="relative group h-full">
-<input class="absolute inset-0 opacity-0 cursor-pointer z-20" type="file"/>
-<div class="w-full border-b border-outline-variant group-hover:border-secondary flex items-center gap-xs py-sm text-outline group-hover:text-secondary transition-colors cursor-pointer">
-<span class="material-symbols-outlined">upload_file</span>
-<span class="text-body-md">Seleccionar archivo...</span>
+<label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Estado</label>
+<select id="bread-status" class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 transition-colors">
+<option value="in_stock">En stock</option>
+<option value="out_of_stock">Agotado</option>
+</select>
 </div>
 </div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md uppercase tracking-widest text-outline block">URL de imagen (opcional)</label>
+<input id="bread-image" class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors" placeholder="https://..." type="url"/>
 </div>
-</div>
+<div class="hidden text-error font-body-md text-body-md" id="bread-error"></div>
 <div class="pt-lg flex flex-col md:flex-row gap-md">
-<button class="flex-1 bg-primary text-on-primary py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors duration-300" type="button">Guardar Pan</button>
+<button class="flex-1 bg-primary text-on-primary py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors duration-300" type="submit">Guardar Pan</button>
 <button class="flex-1 border border-outline-variant text-outline py-md font-label-md text-label-md uppercase tracking-widest hover:border-primary hover:text-primary transition-colors duration-300" onclick="toggleModal('add-bread-modal')" type="button">Cancelar</button>
 </div>
 </form>
@@ -494,5 +416,112 @@
             try { const r = await fetch('/api/me'); if (r.ok) { currentRole = (await r.json()).role || 'admin'; } } catch (e) {}
             loadAdmins();
         })();
+
+        // ----- Inventario de Panes -----
+        let breadsCache = [];
+
+        function fmtPrice(p) { return '$' + Number(p).toFixed(2); }
+
+        function breadStatusBadge(status) {
+            return status === 'in_stock'
+                ? '<span class="bg-secondary-container/30 text-secondary px-sm py-xs rounded-full font-label-md text-caption uppercase">EN STOCK</span>'
+                : '<span class="bg-surface-dim text-outline px-sm py-xs rounded-full font-label-md text-caption uppercase">AGOTADO</span>';
+        }
+
+        function renderBreads(list) {
+            const cont = document.getElementById('breads-list');
+            if (!list.length) {
+                cont.innerHTML = '<div class="p-md text-on-surface-variant font-body-md">No hay panes cargados.</div>';
+                return;
+            }
+            cont.innerHTML = list.map((b) => {
+                const img = b.image_url
+                    ? '<img class="w-full h-full object-cover" src="' + esc(b.image_url) + '" alt="' + esc(b.name) + '"/>'
+                    : '<div class="w-full h-full flex items-center justify-center text-outline"><span class="material-symbols-outlined">bakery_dining</span></div>';
+                return '<div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors duration-200">' +
+                    '<div class="col-span-2 flex items-center gap-md mb-sm md:mb-0"><div class="w-16 h-16 bg-surface-variant rounded overflow-hidden shrink-0">' + img + '</div><span class="font-body-md font-semibold text-primary">' + esc(b.name) + '</span></div>' +
+                    '<div class="col-span-4 text-on-surface-variant text-body-md pr-md mb-sm md:mb-0">' + esc(b.description) + '</div>' +
+                    '<div class="col-span-2 text-center text-primary font-medium mb-sm md:mb-0">' + fmtPrice(b.price) + '</div>' +
+                    '<div class="col-span-2 text-center mb-sm md:mb-0">' + breadStatusBadge(b.status) + '</div>' +
+                    '<div class="col-span-2 flex justify-end gap-md">' +
+                        '<button data-bread-action="edit" data-id="' + b.id + '" class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs"><span class="material-symbols-outlined">edit</span><span class="md:hidden">Editar</span></button>' +
+                        '<button data-bread-action="delete" data-id="' + b.id + '" class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-xs"><span class="material-symbols-outlined">delete</span><span class="md:hidden">Eliminar</span></button>' +
+                    '</div>' +
+                    '</div>';
+            }).join('');
+        }
+
+        async function loadBreads() {
+            const cont = document.getElementById('breads-list');
+            try {
+                const r = await fetch('/api/breads');
+                if (!r.ok) throw new Error();
+                breadsCache = await r.json();
+                renderBreads(breadsCache);
+            } catch (e) {
+                cont.innerHTML = '<div class="p-md text-error font-body-md">No se pudo cargar el inventario.</div>';
+            }
+        }
+
+        function openBreadModal(bread) {
+            document.getElementById('bread-error').classList.add('hidden');
+            document.getElementById('bread-id').value = bread ? bread.id : '';
+            document.getElementById('bread-name').value = bread ? bread.name : '';
+            document.getElementById('bread-desc').value = bread ? bread.description : '';
+            document.getElementById('bread-price').value = bread ? bread.price : '';
+            document.getElementById('bread-status').value = bread ? bread.status : 'in_stock';
+            document.getElementById('bread-image').value = bread ? (bread.image_url || '') : '';
+            document.getElementById('bread-modal-title').textContent = bread ? 'Editar Pan' : 'Añadir Nuevo Pan';
+            if (document.getElementById('add-bread-modal').classList.contains('hidden')) toggleModal('add-bread-modal');
+        }
+
+        async function deleteBread(id) {
+            const b = breadsCache.find((x) => x.id === id);
+            if (!confirm('¿Eliminar "' + (b ? b.name : 'este pan') + '"?')) return;
+            try {
+                const r = await fetch('/api/breads/' + id, { method: 'DELETE' });
+                const d = await r.json().catch(() => ({}));
+                if (r.ok && d.ok) { loadBreads(); return; }
+                alert(d.error || 'No se pudo eliminar.');
+            } catch (e) { alert('Error de conexión.'); }
+        }
+
+        document.getElementById('breads-list').addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-bread-action]');
+            if (!btn) return;
+            const id = Number(btn.getAttribute('data-id'));
+            if (btn.getAttribute('data-bread-action') === 'edit') openBreadModal(breadsCache.find((b) => b.id === id));
+            else deleteBread(id);
+        });
+
+        document.getElementById('bread-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const errEl = document.getElementById('bread-error');
+            errEl.classList.add('hidden');
+            const id = document.getElementById('bread-id').value;
+            const payload = {
+                name: document.getElementById('bread-name').value.trim(),
+                description: document.getElementById('bread-desc').value.trim(),
+                price: document.getElementById('bread-price').value,
+                status: document.getElementById('bread-status').value,
+                image_url: document.getElementById('bread-image').value.trim(),
+            };
+            try {
+                const r = await fetch('/api/breads' + (id ? '/' + id : ''), {
+                    method: id ? 'PUT' : 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+                const d = await r.json().catch(() => ({}));
+                if (r.ok && d.ok) { toggleModal('add-bread-modal'); loadBreads(); return; }
+                errEl.textContent = d.error || 'No se pudo guardar.';
+                errEl.classList.remove('hidden');
+            } catch (err) {
+                errEl.textContent = 'Error de conexión.';
+                errEl.classList.remove('hidden');
+            }
+        });
+
+        loadBreads();
     </script>
 </body></html>

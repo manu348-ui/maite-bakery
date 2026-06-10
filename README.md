@@ -109,7 +109,14 @@ entrar con Google. La lista se guarda en PostgreSQL:
 - Los correos de `ADMIN_EMAILS` se siembran como `primary` (no se pueden borrar/desactivar).
 - API (todo detrás de sesión; modificar requiere ser `primary`): `GET/POST/PATCH/DELETE /api/admins`.
 
-## Pendiente (necesita backend adicional)
+## Inventario de panes
 
-Las acciones de **inventario de panes** (crear/editar/eliminar) siguen siendo maquetas:
-no persisten. Requieren endpoints + tabla en la misma base.
+El panel permite a cualquier admin autenticado crear/editar/eliminar panes, persistidos
+en la tabla `breads` de la misma base. API: `GET /api/breads` (pública) y
+`POST/PUT/DELETE /api/breads` (requieren sesión). La tabla se crea y siembra sola en el
+primer arranque. La imagen se guarda como URL (sin subida de archivos).
+
+## Pendiente (opcional)
+
+El **catálogo público** (`index.html`, `detalle.html`) todavía muestra panes fijos en el
+HTML; podría leer de `GET /api/breads` para reflejar el inventario automáticamente.

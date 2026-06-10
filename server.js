@@ -7,6 +7,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { initAdminStore, adminStore, isValidEmail } from './lib/adminStore.js';
+import { initBreadStore, breadStore, BREAD_STATUSES } from './lib/breadStore.js';
 
 dotenv.config();
 
@@ -219,6 +220,56 @@ app.delete('/api/admins/:email', requireAuth, requirePrimary, async (req, res) =
 });
 
 // ---------------------------------------------------------------------------
+// Inventory API (breads)
+// ---------------------------------------------------------------------------
+function parseBread(body) {
+  const name = String(body?.name || '').trim();
+  const price = Number(body?.price);
+  if (!name) return { error: 'El nombre es obligatorio.' };
+  if (!Number.isFinite(price) || price < 0) return { error: 'El precio debe ser un número válido.' };
+  const status = BREAD_STATUSES.includes(body?.status) ? body.status : 'in_stock';
+  return {
+    data: {
+      name,
+      description: String(body?.description || '').trim(),
+      price,
+      status,
+      image_url: String(body?.image_url || '').trim(),
+    },
+  };
+}
+
+// Lista pública (sirve para el panel y, a futuro, para el catálogo).
+app.get('/api/breads', async (req, res) => {
+  res.json(await breadStore().list());
+});
+
+app.post('/api/breads', requireAuth, async (req, res) => {
+  const { data, error } = parseBread(req.body);
+  if (error) return res.status(400).json({ error });
+  const bread = await breadStore().add(data);
+  res.json({ ok: true, bread });
+});
+
+app.put('/api/breads/:id', requireAuth, async (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id)) return res.status(400).json({ error: 'ID inválido.' });
+  const { data, error } = parseBread(req.body);
+  if (error) return res.status(400).json({ error });
+  const bread = await breadStore().update(id, data);
+  if (!bread) return res.status(404).json({ error: 'Pan no encontrado.' });
+  res.json({ ok: true, bread });
+});
+
+app.delete('/api/breads/:id', requireAuth, async (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id)) return res.status(400).json({ error: 'ID inválido.' });
+  const ok = await breadStore().remove(id);
+  if (!ok) return res.status(404).json({ error: 'Pan no encontrado.' });
+  res.json({ ok: true });
+});
+
+// ---------------------------------------------------------------------------
 // Protected page(s) — must be registered BEFORE the static middleware
 // ---------------------------------------------------------------------------
 app.get(['/admin', '/admin.html'], requireAuthPage, (req, res) => {
@@ -261,6 +312,7 @@ async function start() {
     databaseUrl: process.env.DATABASE_URL,
     primaryEmails: ADMIN_EMAILS,
   });
+  await initBreadStore({ databaseUrl: process.env.DATABASE_URL });
 
   app.listen(PORT, () => {
     console.log(`Maité Bakery escuchando en http://localhost:${PORT}`);

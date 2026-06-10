@@ -1,66 +1,66 @@
-<!DOCTYPE html><html class="light" lang="es"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Confirmación de Pedido - Maité Bakery</title>
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Maité Bakery - Order Confirmation</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect">
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Work+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     "colors": {
-                        "on-background": "#1b1c1c",
                         "surface-bright": "#fbf9f8",
                         "outline-variant": "#d2c4bb",
-                        "primary-fixed-dim": "#dec1ac",
-                        "on-secondary-fixed": "#261a00",
-                        "on-primary-fixed-variant": "#574333",
-                        "tertiary": "#252623",
-                        "tertiary-fixed-dim": "#c8c6c3",
-                        "surface-variant": "#e4e2e1",
-                        "primary": "#322214",
-                        "error-container": "#ffdad6",
-                        "background": "#fbf9f8",
-                        "surface-container": "#f0eded",
-                        "on-primary": "#ffffff",
-                        "on-secondary-container": "#775f2b",
-                        "inverse-surface": "#303030",
+                        "on-tertiary-fixed-variant": "#474744",
+                        "primary-container": "#4a3728",
+                        "surface-container-highest": "#e4e2e1",
+                        "on-surface": "#1b1c1c",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#4e453e",
                         "secondary-fixed-dim": "#e2c384",
                         "on-tertiary": "#ffffff",
-                        "surface-tint": "#705a49",
-                        "surface-container-highest": "#e4e2e1",
-                        "surface": "#fbf9f8",
                         "on-primary-fixed": "#28180b",
-                        "surface-container-high": "#eae8e7",
-                        "primary-container": "#4a3728",
-                        "inverse-on-surface": "#f3f0f0",
-                        "on-secondary-fixed-variant": "#594411",
-                        "secondary": "#725b27",
-                        "surface-dim": "#dcd9d9",
-                        "on-tertiary-container": "#a6a5a2",
-                        "on-error": "#ffffff",
-                        "surface-container-lowest": "#ffffff",
-                        "error": "#ba1a1a",
-                        "surface-container-low": "#f6f3f2",
-                        "secondary-fixed": "#ffdf9e",
-                        "secondary-container": "#fcdc9b",
-                        "on-primary-container": "#bba08c",
-                        "on-tertiary-fixed-variant": "#474744",
                         "on-error-container": "#93000a",
-                        "primary-fixed": "#fbddc7",
-                        "tertiary-fixed": "#e4e2de",
-                        "tertiary-container": "#3b3b39",
-                        "inverse-primary": "#dec1ac",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#dec1ac",
+                        "background": "#fbf9f8",
+                        "surface-tint": "#705a49",
+                        "on-primary-container": "#bba08c",
+                        "surface-container-high": "#eae8e7",
                         "on-tertiary-fixed": "#1b1c1a",
-                        "on-surface-variant": "#4e453e",
-                        "on-surface": "#1b1c1c",
+                        "surface-dim": "#dcd9d9",
+                        "surface": "#fbf9f8",
+                        "tertiary-container": "#3b3b39",
+                        "secondary-container": "#fcdc9b",
+                        "surface-variant": "#e4e2e1",
+                        "primary": "#322214",
+                        "inverse-on-surface": "#f3f0f0",
+                        "primary-fixed": "#fbddc7",
+                        "inverse-surface": "#303030",
+                        "surface-container-low": "#f6f3f2",
+                        "tertiary-fixed-dim": "#c8c6c3",
+                        "surface-container": "#f0eded",
+                        "tertiary": "#252623",
+                        "secondary": "#725b27",
+                        "on-error": "#ffffff",
                         "on-secondary": "#ffffff",
-                        "outline": "#80756d"
+                        "tertiary-fixed": "#e4e2de",
+                        "on-background": "#1b1c1c",
+                        "secondary-fixed": "#ffdf9e",
+                        "inverse-primary": "#dec1ac",
+                        "on-secondary-fixed-variant": "#594411",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#261a00",
+                        "on-primary-fixed-variant": "#574333",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#a6a5a2",
+                        "outline": "#80756d",
+                        "on-secondary-container": "#775f2b"
                     },
                     "borderRadius": {
                         "DEFAULT": "0.125rem",
@@ -69,117 +69,116 @@
                         "full": "0.75rem"
                     },
                     "spacing": {
-                        "md": "24px",
-                        "gutter": "24px",
-                        "xs": "4px",
                         "container-max": "1200px",
-                        "base": "8px",
-                        "xl": "80px",
                         "sm": "12px",
-                        "lg": "48px"
+                        "md": "24px",
+                        "lg": "48px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "xl": "80px",
+                        "base": "8px"
                     },
                     "fontFamily": {
-                        "display-lg": ["Libre Caslon Text"],
-                        "body-md": ["Work Sans"],
-                        "headline-lg": ["Libre Caslon Text"],
-                        "display-lg-mobile": ["Libre Caslon Text"],
-                        "headline-md": ["Libre Caslon Text"],
-                        "label-md": ["Work Sans"],
                         "caption": ["Work Sans"],
-                        "body-lg": ["Work Sans"]
+                        "headline-md": ["Libre Caslon Text"],
+                        "headline-lg": ["Libre Caslon Text"],
+                        "body-md": ["Work Sans"],
+                        "body-lg": ["Work Sans"],
+                        "display-lg": ["Libre Caslon Text"],
+                        "label-md": ["Work Sans"],
+                        "display-lg-mobile": ["Libre Caslon Text"]
                     },
                     "fontSize": {
-                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
-                        "display-lg-mobile": ["36px", { "lineHeight": "44px", "fontWeight": "400" }],
-                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "400" }],
-                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
                         "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
-                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg-mobile": ["36px", { "lineHeight": "44px", "fontWeight": "400" }]
                     }
                 }
             }
         }
     </script>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .material-symbols-outlined.fill {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
         .ambient-shadow {
-            box-shadow: 0 8px 24px rgba(74, 55, 40, 0.05);
+            box-shadow: 0 8px 24px -4px rgba(74, 55, 40, 0.05), 0 4px 16px -2px rgba(74, 55, 40, 0.08);
         }
     </style>
-</head>
-<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col">
-<!-- TopNavBar: Suppressed Navigation Shell for Transactional/Confirmation Page -->
-<header class="w-full top-0 sticky bg-background border-b border-outline-variant/30 z-50">
-<div class="max-w-container-max mx-auto px-gutter flex justify-center items-center h-xl">
-<a class="font-headline-md text-headline-md text-primary tracking-tight" href="/">Maité Bakery</a>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen text-on-surface antialiased flex flex-col items-center">
+<!-- Top Navigation Placeholder (Hidden for transactional screen, but structure kept if needed for later states) -->
+<!-- Content wrapper -->
+<main class="w-full max-w-md mx-auto flex-1 flex flex-col relative h-screen sm:h-auto sm:min-h-screen overflow-hidden">
+<!-- Hero Background Image Layer -->
+<div class="absolute inset-0 z-0">
+<img alt="Artisanal Breads" class="w-full h-full object-cover object-center opacity-30" data-alt="A warm, close-up, high-quality photograph of freshly baked artisanal rustic breads resting on a wooden baker's table. The lighting is soft and natural, resembling early morning sunlight streaming through a bakery window. Flour lightly dusts the dark brown crusts. The mood is authentic, comforting, and organic, perfectly matching a minimalist luxury bakery aesthetic with deep brown and warm wheat tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtQu0ltwGrGZRLNhbquqzHEup9VJnWZXQFSAkwofPNa5c9h4Vp0wydt5ZhLglhIfImXCs9Nwrwz98G6QEN8b39etKhIPlBVKbTlTO4sZt4WKZYlsDZ-Lfg2lwZgC6V9rEurH934zaLcuQt-5b96v3Fcg0suG8H7hLDV3aR1qobbmWnJoJqzU_Zl5UkUNV8oT1vP00SOHrXr6JYS9W3l1Q0Is-88pmCn56PfocTcYE0koXPq7eb1LiTLo5bsdGAnuDxM_8g-ePBueE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/90 to-background/40"></div>
 </div>
-</header>
-<main class="flex-grow flex items-center justify-center py-xl px-gutter">
-<div class="max-w-3xl w-full mx-auto">
-<div class="bg-surface-bright rounded-xl ambient-shadow p-lg md:p-xl border border-outline-variant/20 flex flex-col items-center text-center">
-<div class="mb-lg w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-surface-container-low mx-auto">
-<img alt="Close-up of rustic artisanal baguette" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLsNfa7knJsElLlzRJ6xN8tcgMD33XlHwq2rmEfrZrzYcD9XiuLgShuDknIbe4wlVas7EVybyu_7tSM_Qv8SGeKK5uklI1Gr-ZXaEfxqvVlDXGBejPkDXK7-qxvOyg2jrE7PQIqhLqIuVxob4H6b5iCZQtSE3WryiOibpoHMgHWdCrUtBRTuTvPQF17DzCJBrSzFg0Ci1Z9_mhq-xQJuRaMwGuvER3o4apcqAn3aI0Da7WsACF1Lti85YAk">
+<!-- Main Content Canvas -->
+<div class="relative z-10 flex-1 flex flex-col p-md mt-lg sm:mt-xl space-y-lg">
+<!-- Success Header -->
+<div class="text-center space-y-sm pt-xl">
+<div class="w-20 h-20 mx-auto bg-surface-container rounded-full flex items-center justify-center ambient-shadow mb-md">
+<span class="material-symbols-outlined text-[40px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
 </div>
-<div class="space-y-sm mb-xl">
-<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary">¡Gracias por elegir lo artesanal!</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg mx-auto">Estamos preparando tu horneada con el cuidado y paciencia que merece.</p>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">¡Gracias por elegir lo artesanal!</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-[280px] mx-auto">
+                    Tu pedido ha sido confirmado. Estamos preparando todo con mucha dedicación.
+                </p>
 </div>
-<div class="w-full max-w-md bg-surface-container-low rounded-lg p-md mb-xl text-left border border-outline-variant/30">
-<h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-md border-b border-outline-variant/30 pb-sm">Detalles del Pedido</h2>
-<ul class="space-y-sm font-body-md text-body-md text-on-background">
-<li class="flex justify-between">
-<span class="text-on-surface-variant">Número de Orden:</span>
-<span class="font-semibold text-primary">#MB-1024</span>
-</li>
-<li class="flex justify-between">
-<span class="text-on-surface-variant">Fecha:</span>
-<span class="">24 de Octubre, 2023</span>
-</li>
-<li class="flex flex-col mt-sm pt-sm border-t border-outline-variant/20">
-<span class="text-on-surface-variant mb-xs">Lugar de Recogida:</span>
-<span class="text-primary font-medium">Maité Bakery, Calle Principal 123</span>
-</li>
-</ul>
+<!-- Order Details Card -->
+<div class="bg-surface/90 backdrop-blur-md rounded-xl p-md ambient-shadow border border-secondary-fixed-dim/20 space-y-md">
+<!-- Order ID & Date -->
+<div class="flex justify-between items-center pb-sm border-b border-outline-variant/30">
+<div class="flex flex-col">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Orden #</span>
+<span class="font-label-md text-label-md text-primary">MB-2024-8942</span>
 </div>
-<div class="max-w-lg mb-xl flex items-start gap-md text-left bg-surface-container-lowest p-md rounded-lg border border-outline-variant/20">
-<span class="material-symbols-outlined text-primary text-3xl mt-1">info</span>
-<div>
-<h3 class="font-label-md text-label-md text-primary mb-xs">Instrucciones de Recogida</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Te avisaremos por SMS cuando tu pedido esté listo para recoger. El tiempo estimado de horneado es de 4 horas.</p>
+<div class="flex flex-col text-right">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Fecha</span>
+<span class="font-label-md text-label-md text-primary">24 Oct, 08:30</span>
 </div>
 </div>
-<div class="flex flex-col sm:flex-row gap-md justify-center w-full">
-<a class="inline-flex justify-center items-center px-lg py-sm bg-primary-container text-on-primary font-label-md text-label-md rounded hover:bg-primary transition-colors duration-300 min-w-[200px]" href="index.html">
-                        Volver al Inicio
-                    </a>
+<!-- Total -->
+<div class="flex justify-between items-center py-xs">
+<span class="font-body-md text-body-md text-on-surface">Total</span>
+<span class="font-headline-md text-headline-md text-primary">$ 14.500 ARS</span>
+</div>
+<!-- Pickup Location -->
+<div class="pt-sm border-t border-outline-variant/30">
+<div class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-outline mt-1" style="font-variation-settings: 'FILL' 0;">storefront</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Retiro en local</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Palermo Soho</span>
+<span class="font-caption text-caption text-outline">Jorge Luis Borges 2000, CABA</span>
 </div>
 </div>
-<!-- Decorative Image Section -->
-<div class="mt-xl rounded-xl overflow-hidden ambient-shadow border border-outline-variant/20 h-64 md:h-80 w-full relative">
-<img alt="Artisanal sourdough breads on a rustic wooden table" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLuVr3nqrYsVDXQNPBArZzneVrP-pmci38ELFgOjfZKzV3Vr-x9IUTrnfLZmVl8rLKMg6lov7dCkj-EnexVEbOkcMg4pV0rQzLaOXD4xWYSV_Rzd28pO5o3I3ep5cIZy8VRsf43NMDE2ysJ4DECgy0DzRSic2vW1_6X4AvUWQeJl0of7QdSmhy-ZQdG3gdYt4mlQNI4rmq3ED8PCv2NvzbHPBgFDvp3QNzwEQQxxjM5oDdfUvE52HCtzmmY">
-<div class="absolute inset-0 bg-primary/10"></div>
+</div>
+</div>
+<!-- Instructions -->
+<div class="bg-surface-container-low rounded-lg p-sm flex items-start gap-sm border border-outline-variant/10">
+<span class="material-symbols-outlined text-secondary mt-1" style="font-variation-settings: 'FILL' 0;">info</span>
+<p class="font-caption text-caption text-on-surface-variant">
+                    Por favor, presenta tu número de orden al llegar al mostrador. Tu pedido estará listo para retirar a partir de las 10:00 hs.
+                </p>
+</div>
+<!-- Spacer to push button to bottom -->
+<div class="flex-1"></div>
+<!-- Action Button -->
+<div class="pb-md">
+<button class="w-full bg-primary-container text-on-primary py-4 px-md rounded-DEFAULT font-label-md text-label-md uppercase tracking-wider hover:bg-primary transition-colors active:scale-[0.98] duration-200">
+                    Volver al Inicio
+                </button>
 </div>
 </div>
 </main>
-<footer class="w-full bg-surface-container-low mt-auto">
-<div class="max-w-container-max mx-auto px-gutter py-lg flex flex-col md:flex-row justify-between items-center gap-md">
-<div class="font-headline-md text-headline-md text-primary">Maité Bakery</div>
-<nav class="flex flex-wrap justify-center gap-md">
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="index.html">Origen de Granos</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="index.html">Sostenibilidad</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="index.html">Pedidos Especiales</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="index.html">Contacto</a>
-</nav>
-<div class="font-body-md text-body-md text-on-surface-variant">© 2024 Maité Bakery. Tradición Artesanal.</div>
-</div>
-</footer>
-
-
 </body></html>

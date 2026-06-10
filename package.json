@@ -1,0 +1,23 @@
+{
+  "name": "maite-bakery",
+  "version": "1.0.0",
+  "description": "Sitio de Maité Bakery con backend de autenticación para el panel de administración.",
+  "type": "module",
+  "main": "server.js",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "hash": "node tools/hash-password.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "google-auth-library": "^9.15.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

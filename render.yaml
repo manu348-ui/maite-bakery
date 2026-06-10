@@ -1,0 +1,25 @@
+# Render Blueprint — despliega el sitio + backend de auth como un servicio web Node.
+# En Render: New → Blueprint → conectá este repo. Las variables marcadas como
+# sync:false se cargan a mano en el dashboard (son secretos, no van al repo).
+services:
+  - type: web
+    name: maite-bakery
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: GOOGLE_CLIENT_ID
+        value: 458018892518-srtasi2s4u8d3av95uj3val41nvtcf6a.apps.googleusercontent.com
+      - key: ADMIN_EMAILS
+        value: manu348@gmail.com
+      - key: SESSION_TTL_HOURS
+        value: "8"
+      # Secretos: se definen en el dashboard de Render, NO acá.
+      - key: SESSION_SECRET
+        sync: false
+      - key: ADMIN_PASSWORD_HASH
+        sync: false

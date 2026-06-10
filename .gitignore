@@ -1,0 +1,9 @@
+node_modules/
+.env
+npm-debug.log*
+
+# Herramientas locales / artefactos que no son parte del sitio
+.claude/
+.playwright-mcp/
+memory/
+outbound.txt

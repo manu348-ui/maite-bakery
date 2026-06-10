@@ -1,177 +1,233 @@
 <!DOCTYPE html>
 
-<html class="light" lang="es"><head>
+<html lang="es" style=""><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Maité Bakery - Acceso Administrativo</title>
+<title>Acceso Privado - Maité Bakery</title>
+<meta name="robots" content="noindex, nofollow"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥖</text></svg>"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&amp;family=Work+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-bright": "#fbf9f8",
-                        "outline-variant": "#d2c4bb",
-                        "on-tertiary-fixed-variant": "#474744",
-                        "primary-container": "#4a3728",
-                        "surface-container-highest": "#e4e2e1",
-                        "on-surface": "#1b1c1c",
-                        "error": "#ba1a1a",
-                        "on-surface-variant": "#4e453e",
-                        "secondary-fixed-dim": "#e2c384",
-                        "on-tertiary": "#ffffff",
-                        "on-primary-fixed": "#28180b",
-                        "on-error-container": "#93000a",
-                        "on-primary": "#ffffff",
-                        "primary-fixed-dim": "#dec1ac",
-                        "background": "#fbf9f8",
-                        "surface-tint": "#705a49",
-                        "on-primary-container": "#bba08c",
-                        "surface-container-high": "#eae8e7",
-                        "on-tertiary-fixed": "#1b1c1a",
-                        "surface-dim": "#dcd9d9",
-                        "surface": "#fbf9f8",
-                        "tertiary-container": "#3b3b39",
-                        "secondary-container": "#fcdc9b",
-                        "surface-variant": "#e4e2e1",
-                        "primary": "#322214",
-                        "inverse-on-surface": "#f3f0f0",
-                        "primary-fixed": "#fbddc7",
-                        "inverse-surface": "#303030",
-                        "surface-container-low": "#f6f3f2",
-                        "tertiary-fixed-dim": "#c8c6c3",
-                        "surface-container": "#f0eded",
-                        "tertiary": "#252623",
-                        "secondary": "#725b27",
-                        "on-error": "#ffffff",
-                        "on-secondary": "#ffffff",
-                        "tertiary-fixed": "#e4e2de",
-                        "on-background": "#1b1c1c",
-                        "secondary-fixed": "#ffdf9e",
-                        "inverse-primary": "#dec1ac",
-                        "on-secondary-fixed-variant": "#594411",
-                        "error-container": "#ffdad6",
-                        "on-secondary-fixed": "#261a00",
-                        "on-primary-fixed-variant": "#574333",
-                        "surface-container-lowest": "#ffffff",
-                        "on-tertiary-container": "#a6a5a2",
-                        "outline": "#80756d",
-                        "on-secondary-container": "#775f2b"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "container-max": "1200px",
-                        "sm": "12px",
-                        "md": "24px",
-                        "lg": "48px",
-                        "xs": "4px",
-                        "gutter": "24px",
-                        "xl": "80px",
-                        "base": "8px"
-                    },
-                    "fontFamily": {
-                        "caption": ["Work Sans"],
-                        "headline-md": ["Libre Caslon Text"],
-                        "headline-lg": ["Libre Caslon Text"],
-                        "body-md": ["Work Sans"],
-                        "body-lg": ["Work Sans"],
-                        "display-lg": ["Libre Caslon Text"],
-                        "label-md": ["Work Sans"],
-                        "display-lg-mobile": ["Libre Caslon Text"]
-                    },
-                    "fontSize": {
-                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
-                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "400" }],
-                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
-                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
-                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
-                        "display-lg-mobile": ["36px", { "lineHeight": "44px", "fontWeight": "400" }]
-                    }
-                }
-            }
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-fixed-variant": "#574333",
+            "on-secondary-container": "#775f2b",
+            "tertiary-fixed-dim": "#c8c6c3",
+            "on-secondary": "#ffffff",
+            "surface-variant": "#e4e2e1",
+            "outline-variant": "#d2c4bb",
+            "tertiary-fixed": "#e4e2de",
+            "secondary-fixed-dim": "#e2c384",
+            "surface-container": "#f0eded",
+            "surface": "#fbf9f8",
+            "primary-fixed-dim": "#dec1ac",
+            "secondary-fixed": "#ffdf9e",
+            "surface-dim": "#dcd9d9",
+            "inverse-on-surface": "#f3f0f0",
+            "primary": "#322214",
+            "on-background": "#1b1c1c",
+            "surface-container-high": "#eae8e7",
+            "outline": "#80756d",
+            "on-surface": "#1b1c1c",
+            "inverse-primary": "#dec1ac",
+            "inverse-surface": "#303030",
+            "on-secondary-fixed": "#261a00",
+            "on-error": "#ffffff",
+            "on-surface-variant": "#4e453e",
+            "primary-container": "#4a3728",
+            "on-primary": "#ffffff",
+            "tertiary": "#252623",
+            "tertiary-container": "#3b3b39",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-container": "#a6a5a2",
+            "on-tertiary-fixed": "#1b1c1a",
+            "on-tertiary": "#ffffff",
+            "secondary": "#725b27",
+            "surface-tint": "#705a49",
+            "error-container": "#ffdad6",
+            "surface-container-low": "#f6f3f2",
+            "secondary-container": "#fcdc9b",
+            "background": "#fbf9f8",
+            "error": "#ba1a1a",
+            "on-primary-fixed": "#28180b",
+            "primary-fixed": "#fbddc7",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#bba08c",
+            "surface-bright": "#fbf9f8",
+            "on-secondary-fixed-variant": "#594411",
+            "surface-container-highest": "#e4e2e1",
+            "on-tertiary-fixed-variant": "#474744"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "md": "24px",
+            "xs": "4px",
+            "xl": "80px",
+            "container-max": "1200px",
+            "base": "8px",
+            "gutter": "24px",
+            "sm": "12px",
+            "lg": "48px"
+          },
+          "fontFamily": {
+            "body-md": ["Work Sans"],
+            "headline-lg": ["Libre Caslon Text"],
+            "body-lg": ["Work Sans"],
+            "headline-md": ["Libre Caslon Text"],
+            "headline-sm": ["Libre Caslon Text"],
+            "display-lg-mobile": ["Libre Caslon Text"],
+            "caption": ["Work Sans"],
+            "display-lg": ["Libre Caslon Text"],
+            "label-md": ["Work Sans"]
+          },
+          "fontSize": {
+            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "400"}],
+            "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "400"}],
+            "display-lg-mobile": ["36px", {"lineHeight": "44px", "fontWeight": "400"}],
+            "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+            "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+            "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+          }
         }
-    </script>
+      }
+    }
+  </script>
 <style>
     body {
-      min-height: max(884px, 100dvh);
+      background-color: #fbf9f8;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(229, 198, 135, 0.05) 0, transparent 50%), 
+        radial-gradient(at 50% 0%, rgba(74, 55, 40, 0.02) 0, transparent 50%);
+    }
+    
+    .ambient-shadow {
+      box-shadow: 0 16px 24px -8px rgba(74, 55, 40, 0.06);
+    }
+
+    .input-focus-transition {
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
     }
   </style>
-  </head>
-<body class="bg-surface text-on-surface min-h-screen flex flex-col font-body-md antialiased selection:bg-secondary-container selection:text-on-secondary-container">
-<!-- TopAppBar Shell (Suppressed Nav Actions for Transactional Screen, kept Brand) -->
-<header class="fixed top-0 w-full z-50 bg-surface flex justify-center items-center h-16 px-sm flat no shadows border-b border-surface-container-low">
-<h1 class="font-headline-md text-headline-md uppercase tracking-widest text-primary">MAITÉ</h1>
+<script async="" defer="" src="https://accounts.google.com/gsi/client"></script><style id="googleidentityservice_button_styles">.qJTHM{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;color:#202124;direction:ltr;-webkit-touch-callout:none;font-family:Roboto-Regular,arial,sans-serif;-webkit-font-smoothing:antialiased;font-weight:400;margin:0;overflow:hidden;-webkit-text-size-adjust:100%}.ynRLnc{left:-9999px;position:absolute;top:-9999px}.L6cTce{display:none}.bltWBb{overflow-wrap:break-word;word-break:break-word}.hSRGPd{color:#1a73e8;cursor:pointer;font-weight:500;text-decoration:none}.Bz112c-W3lGp{height:16px;width:16px}.Bz112c-E3DyYd{height:20px;width:20px}.Bz112c-r9oPif{height:24px;width:24px}.Bz112c-u2z5K{height:36px;width:36px}.Bz112c-uaxL4e{border-radius:10px}.LgbsSe-Bz112c{display:block}.S9gUrf-YoZ4jf{border:none;margin:0;padding:0}.S9gUrf-YoZ4jf *{border:none;margin:0;padding:0}.fFW7wc-ibnC6b>.aZ2wEe>div{border-color:#4285f4}.P1ekSe-ZMv3u{-webkit-transition:height .2s linear;transition:height .2s linear}.P1ekSe-ZMv3u>div:first-child{background-color:#1a73e8!important;-webkit-transition:width .3s linear;transition:width .3s linear}.P1ekSe-ZMv3u>div:nth-child(2){background-image:-webkit-gradient(linear,left top,right top,from(rgba(255,255,255,.7)),to(rgba(255,255,255,.7))),-webkit-gradient(linear,left top,right top,from(#1a73e8),to(#1a73e8))!important;background-image:-webkit-linear-gradient(left,rgba(255,255,255,.7),rgba(255,255,255,.7)),-webkit-linear-gradient(left,#1a73e8,#1a73e8)!important;background-image:linear-gradient(90deg,rgba(255,255,255,.7),rgba(255,255,255,.7)),linear-gradient(90deg,#1a73e8,#1a73e8)!important}.P1ekSe-ZMv3u>div:nth-child(3){background-image:-webkit-gradient(linear,left top,right top,from(rgba(255,255,255,.7)),to(rgba(255,255,255,.7))),-webkit-gradient(linear,left top,right top,from(#1a73e8),to(#1a73e8))!important;background-image:-webkit-linear-gradient(left,rgba(255,255,255,.7),rgba(255,255,255,.7)),-webkit-linear-gradient(left,#1a73e8,#1a73e8)!important;background-image:linear-gradient(90deg,rgba(255,255,255,.7),rgba(255,255,255,.7)),linear-gradient(90deg,#1a73e8,#1a73e8)!important}.haAclf{display:inline-block}.nsm7Bb-HzV7m-LgbsSe{border-radius:4px;box-sizing:border-box;-webkit-transition:background-color .218s,border-color .218s;transition:background-color .218s,border-color .218s;-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;-webkit-appearance:none;background-color:#fff;background-image:none;border:1px solid #dadce0;color:#3c4043;cursor:pointer;font-family:Google Sans,arial,sans-serif;font-size:14px;height:40px;letter-spacing:.25px;outline:none;overflow:hidden;padding:0 12px;position:relative;text-align:center;vertical-align:middle;white-space:nowrap;width:auto}@media screen and (-ms-high-contrast:active){.nsm7Bb-HzV7m-LgbsSe{border:2px solid windowText;color:windowText}}@media screen and (preferes-contrast:more){.nsm7Bb-HzV7m-LgbsSe{color:#000}}.nsm7Bb-HzV7m-LgbsSe.pSzOP-SxQuSe{font-size:14px;height:32px;letter-spacing:.25px;padding:0 10px}.nsm7Bb-HzV7m-LgbsSe.purZT-SxQuSe{font-size:11px;height:20px;letter-spacing:.3px;padding:0 8px}.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe{padding:0;width:40px}.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe.pSzOP-SxQuSe{width:32px}.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe.purZT-SxQuSe{width:20px}.nsm7Bb-HzV7m-LgbsSe.JGcpL-RbRzK{border-radius:20px}.nsm7Bb-HzV7m-LgbsSe.JGcpL-RbRzK.pSzOP-SxQuSe{border-radius:16px}.nsm7Bb-HzV7m-LgbsSe.JGcpL-RbRzK.purZT-SxQuSe{border-radius:10px}.nsm7Bb-HzV7m-LgbsSe.i5vt6e-to915-Ia7Qfc{border:1px solid #8e918f;background-color:#131314;color:#e3e3e3}.nsm7Bb-HzV7m-LgbsSe.MFS4be-Ia7Qfc{border:none;color:#fff}.nsm7Bb-HzV7m-LgbsSe.MFS4be-v3pZbf-Ia7Qfc{background-color:#1a73e8}.nsm7Bb-HzV7m-LgbsSe.MFS4be-JaPV2b-Ia7Qfc{background-color:#202124;color:#e8eaed}@media screen and (prefers-contrast:more){.nsm7Bb-HzV7m-LgbsSe.MFS4be-JaPV2b-Ia7Qfc{color:#fff}}.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-Bz112c{height:18px;margin-right:8px;min-width:18px;width:18px}.nsm7Bb-HzV7m-LgbsSe.pSzOP-SxQuSe .nsm7Bb-HzV7m-LgbsSe-Bz112c{height:14px;min-width:14px;width:14px}.nsm7Bb-HzV7m-LgbsSe.purZT-SxQuSe .nsm7Bb-HzV7m-LgbsSe-Bz112c{height:10px;min-width:10px;width:10px}.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-Bz112c{margin-left:8px;margin-right:-4px}.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe .nsm7Bb-HzV7m-LgbsSe-Bz112c{margin:0;padding:10px}.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe.pSzOP-SxQuSe .nsm7Bb-HzV7m-LgbsSe-Bz112c{padding:8px}.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe.purZT-SxQuSe .nsm7Bb-HzV7m-LgbsSe-Bz112c{padding:4px}.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{border-top-left-radius:3px;border-bottom-left-radius:3px;display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-pack:center;-webkit-justify-content:center;justify-content:center;-webkit-box-align:center;-webkit-align-items:center;align-items:center;background-color:#fff;height:36px;margin-left:-10px;margin-right:12px;min-width:36px;width:36px}.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf .nsm7Bb-HzV7m-LgbsSe-Bz112c,.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf .nsm7Bb-HzV7m-LgbsSe-Bz112c{margin:0;padding:0}.nsm7Bb-HzV7m-LgbsSe.pSzOP-SxQuSe .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{height:28px;margin-left:-8px;margin-right:10px;min-width:28px;width:28px}.nsm7Bb-HzV7m-LgbsSe.purZT-SxQuSe .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{height:16px;margin-left:-6px;margin-right:8px;min-width:16px;width:16px}.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{border-radius:3px;margin-left:2px;margin-right:0;padding:0}.nsm7Bb-HzV7m-LgbsSe.JGcpL-RbRzK .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{border-radius:18px}.nsm7Bb-HzV7m-LgbsSe.pSzOP-SxQuSe.JGcpL-RbRzK .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{border-radius:14px}.nsm7Bb-HzV7m-LgbsSe.purZT-SxQuSe.JGcpL-RbRzK .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{border-radius:8px}.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-bN97Pc-sM5MNb{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-align-items:center;-webkit-box-align:center;align-items:center;-webkit-flex-direction:row;-webkit-box-orient:horizontal;-webkit-box-direction:normal;flex-direction:row;-webkit-box-pack:justify;-webkit-justify-content:space-between;justify-content:space-between;-webkit-flex-wrap:nowrap;flex-wrap:nowrap;height:100%;position:relative;width:100%}.nsm7Bb-HzV7m-LgbsSe .oXtfBe-l4eHX{-webkit-box-pack:center;-webkit-justify-content:center;justify-content:center}.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-BPrWId{-webkit-flex-grow:1;-webkit-box-flex:1;flex-grow:1;font-family:Google Sans,arial,sans-serif;font-weight:500;overflow:hidden;text-overflow:ellipsis;vertical-align:top}.nsm7Bb-HzV7m-LgbsSe.purZT-SxQuSe .nsm7Bb-HzV7m-LgbsSe-BPrWId{font-weight:300}.nsm7Bb-HzV7m-LgbsSe .oXtfBe-l4eHX .nsm7Bb-HzV7m-LgbsSe-BPrWId{-webkit-flex-grow:0;-webkit-box-flex:0;flex-grow:0}.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-MJoBVe{-webkit-transition:background-color .218s;transition:background-color .218s;bottom:0;left:0;position:absolute;right:0;top:0}.nsm7Bb-HzV7m-LgbsSe:focus,.nsm7Bb-HzV7m-LgbsSe:hover{box-shadow:none;border-color:rgb(210,227,252);outline:none}.nsm7Bb-HzV7m-LgbsSe:focus-within{outline:2px solid #00639b;border-color:transparent}.nsm7Bb-HzV7m-LgbsSe:hover .nsm7Bb-HzV7m-LgbsSe-MJoBVe{background:rgba(66,133,244,.08)}.nsm7Bb-HzV7m-LgbsSe:active .nsm7Bb-HzV7m-LgbsSe-MJoBVe,.nsm7Bb-HzV7m-LgbsSe:focus .nsm7Bb-HzV7m-LgbsSe-MJoBVe{background:rgba(66,133,244,.1)}.nsm7Bb-HzV7m-LgbsSe.i5vt6e-to915-Ia7Qfc:hover .nsm7Bb-HzV7m-LgbsSe-MJoBVe{background:rgba(255,255,255,.08)}.nsm7Bb-HzV7m-LgbsSe.i5vt6e-to915-Ia7Qfc:active .nsm7Bb-HzV7m-LgbsSe-MJoBVe,.nsm7Bb-HzV7m-LgbsSe.i5vt6e-to915-Ia7Qfc:focus .nsm7Bb-HzV7m-LgbsSe-MJoBVe{background:rgba(255,255,255,.12)}.nsm7Bb-HzV7m-LgbsSe.MFS4be-Ia7Qfc:hover .nsm7Bb-HzV7m-LgbsSe-MJoBVe{background:rgba(255,255,255,.24)}.nsm7Bb-HzV7m-LgbsSe.MFS4be-Ia7Qfc:active .nsm7Bb-HzV7m-LgbsSe-MJoBVe,.nsm7Bb-HzV7m-LgbsSe.MFS4be-Ia7Qfc:focus .nsm7Bb-HzV7m-LgbsSe-MJoBVe{background:rgba(255,255,255,.32)}.nsm7Bb-HzV7m-LgbsSe .n1UuX-DkfjY{border-radius:50%;display:-webkit-box;display:-webkit-flex;display:flex;height:20px;margin-left:-4px;margin-right:8px;min-width:20px;width:20px}.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-BPrWId{font-family:Roboto;font-size:12px;text-align:left}.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-BPrWId .K4efff .fmcmS,.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-BPrWId .ssJRIf{overflow:hidden;text-overflow:ellipsis}.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-BPrWId .K4efff{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-align-items:center;-webkit-box-align:center;align-items:center;color:#5f6368;fill:#5f6368;font-size:11px;font-weight:400}.nsm7Bb-HzV7m-LgbsSe.jVeSEe.MFS4be-Ia7Qfc .nsm7Bb-HzV7m-LgbsSe-BPrWId .K4efff{color:#e8eaed;fill:#e8eaed}@media screen and (prefers-contrast:more){.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-BPrWId .K4efff,.nsm7Bb-HzV7m-LgbsSe.jVeSEe.MFS4be-Ia7Qfc .nsm7Bb-HzV7m-LgbsSe-BPrWId .K4efff{color:#000;fill:#000}}.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-BPrWId .K4efff .Bz112c{height:18px;margin:-3px -3px -3px 2px;min-width:18px;width:18px}.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{border-top-left-radius:0;border-bottom-left-radius:0;border-top-right-radius:3px;border-bottom-right-radius:3px;margin-left:12px;margin-right:-10px}.nsm7Bb-HzV7m-LgbsSe.jVeSEe.JGcpL-RbRzK .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{border-radius:18px}.L5Fo6c-sM5MNb{border:0;display:block;left:0;position:relative;top:0}.L5Fo6c-bF1uUb{border-radius:4px;bottom:0;cursor:pointer;left:0;position:absolute;right:0;top:0}.L5Fo6c-bF1uUb:focus{border:none;outline:none}sentinel{}</style></head>
+<body class="font-body-md text-on-surface flex flex-col min-h-screen">
+<!-- Shell Visibility: Suppressed Navigation for transactional/focused login page -->
+<main class="flex-grow flex items-center justify-center px-gutter py-xl">
+<div class="w-full max-w-[400px] bg-surface-container-lowest p-lg ambient-shadow border border-outline-variant/30 text-center flex flex-col items-center">
+<!-- Brand Identity Minimal -->
+<div class="mb-lg">
+<a href="index.html"><h1 class="font-headline-md text-headline-md text-primary mb-xs">Maité Bakery</h1></a>
+<div class="w-8 h-[1px] bg-secondary-fixed-dim mx-auto"></div>
+</div>
+<!-- Login Content -->
+<header class="mb-lg">
+<h2 class="font-headline-sm text-headline-sm text-on-surface opacity-90">Acceso Administrador</h2><div class="flex items-center justify-center gap-2 mt-xs text-on-surface-variant opacity-70"><span class="material-symbols-outlined text-[18px]">shield_lock</span><span class="font-label-md text-caption uppercase tracking-widest">Acceso Seguro</span></div>
 </header>
-<!-- Main Content Canvas -->
-<main class="flex-grow flex flex-col items-center justify-center px-5 pt-24 pb-12 w-full max-w-md mx-auto">
-<!-- Hero Image / Brand Vis -->
-<div class="mb-8 w-24 h-24 rounded-full overflow-hidden bg-surface-container-high flex items-center justify-center shadow-lg shadow-[#4A3728]/[0.05] border border-outline-variant/20">
-<span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+<div class="w-full mb-md"><div class="hidden mb-md p-sm bg-error-container text-on-error-container font-body-md text-center rounded-lg" id="login-error"></div>
+<div data-auto_prompt="false" data-callback="handleCredentialResponse" data-client_id="458018892518-srtasi2s4u8d3av95uj3val41nvtcf6a.apps.googleusercontent.com" data-context="signin" data-login_uri="" data-ux_mode="popup" id="g_id_onload"></div><div class="g_id_signin" data-logo_alignment="left" data-shape="rectangular" data-size="large" data-text="continue_with" data-theme="outline" data-type="standard" data-width="400"></div>
+<div class="flex items-center my-md">
+<div class="flex-grow h-[1px] bg-outline-variant/30"></div>
+<span class="px-sm font-caption text-caption text-outline-variant uppercase tracking-widest">o</span>
+<div class="flex-grow h-[1px] bg-outline-variant/30"></div>
 </div>
-<div class="text-center mb-10 w-full space-y-4">
-<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-2">Acceso Administrativo</h2>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-[280px] mx-auto">
-                Exclusivo para el equipo de Maité Bakery.
-            </p>
-<div class="bg-secondary-container/20 border border-secondary-fixed-dim/30 rounded-lg p-sm mt-md flex items-start gap-3 text-left">
-<span class="material-symbols-outlined text-secondary-fixed-dim mt-0.5" style="font-variation-settings: 'FILL' 1;">info</span>
-<p class="font-caption text-caption text-on-surface-variant">
-<span class="font-bold text-on-surface">Atención:</span> Acceso Administrativo Exclusivo - Los clientes no necesitan iniciar sesión para comprar.
-                </p>
-</div>
-</div>
-<!-- Login Form Area -->
-<div class="w-full space-y-6">
-<form action="#" class="space-y-4" method="POST">
-<div class="relative">
-<label class="sr-only" for="email">Correo Electrónico</label>
-<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary-fixed-dim focus:ring-0 px-0 py-3 font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50 transition-colors" id="email" name="email" placeholder="Correo electrónico institucional" type="email"/>
-</div>
-<div class="relative">
-<label class="sr-only" for="password">Contraseña</label>
-<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary-fixed-dim focus:ring-0 px-0 py-3 font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50 transition-colors" id="password" name="password" placeholder="Contraseña" type="password"/>
-</div>
-<div class="pt-4">
-<button class="w-full bg-primary-container text-on-primary py-4 px-8 rounded-full font-label-md text-label-md uppercase tracking-wider hover:bg-primary transition-colors shadow-lg shadow-[#4A3728]/[0.08]" type="submit">
-                        Ingresar al Sistema
-                    </button>
-</div>
-</form>
-<div class="flex items-center w-full my-6">
-<div class="flex-grow border-t border-outline-variant/30"></div>
-<span class="px-3 font-caption text-caption text-on-surface-variant uppercase tracking-widest">o</span>
-<div class="flex-grow border-t border-outline-variant/30"></div>
-</div>
-<!-- SSO Google -->
-<button class="w-full flex items-center justify-center gap-3 bg-surface border border-outline-variant/50 text-on-surface py-4 px-8 rounded-full font-label-md text-label-md hover:bg-surface-container-low transition-colors shadow-sm">
-<svg class="w-5 h-5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
-<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
-<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
-<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
-</svg>
-                Continuar con Google
-            </button>
-<div class="text-center mt-8">
-<a class="font-caption text-caption text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant/50 transition-colors" href="#">
-                    ¿Olvidó su contraseña administrativa?
-                </a>
-</div>
+</div><form class="w-full space-y-md" id="login-form"><div class="relative group"><label class="sr-only" for="password">Contraseña</label><div class="flex items-center border-b border-outline-variant group-focus-within:border-secondary transition-colors duration-300"><span class="material-symbols-outlined text-outline-variant mr-sm group-focus-within:text-secondary">lock</span><input class="w-full py-sm bg-transparent border-none focus:ring-0 font-body-md text-on-surface placeholder:text-outline-variant/60" id="password" name="password" placeholder="Contraseña" required="" type="password" autocomplete="current-password"/></div></div><div class="pt-sm"><button class="w-full bg-primary-container text-on-primary font-label-md text-label-md py-md px-lg hover:bg-primary transition-colors duration-300 tracking-widest uppercase active:scale-[0.98]" id="login-btn" type="submit">INICIAR SESIÓN</button></div><div class="pt-md"><a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200 opacity-70" href="index.html">Regresar a la tienda</a></div></form>
 </div>
 </main>
-<!-- Suppressed Footer for Transactional Screen to keep focus, only showing tiny legal text if needed -->
-<footer class="py-md text-center text-on-surface-variant font-caption text-caption">
-         © 2024 Maité Bakery. Sistema Interno.
-    </footer>
-</body></html>
+<!-- Footer Suppression: Simplified version for focused flow -->
+<footer class="w-full py-md text-center">
+<p class="font-caption text-caption text-on-surface-variant opacity-50">
+      © 2024 Maité Bakery. Hecho a mano diariamente.
+    </p>
+</footer>
+<script>
+    // Password login — verified server-side against ADMIN_PASSWORD_HASH
+    const passwordInput = document.getElementById('password');
+    const loginForm = document.getElementById('login-form');
+    const errorDiv = document.getElementById('login-error');
+
+    function showError(msg) {
+      errorDiv.innerText = msg;
+      errorDiv.classList.remove('hidden');
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorDiv.classList.add('hidden');
+
+      if (passwordInput.value.length === 0) {
+        passwordInput.focus();
+        return;
+      }
+
+      const btn = document.getElementById('login-btn');
+      const originalText = btn.innerText;
+      btn.innerText = 'VERIFICANDO...';
+      btn.disabled = true;
+      btn.style.opacity = '0.7';
+
+      try {
+        const res = await fetch('/api/auth/password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: passwordInput.value }),
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok && data.ok) {
+          btn.innerText = 'ACCESO CONCEDIDO';
+          btn.classList.remove('bg-primary-container');
+          btn.classList.add('bg-secondary');
+          window.location.href = '/admin.html';
+          return;
+        }
+        showError(data.error || 'No se pudo iniciar sesión.');
+      } catch (err) {
+        showError('Error de conexión con el servidor.');
+      }
+
+      btn.innerText = originalText;
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    });
+  </script>
+<script>
+// The Google credential is sent to the server, which verifies the token and
+// checks the email allowlist. No trust is placed in the client.
+async function handleCredentialResponse(response) {
+  const errorDiv = document.getElementById('login-error');
+  errorDiv.classList.add('hidden');
+  try {
+    const res = await fetch('/api/auth/google', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ credential: response.credential }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok && data.ok) {
+      window.location.href = '/admin.html';
+      return;
+    }
+    errorDiv.innerText = data.error || 'Acceso no autorizado.';
+    errorDiv.classList.remove('hidden');
+  } catch (err) {
+    errorDiv.innerText = 'Error de conexión con el servidor.';
+    errorDiv.classList.remove('hidden');
+  }
+}
+</script></body></html>

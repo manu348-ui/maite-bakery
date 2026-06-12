@@ -215,8 +215,20 @@
 </div>
 </div>
 <div class="space-y-xs">
-<label class="font-label-md text-label-md uppercase tracking-widest text-outline block">URL de imagen (opcional)</label>
-<input id="bread-image" class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors" placeholder="https://..." type="url"/>
+<label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Foto del pan (opcional)</label>
+<input id="bread-image" type="hidden"/>
+<div class="flex items-center gap-md">
+<div class="hidden shrink-0" id="bread-image-preview-wrap">
+<img alt="Vista previa" class="w-20 h-20 object-cover rounded border border-outline-variant" id="bread-image-preview"/>
+</div>
+<label class="flex-1 cursor-pointer border-b border-outline-variant hover:border-secondary flex items-center gap-xs py-sm text-outline hover:text-secondary transition-colors">
+<span class="material-symbols-outlined">photo_camera</span>
+<span class="text-body-md" id="bread-image-label">Subir foto desde tu dispositivo…</span>
+<input accept="image/*" class="hidden" id="bread-image-file" type="file"/>
+</label>
+<button class="hidden text-outline hover:text-error transition-colors" id="bread-image-remove" title="Quitar foto" type="button"><span class="material-symbols-outlined">close</span></button>
+</div>
+<p class="font-caption text-caption text-outline">Se reduce automáticamente para optimizar el peso.</p>
 </div>
 <div class="hidden text-error font-body-md text-body-md" id="bread-error"></div>
 <div class="pt-lg flex flex-col md:flex-row gap-md">
@@ -471,6 +483,7 @@
             document.getElementById('bread-price').value = bread ? bread.price : '';
             document.getElementById('bread-status').value = bread ? bread.status : 'in_stock';
             document.getElementById('bread-image').value = bread ? (bread.image_url || '') : '';
+            showBreadImagePreview(bread ? (bread.image_url || '') : '');
             document.getElementById('bread-modal-title').textContent = bread ? 'Editar Pan' : 'Añadir Nuevo Pan';
             if (document.getElementById('add-bread-modal').classList.contains('hidden')) toggleModal('add-bread-modal');
         }
@@ -520,6 +533,71 @@
                 errEl.textContent = 'Error de conexión.';
                 errEl.classList.remove('hidden');
             }
+        });
+
+        // ----- Foto del pan: subir, comprimir y guardar como data URL -----
+        function showBreadImagePreview(src) {
+            const wrap = document.getElementById('bread-image-preview-wrap');
+            const img = document.getElementById('bread-image-preview');
+            const rm = document.getElementById('bread-image-remove');
+            const label = document.getElementById('bread-image-label');
+            if (src) {
+                img.src = src;
+                wrap.classList.remove('hidden');
+                rm.classList.remove('hidden');
+                label.textContent = 'Cambiar foto…';
+            } else {
+                wrap.classList.add('hidden');
+                rm.classList.add('hidden');
+                label.textContent = 'Subir foto desde tu dispositivo…';
+            }
+        }
+
+        function resizeImage(file, maxDim, quality) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const image = new Image();
+                    image.onload = () => {
+                        let w = image.width, h = image.height;
+                        if (w > maxDim || h > maxDim) {
+                            if (w >= h) { h = Math.round(h * maxDim / w); w = maxDim; }
+                            else { w = Math.round(w * maxDim / h); h = maxDim; }
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = w; canvas.height = h;
+                        canvas.getContext('2d').drawImage(image, 0, 0, w, h);
+                        resolve(canvas.toDataURL('image/jpeg', quality));
+                    };
+                    image.onerror = reject;
+                    image.src = reader.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        document.getElementById('bread-image-file').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) { alert('Seleccioná un archivo de imagen.'); return; }
+            const label = document.getElementById('bread-image-label');
+            const prev = label.textContent;
+            label.textContent = 'Procesando…';
+            try {
+                const dataUrl = await resizeImage(file, 800, 0.8);
+                document.getElementById('bread-image').value = dataUrl;
+                showBreadImagePreview(dataUrl);
+            } catch (err) {
+                label.textContent = prev;
+                alert('No se pudo procesar la imagen.');
+            }
+            e.target.value = ''; // permite volver a elegir el mismo archivo
+        });
+
+        document.getElementById('bread-image-remove').addEventListener('click', () => {
+            document.getElementById('bread-image').value = '';
+            showBreadImagePreview('');
         });
 
         loadBreads();

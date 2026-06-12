@@ -53,7 +53,7 @@ const googleClient = new OAuth2Client(GOOGLE_CLIENT_ID);
 // ---------------------------------------------------------------------------
 const app = express();
 app.disable('x-powered-by');
-app.use(express.json({ limit: '16kb' }));
+app.use(express.json({ limit: '4mb' })); // 4mb: deja margen para fotos en data URL
 app.use(cookieParser());
 
 function issueSession(res, email) {

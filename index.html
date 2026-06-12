@@ -171,8 +171,8 @@
 <span class="font-label-md text-label-md text-on-surface-variant cursor-pointer hover:text-primary transition-colors">Especialidades</span>
 </div>
 </div>
-<!-- Bento Grid Catalog -->
-<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter mt-lg">
+<!-- Bento Grid Catalog (poblado dinámicamente desde /api/breads; las cards de abajo son fallback) -->
+<div id="catalogo-grid" class="grid grid-cols-1 md:grid-cols-12 gap-gutter mt-lg">
 <!-- Feature Card (Large) -->
 <div class="md:col-span-8 group cursor-pointer" onclick="window.location.href='detalle.html'">
 <div class="relative aspect-[16/9] overflow-hidden bg-surface-container mb-md">
@@ -329,6 +329,39 @@
       newsletterForm.classList.add('hidden');
       document.getElementById('newsletter-msg').classList.remove('hidden');
     });
+
+    // Catálogo dinámico desde la base
+    (function () {
+      const grid = document.getElementById('catalogo-grid');
+      if (!grid) return;
+      const e = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      const card = (b, feature) => {
+        const span = feature ? 'md:col-span-8' : 'md:col-span-4';
+        const aspect = feature ? 'aspect-[16/9]' : 'aspect-square';
+        const out = b.status === 'out_of_stock';
+        const img = b.image_url
+          ? '<img alt="' + e(b.name) + '" class="w-full h-full object-cover transition-custom group-hover:scale-105' + (out ? ' opacity-60' : '') + '" src="' + e(b.image_url) + '">'
+          : '<div class="w-full h-full flex items-center justify-center text-outline"><span class="material-symbols-outlined" style="font-size:48px">bakery_dining</span></div>';
+        const badge = out
+          ? '<div class="absolute top-md left-md bg-surface/90 px-sm py-xs backdrop-blur-sm"><span class="font-label-md text-caption text-on-surface-variant uppercase">Agotado</span></div>'
+          : (feature ? '<div class="absolute top-md left-md bg-secondary-container/90 px-sm py-xs backdrop-blur-sm"><span class="font-label-md text-caption text-on-secondary-container uppercase">Firma</span></div>' : '');
+        const descCls = 'font-body-md text-body-md text-on-surface-variant mt-xs' + (feature ? ' max-w-md' : '');
+        return '<div class="' + span + ' group cursor-pointer" onclick="window.location.href=\'detalle.html?id=' + b.id + '\'">' +
+          '<div class="relative ' + aspect + ' overflow-hidden bg-surface-container mb-md">' + img + badge + '</div>' +
+          '<div class="flex justify-between items-start gap-md">' +
+            '<div><h3 class="font-headline-md text-headline-md text-primary">' + e(b.name) + '</h3>' +
+            '<p class="' + descCls + '">' + e(b.description) + '</p></div>' +
+            '<span class="font-headline-md text-headline-md text-primary whitespace-nowrap">$' + Number(b.price).toFixed(2) + '</span>' +
+          '</div></div>';
+      };
+      fetch('/api/breads')
+        .then((r) => r.ok ? r.json() : Promise.reject())
+        .then((list) => {
+          if (!Array.isArray(list) || !list.length) return; // deja el fallback estático
+          grid.innerHTML = list.map((b, i) => card(b, i === 0)).join('');
+        })
+        .catch(() => { /* sin backend: queda el catálogo estático */ });
+    })();
   </script>
 
 

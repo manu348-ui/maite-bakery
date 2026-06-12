@@ -152,7 +152,7 @@
 <!-- Left Column: Large High-Quality Image -->
 <div class="md:col-span-7 fade-in">
 <div class="relative overflow-hidden rounded-lg group shadow-sm bg-surface-container-low p-base">
-<img alt="Pan de Masa Madre Artesanal de Maité Bakery" class="w-full h-auto object-cover rounded shadow-md group-hover:scale-[1.02] transition-transform duration-700 ease-in-out" data-alt="A close-up, high-resolution photograph of a crusty, handcrafted sourdough baguette resting on a rustic linen cloth. The bread features a deep golden-brown, blistered crust with flour-dusted scores that reveal a soft, airy interior. The lighting is warm and natural, mimicking an early morning bakery scene with soft shadows. The overall aesthetic is minimalist and tactile, highlighting the organic texture of the crust and the artisanal quality of the bake." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwV2N3D6poA-2Zc9eRBMcl6TDnGo5oZig216o9QAXEuBSbkWB04JHLasEu0MNBcHoYaB7T1Zk67FLrkgZ59QVRuz_bN5g__rZxUNIu74ZKem7XzPAUBywu822xekQasMABkI3ILs-sy0ozT7oOeQgbRTaCO7t-UBalxPWWkxDg_0XSh-tgwNZsOH4sMheFUigkRrLSjCqUb10sqSd_zHr1WIdVT9V-cp4lf0kurHJQYKtGLZL7ddbzYk6_VlipDYobQqTQMbfR1Bo">
+<img id="product-image" alt="Pan de Masa Madre Artesanal de Maité Bakery" class="w-full h-auto object-cover rounded shadow-md group-hover:scale-[1.02] transition-transform duration-700 ease-in-out" data-alt="A close-up, high-resolution photograph of a crusty, handcrafted sourdough baguette resting on a rustic linen cloth. The bread features a deep golden-brown, blistered crust with flour-dusted scores that reveal a soft, airy interior. The lighting is warm and natural, mimicking an early morning bakery scene with soft shadows. The overall aesthetic is minimalist and tactile, highlighting the organic texture of the crust and the artisanal quality of the bake." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwV2N3D6poA-2Zc9eRBMcl6TDnGo5oZig216o9QAXEuBSbkWB04JHLasEu0MNBcHoYaB7T1Zk67FLrkgZ59QVRuz_bN5g__rZxUNIu74ZKem7XzPAUBywu822xekQasMABkI3ILs-sy0ozT7oOeQgbRTaCO7t-UBalxPWWkxDg_0XSh-tgwNZsOH4sMheFUigkRrLSjCqUb10sqSd_zHr1WIdVT9V-cp4lf0kurHJQYKtGLZL7ddbzYk6_VlipDYobQqTQMbfR1Bo">
 <div class="absolute top-md left-md">
 <span class="bg-surface/80 backdrop-blur-sm px-md py-xs rounded-full font-label-md text-label-md text-secondary uppercase tracking-widest">LOTE LIMITADO</span>
 </div>
@@ -161,7 +161,7 @@
 <!-- Right Column: Product Details -->
 <div class="md:col-span-5 flex flex-col gap-lg sticky top-[120px] fade-in" style="animation-delay: 0.2s;">
 <div>
-<h1 class="font-display-lg text-display-lg text-primary mb-sm leading-tight">
+<h1 id="product-name" class="font-display-lg text-display-lg text-primary mb-sm leading-tight">
                     Masa Madre de 36 Horas
                 </h1>
 <p class="font-headline-md text-headline-md text-secondary italic opacity-80">
@@ -169,7 +169,7 @@
                 </p>
 </div>
 <div class="flex items-center gap-md">
-<span class="font-display-lg text-headline-lg text-primary-container">$12.50</span>
+<span id="product-price" class="font-display-lg text-headline-lg text-primary-container">$12.50</span>
 <div class="h-4 w-[1px] bg-outline-variant"></div>
 <div class="flex gap-xs">
 <span class="px-sm py-1 bg-secondary/10 text-secondary font-label-md text-label-md rounded uppercase tracking-wider">VEGANO</span>
@@ -179,7 +179,7 @@
 <div class="space-y-md">
 <div>
 <h3 class="font-label-md text-label-md uppercase tracking-widest text-primary mb-xs">FERMENTACIÓN ARTESANAL</h3>
-<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+<p id="product-description" class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
                         Nuestra hogaza insignia se somete a un riguroso proceso de fermentación artesanal en frío durante 36 horas. Este tiempo prolongado permite que nuestras levaduras naturales transformen materias primas de la más alta calidad en un pan de perfil complejo, con una miga aireada y una corteza profundamente caramelizada.
                     </p>
 </div>
@@ -274,6 +274,26 @@
             input.value = parseInt(input.value) - 1;
         }
     }
+
+    // Carga el pan según ?id= (si no hay id, queda el contenido por defecto)
+    (function () {
+        const id = new URLSearchParams(location.search).get('id');
+        if (!id) return;
+        fetch('/api/breads/' + encodeURIComponent(id))
+            .then((r) => r.ok ? r.json() : Promise.reject())
+            .then((b) => {
+                document.title = b.name + ' — Maité Bakery';
+                const name = document.getElementById('product-name');
+                const price = document.getElementById('product-price');
+                const desc = document.getElementById('product-description');
+                const img = document.getElementById('product-image');
+                if (name) name.textContent = b.name;
+                if (price) price.textContent = '$' + Number(b.price).toFixed(2);
+                if (desc && b.description) desc.textContent = b.description;
+                if (img && b.image_url) { img.src = b.image_url; img.alt = b.name; }
+            })
+            .catch(() => { /* deja el contenido estático */ });
+    })();
 </script>
 
 

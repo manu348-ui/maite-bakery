@@ -239,9 +239,18 @@ function parseBread(body) {
   };
 }
 
-// Lista pública (sirve para el panel y, a futuro, para el catálogo).
+// Lista pública (la usa el panel y el catálogo).
 app.get('/api/breads', async (req, res) => {
   res.json(await breadStore().list());
+});
+
+// Un pan individual (público, para la página de detalle).
+app.get('/api/breads/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id)) return res.status(400).json({ error: 'ID inválido.' });
+  const bread = await breadStore().get(id);
+  if (!bread) return res.status(404).json({ error: 'Pan no encontrado.' });
+  res.json(bread);
 });
 
 app.post('/api/breads', requireAuth, async (req, res) => {

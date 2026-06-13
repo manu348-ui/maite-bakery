@@ -27,6 +27,9 @@ services:
       # Email de aviso de pedidos (SendGrid HTTP API).
       - key: MAIL_FROM
         value: manu348@gmail.com
+      # URL pública del sitio (para el link de baja de las campañas).
+      - key: SITE_URL
+        value: https://maite-bakery.onrender.com
       # Secretos: se definen en el dashboard de Render, NO acá.
       - key: SESSION_SECRET
         sync: false

@@ -209,6 +209,28 @@
 <div class="p-md text-on-surface-variant font-body-md">Cargando…</div>
 </div>
 </div>
+</section>
+<section id="newsletter-section" class="mt-xl pt-xl border-t border-outline-variant/30">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-lg">
+<div>
+<span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-xs block">Marketing</span>
+<h2 class="font-headline-lg text-headline-lg text-primary">Suscriptores</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs max-w-xl">Quienes se anotaron al newsletter. Marcá los que quieras y enviales una campaña con tus productos.</p>
+</div>
+<button id="send-campaign-btn" onclick="openCampaignModal()" class="bg-primary text-on-primary px-lg py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors duration-300 ambient-shadow flex items-center gap-base"><span class="material-symbols-outlined">campaign</span>ENVIAR CAMPAÑA</button>
+</div>
+<div class="grid grid-cols-1 gap-gutter">
+<div class="hidden md:grid grid-cols-12 px-md py-sm border-b border-outline-variant font-label-md text-label-md uppercase tracking-widest text-outline items-center">
+<div class="col-span-1"><input type="checkbox" id="subs-select-all" title="Seleccionar todos" class="h-4 w-4"></div>
+<div class="col-span-6">EMAIL</div>
+<div class="col-span-3 text-center">ESTADO</div>
+<div class="col-span-2 text-right">ACCIÓN</div>
+</div>
+<div id="subs-list" class="grid grid-cols-1 gap-gutter">
+<div class="p-md text-on-surface-variant font-body-md">Cargando…</div>
+</div>
+</div>
+<p id="subs-count" class="font-caption text-caption text-outline mt-sm"></p>
 </section></main>
 <!-- Modal: Add New Bread -->
 <div class="hidden fixed inset-0 z-[60] flex items-center justify-center p-md" id="add-bread-modal">
@@ -285,6 +307,37 @@
 <button class="flex-1 bg-primary text-on-primary py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors duration-300" type="submit">Autorizar</button>
 <button class="flex-1 border border-outline-variant text-outline py-md font-label-md text-label-md uppercase tracking-widest hover:border-primary hover:text-primary transition-colors duration-300" type="button" onclick="toggleModal('add-admin-modal')">Cancelar</button>
 </div>
+</form>
+</div>
+</div>
+<!-- Modal: Enviar campaña -->
+<div class="hidden fixed inset-0 z-[60] flex items-center justify-center p-md" id="campaign-modal">
+<div class="modal-overlay absolute inset-0" onclick="toggleModal('campaign-modal')"></div>
+<div class="bg-surface w-full max-w-xl relative z-10 ambient-shadow border border-outline-variant p-lg max-h-[90vh] overflow-y-auto">
+<div class="flex justify-between items-start mb-lg">
+<h2 class="font-headline-md text-headline-md text-primary">Enviar campaña</h2>
+<button class="text-outline hover:text-primary transition-colors" onclick="toggleModal('campaign-modal')"><span class="material-symbols-outlined">close</span></button>
+</div>
+<form class="space-y-md" id="campaign-form">
+<p class="font-body-md text-body-md text-secondary flex items-center gap-xs" id="campaign-recipients-note"></p>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Asunto</label>
+<input id="campaign-subject" required class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors" placeholder="ej. Nuevos panes de la semana 🥖" type="text"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Mensaje</label>
+<textarea id="campaign-message" required rows="5" class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors resize-none" placeholder="Escribí la promoción…"></textarea>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md uppercase tracking-widest text-outline block">Destacar productos (opcional)</label>
+<div id="campaign-products" class="grid grid-cols-1 md:grid-cols-2 gap-xs max-h-40 overflow-y-auto"></div>
+</div>
+<div class="hidden text-error font-body-md text-body-md" id="campaign-error"></div>
+<div class="pt-md flex flex-col md:flex-row gap-md">
+<button id="campaign-send" class="flex-1 bg-primary text-on-primary py-md font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors duration-300" type="submit">Enviar</button>
+<button class="flex-1 border border-outline-variant text-outline py-md font-label-md text-label-md uppercase tracking-widest hover:border-primary hover:text-primary transition-colors duration-300" type="button" onclick="toggleModal('campaign-modal')">Cancelar</button>
+</div>
+<p class="font-caption text-caption text-outline">Se envía solo a suscriptores activos, de a uno (sin exponer la lista) y con link de baja. Tené en cuenta el límite del plan (~100 emails por día).</p>
 </form>
 </div>
 </div>
@@ -458,6 +511,7 @@
             loadAdmins();
             loadOrders();
             loadNotifEmails();
+            loadSubscribers();
         })();
 
         // ----- Inventario de Panes -----
@@ -737,5 +791,103 @@
                 msg.textContent = 'Error de conexión.'; msg.classList.remove('hidden'); msg.classList.add('text-error');
             }
         }
+
+        // ----- Suscriptores y campañas -----
+        let subsCache = [];
+        let campaignEmails = [];
+
+        function renderSubscribers(list) {
+            const cont = document.getElementById('subs-list');
+            const active = list.filter((s) => !s.unsubscribed).length;
+            document.getElementById('subs-count').textContent = list.length + ' suscriptor(es) · ' + active + ' activo(s)';
+            if (!list.length) { cont.innerHTML = '<div class="p-md text-on-surface-variant font-body-md">Todavía no hay suscriptores.</div>'; return; }
+            cont.innerHTML = list.map((s) => {
+                const date = new Date(s.created_at).toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: '2-digit' });
+                const estado = s.unsubscribed
+                    ? '<span class="bg-surface-dim text-outline px-sm py-xs rounded-full font-label-md text-caption uppercase">Baja</span>'
+                    : '<span class="bg-secondary-container/30 text-secondary px-sm py-xs rounded-full font-label-md text-caption uppercase">Activo</span>';
+                const chk = s.unsubscribed
+                    ? '<input type="checkbox" disabled class="h-4 w-4 opacity-40">'
+                    : '<input type="checkbox" class="sub-check h-4 w-4" data-email="' + esc(s.email) + '">';
+                return '<div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors gap-sm">' +
+                    '<div class="col-span-1">' + chk + '</div>' +
+                    '<div class="col-span-6 font-body-md text-primary break-all">' + esc(s.email) + '<span class="block font-caption text-caption text-outline">desde ' + date + '</span></div>' +
+                    '<div class="col-span-3 text-center">' + estado + '</div>' +
+                    '<div class="col-span-2 flex justify-end"><button data-del-sub="' + s.id + '" title="Eliminar" class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">delete</span></button></div>' +
+                '</div>';
+            }).join('');
+            const sa = document.getElementById('subs-select-all');
+            if (sa) sa.checked = false;
+        }
+
+        async function loadSubscribers() {
+            const cont = document.getElementById('subs-list');
+            try {
+                const r = await fetch('/api/subscribers');
+                if (!r.ok) throw new Error();
+                subsCache = await r.json();
+                renderSubscribers(subsCache);
+            } catch (e) { cont.innerHTML = '<div class="p-md text-error font-body-md">No se pudieron cargar los suscriptores.</div>'; }
+        }
+
+        document.getElementById('subs-select-all').addEventListener('change', (e) => {
+            document.querySelectorAll('.sub-check').forEach((c) => { c.checked = e.target.checked; });
+        });
+
+        document.getElementById('subs-list').addEventListener('click', async (e) => {
+            const btn = e.target.closest('button[data-del-sub]');
+            if (!btn) return;
+            if (!confirm('¿Eliminar este suscriptor de la lista?')) return;
+            try {
+                const r = await fetch('/api/subscribers/' + btn.getAttribute('data-del-sub'), { method: 'DELETE' });
+                const d = await r.json().catch(() => ({}));
+                if (r.ok && d.ok) { loadSubscribers(); return; }
+                alert(d.error || 'No se pudo eliminar.');
+            } catch (e) { alert('Error de conexión.'); }
+        });
+
+        function openCampaignModal() {
+            campaignEmails = Array.from(document.querySelectorAll('.sub-check:checked')).map((c) => c.getAttribute('data-email'));
+            if (!campaignEmails.length) { alert('Marcá al menos un suscriptor (o usá la casilla de “seleccionar todos”).'); return; }
+            document.getElementById('campaign-error').classList.add('hidden');
+            document.getElementById('campaign-recipients-note').innerHTML = '<span class="material-symbols-outlined text-[18px]">group</span> Se enviará a ' + campaignEmails.length + ' suscriptor(es) activo(s).';
+            const cont = document.getElementById('campaign-products');
+            cont.innerHTML = (breadsCache && breadsCache.length)
+                ? breadsCache.map((b) => '<label class="flex items-center gap-xs font-body-md text-body-md cursor-pointer"><input type="checkbox" class="camp-prod h-4 w-4" value="' + b.id + '">' + esc(b.name) + '</label>').join('')
+                : '<span class="font-caption text-caption text-outline">No hay productos cargados.</span>';
+            toggleModal('campaign-modal');
+        }
+
+        document.getElementById('campaign-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const errEl = document.getElementById('campaign-error');
+            errEl.classList.add('hidden');
+            const subject = document.getElementById('campaign-subject').value.trim();
+            const message = document.getElementById('campaign-message').value.trim();
+            const productIds = Array.from(document.querySelectorAll('.camp-prod:checked')).map((c) => Number(c.value));
+            const btn = document.getElementById('campaign-send');
+            const original = btn.textContent;
+            btn.textContent = 'Enviando…'; btn.disabled = true;
+            try {
+                const r = await fetch('/api/campaigns', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ subject, message, productIds, emails: campaignEmails }),
+                });
+                const d = await r.json().catch(() => ({}));
+                if (r.ok && d.ok) {
+                    toggleModal('campaign-modal');
+                    document.getElementById('campaign-form').reset();
+                    alert('Campaña enviada: ' + d.sent + ' enviado(s)' + (d.failed ? ', ' + d.failed + ' con error' : '') + '.');
+                    btn.textContent = original; btn.disabled = false;
+                    return;
+                }
+                errEl.textContent = d.error || 'No se pudo enviar la campaña.';
+                errEl.classList.remove('hidden');
+            } catch (err) {
+                errEl.textContent = 'Error de conexión.';
+                errEl.classList.remove('hidden');
+            }
+            btn.textContent = original; btn.disabled = false;
+        });
     </script>
 </body></html>

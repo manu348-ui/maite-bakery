@@ -10,7 +10,8 @@ import { initAdminStore, adminStore, isValidEmail } from './lib/adminStore.js';
 import { initBreadStore, breadStore, BREAD_STATUSES } from './lib/breadStore.js';
 import { initOrderStore, orderStore, ORDER_STATUSES } from './lib/orderStore.js';
 import { initSettingsStore, settingsStore } from './lib/settingsStore.js';
-import { initMailer, sendOrderNotification } from './lib/mailer.js';
+import { initSubscriberStore, subscriberStore } from './lib/subscriberStore.js';
+import { initMailer, sendOrderNotification, sendCampaignEmail, mailerEnabled } from './lib/mailer.js';
 
 dotenv.config();
 
@@ -38,6 +39,9 @@ const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || '';
 
 const SESSION_COOKIE = 'mb_session';
 const SESSION_TTL_HOURS = Number(process.env.SESSION_TTL_HOURS || 8);
+
+// URL pública del sitio (para armar el link de baja en las campañas).
+const SITE_URL = (process.env.SITE_URL || 'https://maite-bakery.onrender.com').replace(/\/$/, '');
 
 let SESSION_SECRET = process.env.SESSION_SECRET;
 if (!SESSION_SECRET) {
@@ -132,6 +136,24 @@ function rateLimitPassword(req, res, next) {
   entry.count += 1;
   next();
 }
+
+function makeRateLimiter({ windowMs, max, message }) {
+  const hits = new Map();
+  return (req, res, next) => {
+    const ip = req.ip;
+    const now = Date.now();
+    const e = hits.get(ip);
+    if (!e || now > e.resetAt) {
+      hits.set(ip, { count: 1, resetAt: now + windowMs });
+      return next();
+    }
+    if (e.count >= max) return res.status(429).json({ error: message });
+    e.count += 1;
+    next();
+  };
+}
+const rateLimitSubscribe = makeRateLimiter({ windowMs: 10 * 60 * 1000, max: 6, message: 'Demasiadas suscripciones desde esta conexión. Probá más tarde.' });
+const rateLimitCampaign = makeRateLimiter({ windowMs: 60 * 60 * 1000, max: 12, message: 'Demasiados envíos seguidos. Esperá un rato.' });
 
 // ---------------------------------------------------------------------------
 // Auth API
@@ -374,6 +396,98 @@ app.put('/api/settings/notifications', requireAuth, requirePrimary, async (req, 
 });
 
 // ---------------------------------------------------------------------------
+// Suscriptores y campañas de email
+// ---------------------------------------------------------------------------
+const CAMPAIGN_MAX_RECIPIENTS = 200;
+
+// Alta de suscriptor (público, desde el formulario del home). Opt-in.
+app.post('/api/subscribe', rateLimitSubscribe, async (req, res) => {
+  const email = String(req.body?.email || '').trim().toLowerCase();
+  if (!isValidEmail(email)) return res.status(400).json({ error: 'Correo inválido.' });
+  await subscriberStore().add(email);
+  res.json({ ok: true });
+});
+
+app.get('/api/subscribers', requireAuth, async (req, res) => {
+  res.json(await subscriberStore().list());
+});
+
+app.delete('/api/subscribers/:id', requireAuth, async (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id)) return res.status(400).json({ error: 'ID inválido.' });
+  const ok = await subscriberStore().remove(id);
+  if (!ok) return res.status(404).json({ error: 'Suscriptor no encontrado.' });
+  res.json({ ok: true });
+});
+
+// Enviar campaña — solo admin principal. Anti-spam: solo a suscriptores activos,
+// envío individual (sin exponer la lista) y con link de baja por destinatario.
+app.post('/api/campaigns', requireAuth, requirePrimary, rateLimitCampaign, async (req, res) => {
+  if (!mailerEnabled()) return res.status(503).json({ error: 'El envío de email no está configurado (falta SENDGRID_API_KEY).' });
+
+  const subject = String(req.body?.subject || '').trim();
+  const message = String(req.body?.message || '').trim();
+  const productIds = Array.isArray(req.body?.productIds) ? req.body.productIds : [];
+  const emails = Array.isArray(req.body?.emails)
+    ? [...new Set(req.body.emails.map((e) => String(e).trim().toLowerCase()).filter(Boolean))]
+    : [];
+
+  if (!subject) return res.status(400).json({ error: 'Falta el asunto.' });
+  if (!message) return res.status(400).json({ error: 'Falta el mensaje.' });
+  if (emails.length === 0) return res.status(400).json({ error: 'Seleccioná al menos un destinatario.' });
+
+  // Filtrar: solo suscriptores activos (no dados de baja).
+  const valid = [];
+  for (const e of emails) {
+    if (await subscriberStore().isActive(e)) valid.push(e);
+  }
+  if (valid.length === 0) return res.status(400).json({ error: 'Ninguno de los seleccionados es un suscriptor activo.' });
+  if (valid.length > CAMPAIGN_MAX_RECIPIENTS) {
+    return res.status(400).json({ error: `Máximo ${CAMPAIGN_MAX_RECIPIENTS} destinatarios por envío.` });
+  }
+
+  // Productos a destacar (opcional).
+  const products = [];
+  for (const id of productIds) {
+    const b = await breadStore().get(Number(id));
+    if (b) products.push({ name: b.name, price: b.price, image_url: b.image_url });
+  }
+
+  let sent = 0;
+  let failed = 0;
+  for (const email of valid) {
+    const token = jwt.sign({ sub: email, p: 'unsub' }, SESSION_SECRET);
+    const unsubscribeUrl = `${SITE_URL}/unsubscribe?token=${encodeURIComponent(token)}`;
+    const ok = await sendCampaignEmail({ to: email, subject, message, products, unsubscribeUrl, siteUrl: SITE_URL });
+    if (ok) sent += 1;
+    else failed += 1;
+  }
+  res.json({ ok: true, sent, failed, total: valid.length });
+});
+
+// Baja de suscripción (público, desde el link del email).
+function unsubPage(msg) {
+  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Maité Bakery</title></head>
+  <body style="font-family:Arial,sans-serif;background:#fbf9f8;color:#1b1c1c;display:flex;min-height:90vh;align-items:center;justify-content:center;text-align:center;padding:24px">
+  <div><h1 style="color:#322214;font-size:22px">Maité Bakery</h1><p style="font-size:16px;color:#4e453e">${msg}</p>
+  <p style="margin-top:18px"><a href="${SITE_URL}" style="color:#725b27">Volver a la tienda</a></p></div></body></html>`;
+}
+
+app.get('/unsubscribe', async (req, res) => {
+  const token = String(req.query.token || '');
+  let email = null;
+  try {
+    const payload = jwt.verify(token, SESSION_SECRET);
+    if (payload.p === 'unsub') email = payload.sub;
+  } catch {
+    /* token inválido */
+  }
+  if (!email) return res.status(400).send(unsubPage('El enlace de baja no es válido o ya no está disponible.'));
+  await subscriberStore().unsubscribe(email);
+  res.send(unsubPage('Listo, te diste de baja. No vas a recibir más correos de Maité Bakery.'));
+});
+
+// ---------------------------------------------------------------------------
 // Protected page(s) — must be registered BEFORE the static middleware
 // ---------------------------------------------------------------------------
 app.get(['/admin', '/admin.html'], requireAuthPage, (req, res) => {
@@ -422,6 +536,7 @@ async function start() {
     databaseUrl: process.env.DATABASE_URL,
     seed: { notification_emails: ADMIN_EMAILS[0] || '' },
   });
+  await initSubscriberStore({ databaseUrl: process.env.DATABASE_URL });
   initMailer();
 
   app.listen(PORT, () => {

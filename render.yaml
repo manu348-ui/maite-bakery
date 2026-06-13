@@ -24,15 +24,15 @@ services:
         fromDatabase:
           name: maite-bakery-db
           property: connectionString
-      # Email de aviso de pedidos (Gmail).
-      - key: GMAIL_USER
+      # Email de aviso de pedidos (SendGrid HTTP API).
+      - key: MAIL_FROM
         value: manu348@gmail.com
       # Secretos: se definen en el dashboard de Render, NO acá.
       - key: SESSION_SECRET
         sync: false
       - key: ADMIN_PASSWORD_HASH
         sync: false
-      - key: GMAIL_APP_PASSWORD
+      - key: SENDGRID_API_KEY
         sync: false
 
 databases:

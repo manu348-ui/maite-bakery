@@ -344,6 +344,14 @@ app.patch('/api/orders/:id', requireAuth, async (req, res) => {
   res.json({ ok: true });
 });
 
+app.delete('/api/orders/:id', requireAuth, async (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id)) return res.status(400).json({ error: 'ID inválido.' });
+  const ok = await orderStore().remove(id);
+  if (!ok) return res.status(404).json({ error: 'Pedido no encontrado.' });
+  res.json({ ok: true });
+});
+
 // ---------------------------------------------------------------------------
 // Settings API — destinatarios de notificación de pedidos
 // ---------------------------------------------------------------------------

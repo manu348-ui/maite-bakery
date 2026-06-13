@@ -660,6 +660,7 @@
                     '<div class="col-span-3 flex md:justify-end items-center gap-sm">' +
                         '<span class="px-sm py-xs rounded-full font-label-md text-caption uppercase ' + (ORDER_BADGE[o.status] || '') + '">' + (ORDER_LABELS[o.status] || o.status) + '</span>' +
                         '<select data-order="' + o.id + '" class="bg-transparent border border-outline-variant rounded text-body-md py-xs px-sm focus:ring-0">' + opts + '</select>' +
+                        '<button data-del-order="' + o.id + '" title="Eliminar pedido" class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">delete</span></button>' +
                     '</div>' +
                 '</div>';
             }).join('');
@@ -686,6 +687,19 @@
                 const d = await r.json().catch(() => ({}));
                 if (r.ok && d.ok) { loadOrders(); return; }
                 alert(d.error || 'No se pudo actualizar el estado.');
+            } catch (e) { alert('Error de conexión.'); }
+        });
+
+        document.getElementById('orders-list').addEventListener('click', async (e) => {
+            const btn = e.target.closest('button[data-del-order]');
+            if (!btn) return;
+            const id = btn.getAttribute('data-del-order');
+            if (!confirm('¿Eliminar el pedido #MB-' + id + '? Esta acción no se puede deshacer.')) return;
+            try {
+                const r = await fetch('/api/orders/' + id, { method: 'DELETE' });
+                const d = await r.json().catch(() => ({}));
+                if (r.ok && d.ok) { loadOrders(); return; }
+                alert(d.error || 'No se pudo eliminar el pedido.');
             } catch (e) { alert('Error de conexión.'); }
         });
 

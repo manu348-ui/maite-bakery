@@ -24,10 +24,15 @@ services:
         fromDatabase:
           name: maite-bakery-db
           property: connectionString
+      # Email de aviso de pedidos (Gmail).
+      - key: GMAIL_USER
+        value: manu348@gmail.com
       # Secretos: se definen en el dashboard de Render, NO acá.
       - key: SESSION_SECRET
         sync: false
       - key: ADMIN_PASSWORD_HASH
+        sync: false
+      - key: GMAIL_APP_PASSWORD
         sync: false
 
 databases:

@@ -207,16 +207,16 @@
 <div class="border-t border-outline-variant/50 pt-md space-y-sm mb-md">
 <div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
 <span class="">Subtotal</span>
-<span class="">$19.50</span>
+<span class="" id="sum-subtotal">$0.00</span>
 </div>
 <div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
 <span class="">Impuestos (10%)</span>
-<span class="">$1.95</span>
+<span class="" id="sum-tax">$0.00</span>
 </div>
 </div>
 <div class="border-t border-primary/20 pt-md flex justify-between items-center">
 <span class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Total</span>
-<span class="font-headline-md text-headline-md text-primary">$21.45</span>
+<span class="font-headline-md text-headline-md text-primary" id="sum-total">$0.00</span>
 </div>
 </div>
 </aside>
@@ -239,25 +239,93 @@
 </div>
 </footer>
 <script>
-        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+        // ----- Carrito (localStorage) -----
+        function getCart() { try { return JSON.parse(localStorage.getItem('mb_cart')) || []; } catch (e) { return []; } }
+        function setCart(c) { localStorage.setItem('mb_cart', JSON.stringify(c)); }
+        const TAX_RATE = 0.10;
+        const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+        function renderCheckout() {
+            const cart = getCart();
+            const cont = document.getElementById('order-items');
+            const btn = document.querySelector('#checkout-form button[type="submit"]');
+            if (!cart.length) {
+                cont.innerHTML = '<p class="font-body-md text-on-surface-variant text-center py-md">Tu carrito está vacío. <a href="index.html" class="text-primary underline">Ver panes</a></p>';
+                if (btn) { btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed'); }
+                document.getElementById('sum-subtotal').textContent = '$0.00';
+                document.getElementById('sum-tax').textContent = '$0.00';
+                document.getElementById('sum-total').textContent = '$0.00';
+                return;
+            }
+            cont.innerHTML = cart.map((it, idx) => {
+                const img = it.image_url
+                    ? '<img class="w-full h-full object-cover" src="' + esc(it.image_url) + '" alt="' + esc(it.name) + '">'
+                    : '<div class="w-full h-full flex items-center justify-center text-outline"><span class="material-symbols-outlined">bakery_dining</span></div>';
+                return '<div class="flex items-start gap-md">' +
+                    '<div class="w-20 h-20 rounded bg-surface-container overflow-hidden shrink-0">' + img + '</div>' +
+                    '<div class="flex-grow">' +
+                        '<div class="flex justify-between items-start gap-sm"><h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">' + esc(it.name) + '</h3>' +
+                        '<button data-rm="' + idx + '" title="Quitar" class="text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-[18px]">close</span></button></div>' +
+                        '<div class="flex justify-between items-center mt-sm">' +
+                            '<div class="flex items-center border border-outline-variant rounded">' +
+                                '<button data-dec="' + idx + '" class="px-sm py-xs hover:bg-surface-container">−</button>' +
+                                '<span class="px-sm font-body-md">' + it.qty + '</span>' +
+                                '<button data-inc="' + idx + '" class="px-sm py-xs hover:bg-surface-container">+</button>' +
+                            '</div>' +
+                            '<span class="font-body-lg text-body-lg text-primary">$' + (it.price * it.qty).toFixed(2) + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+            const subtotal = cart.reduce((s, it) => s + it.price * it.qty, 0);
+            const tax = subtotal * TAX_RATE;
+            document.getElementById('sum-subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('sum-tax').textContent = '$' + tax.toFixed(2);
+            document.getElementById('sum-total').textContent = '$' + (subtotal + tax).toFixed(2);
+            if (btn) { btn.disabled = false; btn.classList.remove('opacity-50', 'cursor-not-allowed'); }
+        }
+
+        document.getElementById('order-items').addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-inc],button[data-dec],button[data-rm]');
+            if (!btn) return;
+            const cart = getCart();
+            if (btn.hasAttribute('data-inc')) cart[+btn.getAttribute('data-inc')].qty++;
+            else if (btn.hasAttribute('data-dec')) { const i = +btn.getAttribute('data-dec'); cart[i].qty = Math.max(1, cart[i].qty - 1); }
+            else if (btn.hasAttribute('data-rm')) cart.splice(+btn.getAttribute('data-rm'), 1);
+            setCart(cart);
+            renderCheckout();
+        });
+
+        renderCheckout();
+
+        document.getElementById('checkout-form').addEventListener('submit', async function (e) {
             e.preventDefault();
+            const cart = getCart();
+            if (!cart.length) return;
             const btn = this.querySelector('button[type="submit"]');
+            const original = btn.innerHTML;
+            const name = document.getElementById('nombre').value.trim();
+            const phone = document.getElementById('telefono').value.trim();
+            const delivery = (document.querySelector('input[name="entrega"]:checked') || {}).value || 'recogida';
 
-            // Simple interaction feedback
             btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Procesando...';
-            btn.disabled = true;
-            btn.classList.add('opacity-70');
-
-            setTimeout(() => {
-                btn.innerHTML = '<span class="material-symbols-outlined">check</span> Pedido Confirmado';
-                btn.classList.remove('bg-primary-container');
-                btn.classList.add('bg-[#4a3728]'); // Darker state for success
-
-                // Redirect to the confirmation page
-                setTimeout(() => {
-                    window.location.href = 'confirmacion.html';
-                }, 800);
-            }, 1000);
+            btn.disabled = true; btn.classList.add('opacity-70');
+            try {
+                const r = await fetch('/api/orders', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, phone, delivery, items: cart.map((it) => ({ id: it.id, qty: it.qty })) }),
+                });
+                const d = await r.json().catch(() => ({}));
+                if (r.ok && d.ok) {
+                    localStorage.removeItem('mb_cart');
+                    window.location.href = 'confirmacion.html?order=' + d.orderId;
+                    return;
+                }
+                alert(d.error || 'No se pudo procesar el pedido.');
+            } catch (err) {
+                alert('Error de conexión con el servidor.');
+            }
+            btn.innerHTML = original; btn.disabled = false; btn.classList.remove('opacity-70');
         });
     </script>
 

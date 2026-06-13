@@ -138,11 +138,11 @@
 <ul class="space-y-sm font-body-md text-body-md text-on-background">
 <li class="flex justify-between">
 <span class="text-on-surface-variant">Número de Orden:</span>
-<span class="font-semibold text-primary">#MB-1024</span>
+<span class="font-semibold text-primary" id="order-number">#MB-1024</span>
 </li>
 <li class="flex justify-between">
 <span class="text-on-surface-variant">Fecha:</span>
-<span class="">10 de Junio, 2026</span>
+<span class="" id="order-date">10 de Junio, 2026</span>
 </li>
 <li class="flex flex-col mt-sm pt-sm border-t border-outline-variant/20">
 <span class="text-on-surface-variant mb-xs">Lugar de Recogida:</span>
@@ -182,6 +182,13 @@
 <div class="font-body-md text-body-md text-on-surface-variant">© 2024 Maité Bakery. Tradición Artesanal.</div>
 </div>
 </footer>
+<script>
+    (function () {
+        const id = new URLSearchParams(location.search).get('order');
+        if (id) document.getElementById('order-number').textContent = '#MB-' + id;
+        document.getElementById('order-date').textContent = new Date().toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' });
+    })();
+</script>
 
 
 </body></html>

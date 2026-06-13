@@ -161,6 +161,35 @@
 <div class="p-md text-on-surface-variant font-body-md">Cargando…</div>
 </div>
 </div>
+<section id="orders-section" class="mt-xl pt-xl border-t border-outline-variant/30">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-lg">
+<div>
+<span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-xs block">Operaciones</span>
+<h2 class="font-headline-lg text-headline-lg text-primary">Pedidos</h2>
+</div>
+<button onclick="loadOrders()" class="border border-outline-variant text-on-surface-variant px-md py-sm font-label-md text-label-md uppercase tracking-widest hover:border-primary hover:text-primary transition-colors flex items-center gap-xs"><span class="material-symbols-outlined text-[18px]">refresh</span>Actualizar</button>
+</div>
+<div class="bg-surface-container-low rounded p-md mb-lg flex flex-col md:flex-row md:items-end gap-md border border-outline-variant/30">
+<div class="flex-grow space-y-xs">
+<label class="font-label-md text-label-md uppercase tracking-widest text-outline block flex items-center gap-xs"><span class="material-symbols-outlined text-[18px]">notifications</span>Avisar nuevos pedidos por email a</label>
+<input id="notif-emails" type="text" placeholder="mail1@ejemplo.com, mail2@ejemplo.com" class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-secondary focus:ring-0 text-body-md py-sm px-0 placeholder:text-outline/50 transition-colors"/>
+<p class="font-caption text-caption text-outline">Separá varios correos con comas. Solo el administrador principal puede cambiarlos.</p>
+</div>
+<button id="notif-save" onclick="saveNotifEmails()" class="bg-primary text-on-primary px-lg py-sm font-label-md text-label-md uppercase tracking-widest hover:bg-primary-container transition-colors shrink-0">Guardar</button>
+<span id="notif-msg" class="hidden font-body-md text-body-md text-secondary"></span>
+</div>
+<div class="grid grid-cols-1 gap-gutter">
+<div class="hidden md:grid grid-cols-12 px-md py-sm border-b border-outline-variant font-label-md text-label-md uppercase tracking-widest text-outline">
+<div class="col-span-3">CLIENTE</div>
+<div class="col-span-4">PEDIDO</div>
+<div class="col-span-2 text-center">TOTAL</div>
+<div class="col-span-3 text-right">ESTADO</div>
+</div>
+<div id="orders-list" class="grid grid-cols-1 gap-gutter">
+<div class="p-md text-on-surface-variant font-body-md">Cargando…</div>
+</div>
+</div>
+</section>
 <section id="access-section" class="mt-xl pt-xl border-t border-outline-variant/30">
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl">
 <div>
@@ -427,6 +456,8 @@
         (async () => {
             try { const r = await fetch('/api/me'); if (r.ok) { currentRole = (await r.json()).role || 'admin'; } } catch (e) {}
             loadAdmins();
+            loadOrders();
+            loadNotifEmails();
         })();
 
         // ----- Inventario de Panes -----
@@ -601,5 +632,94 @@
         });
 
         loadBreads();
+
+        // ----- Pedidos -----
+        const ORDER_LABELS = { nuevo: 'Nuevo', preparando: 'Preparando', entregado: 'Entregado', cancelado: 'Cancelado' };
+        const ORDER_BADGE = {
+            nuevo: 'bg-secondary-container text-on-secondary-container',
+            preparando: 'bg-secondary/20 text-secondary',
+            entregado: 'bg-primary text-on-primary',
+            cancelado: 'bg-surface-dim text-outline',
+        };
+
+        function renderOrders(list) {
+            const cont = document.getElementById('orders-list');
+            if (!list.length) { cont.innerHTML = '<div class="p-md text-on-surface-variant font-body-md">Todavía no hay pedidos.</div>'; return; }
+            cont.innerHTML = list.map((o) => {
+                const wa = String(o.phone || '').replace(/\D/g, '');
+                const phone = wa
+                    ? '<a href="https://wa.me/' + wa + '" target="_blank" class="text-secondary hover:underline inline-flex items-center gap-xs"><span class="material-symbols-outlined text-[16px]">chat</span>' + esc(o.phone) + '</a>'
+                    : esc(o.phone);
+                const date = new Date(o.created_at).toLocaleString('es-AR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+                const items = (o.items || []).map((i) => esc(i.name) + ' ×' + i.qty).join(', ');
+                const opts = Object.keys(ORDER_LABELS).map((s) => '<option value="' + s + '"' + (s === o.status ? ' selected' : '') + '>' + ORDER_LABELS[s] + '</option>').join('');
+                return '<div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors gap-sm">' +
+                    '<div class="col-span-3 mb-sm md:mb-0"><div class="font-body-md font-semibold text-primary">' + esc(o.customer_name) + '</div><div class="font-caption text-caption">' + phone + '</div><div class="font-caption text-caption text-outline">#MB-' + o.id + ' · ' + date + '</div></div>' +
+                    '<div class="col-span-4 text-on-surface-variant text-body-md mb-sm md:mb-0">' + items + '</div>' +
+                    '<div class="col-span-2 text-center text-primary font-medium mb-sm md:mb-0">$' + Number(o.total).toFixed(2) + '</div>' +
+                    '<div class="col-span-3 flex md:justify-end items-center gap-sm">' +
+                        '<span class="px-sm py-xs rounded-full font-label-md text-caption uppercase ' + (ORDER_BADGE[o.status] || '') + '">' + (ORDER_LABELS[o.status] || o.status) + '</span>' +
+                        '<select data-order="' + o.id + '" class="bg-transparent border border-outline-variant rounded text-body-md py-xs px-sm focus:ring-0">' + opts + '</select>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        async function loadOrders() {
+            const cont = document.getElementById('orders-list');
+            try {
+                const r = await fetch('/api/orders');
+                if (!r.ok) throw new Error();
+                renderOrders(await r.json());
+            } catch (e) {
+                cont.innerHTML = '<div class="p-md text-error font-body-md">No se pudieron cargar los pedidos.</div>';
+            }
+        }
+
+        document.getElementById('orders-list').addEventListener('change', async (e) => {
+            const sel = e.target.closest('select[data-order]');
+            if (!sel) return;
+            try {
+                const r = await fetch('/api/orders/' + sel.getAttribute('data-order'), {
+                    method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: sel.value }),
+                });
+                const d = await r.json().catch(() => ({}));
+                if (r.ok && d.ok) { loadOrders(); return; }
+                alert(d.error || 'No se pudo actualizar el estado.');
+            } catch (e) { alert('Error de conexión.'); }
+        });
+
+        // ----- Notificaciones -----
+        async function loadNotifEmails() {
+            try {
+                const r = await fetch('/api/settings/notifications');
+                if (r.ok) document.getElementById('notif-emails').value = (await r.json()).emails || '';
+            } catch (e) {}
+            if (currentRole !== 'primary') {
+                document.getElementById('notif-emails').disabled = true;
+                document.getElementById('notif-save').classList.add('hidden');
+            }
+        }
+
+        async function saveNotifEmails() {
+            const input = document.getElementById('notif-emails');
+            const msg = document.getElementById('notif-msg');
+            msg.classList.add('hidden');
+            try {
+                const r = await fetch('/api/settings/notifications', {
+                    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ emails: input.value }),
+                });
+                const d = await r.json().catch(() => ({}));
+                if (r.ok && d.ok) {
+                    input.value = d.emails;
+                    msg.textContent = 'Guardado ✓'; msg.classList.remove('hidden', 'text-error'); msg.classList.add('text-secondary');
+                    setTimeout(() => msg.classList.add('hidden'), 2500);
+                    return;
+                }
+                msg.textContent = d.error || 'No se pudo guardar.'; msg.classList.remove('hidden', 'text-secondary'); msg.classList.add('text-error');
+            } catch (e) {
+                msg.textContent = 'Error de conexión.'; msg.classList.remove('hidden'); msg.classList.add('text-error');
+            }
+        }
     </script>
 </body></html>

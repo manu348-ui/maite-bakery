@@ -8,6 +8,9 @@ import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { initAdminStore, adminStore, isValidEmail } from './lib/adminStore.js';
 import { initBreadStore, breadStore, BREAD_STATUSES } from './lib/breadStore.js';
+import { initOrderStore, orderStore, ORDER_STATUSES } from './lib/orderStore.js';
+import { initSettingsStore, settingsStore } from './lib/settingsStore.js';
+import { initMailer, sendOrderNotification } from './lib/mailer.js';
 
 dotenv.config();
 
@@ -279,6 +282,87 @@ app.delete('/api/breads/:id', requireAuth, async (req, res) => {
 });
 
 // ---------------------------------------------------------------------------
+// Orders API
+// ---------------------------------------------------------------------------
+const TAX_RATE = 0.10;
+
+// Crear un pedido (público, desde el checkout). Los totales se recalculan en el
+// servidor a partir de los precios reales de la base (no se confía en el cliente).
+app.post('/api/orders', async (req, res) => {
+  const name = String(req.body?.name || '').trim();
+  const phone = String(req.body?.phone || '').trim();
+  const delivery = String(req.body?.delivery || 'recogida').trim() || 'recogida';
+  const rawItems = Array.isArray(req.body?.items) ? req.body.items : [];
+
+  if (!name) return res.status(400).json({ error: 'Falta el nombre del cliente.' });
+  if (!phone) return res.status(400).json({ error: 'Falta el teléfono.' });
+  if (rawItems.length === 0) return res.status(400).json({ error: 'El carrito está vacío.' });
+
+  // Resolver cada ítem contra la base.
+  const items = [];
+  let subtotal = 0;
+  for (const it of rawItems) {
+    const bread = await breadStore().get(Number(it.id));
+    const qty = Math.max(1, Math.min(99, parseInt(it.qty, 10) || 1));
+    if (!bread) return res.status(400).json({ error: 'Hay un producto que ya no existe.' });
+    subtotal += bread.price * qty;
+    items.push({ id: bread.id, name: bread.name, price: bread.price, qty });
+  }
+  subtotal = Math.round(subtotal * 100) / 100;
+  const tax = Math.round(subtotal * TAX_RATE * 100) / 100;
+  const total = Math.round((subtotal + tax) * 100) / 100;
+
+  const order = await orderStore().add({
+    customer_name: name,
+    phone,
+    delivery_method: delivery,
+    items,
+    subtotal,
+    tax,
+    total,
+  });
+
+  // Notificar por email sin bloquear la respuesta.
+  settingsStore()
+    .get('notification_emails', ADMIN_EMAILS[0] || '')
+    .then((csv) => sendOrderNotification(order, csv.split(',').map((e) => e.trim()).filter(Boolean)))
+    .catch((e) => console.error('Notificación de pedido falló:', e.message));
+
+  res.json({ ok: true, orderId: order.id });
+});
+
+app.get('/api/orders', requireAuth, async (req, res) => {
+  res.json(await orderStore().list());
+});
+
+app.patch('/api/orders/:id', requireAuth, async (req, res) => {
+  const id = Number(req.params.id);
+  const status = String(req.body?.status || '');
+  if (!ORDER_STATUSES.includes(status)) return res.status(400).json({ error: 'Estado inválido.' });
+  const ok = await orderStore().setStatus(id, status);
+  if (!ok) return res.status(404).json({ error: 'Pedido no encontrado.' });
+  res.json({ ok: true });
+});
+
+// ---------------------------------------------------------------------------
+// Settings API — destinatarios de notificación de pedidos
+// ---------------------------------------------------------------------------
+app.get('/api/settings/notifications', requireAuth, async (req, res) => {
+  const csv = await settingsStore().get('notification_emails', ADMIN_EMAILS[0] || '');
+  res.json({ emails: csv });
+});
+
+app.put('/api/settings/notifications', requireAuth, requirePrimary, async (req, res) => {
+  const raw = String(req.body?.emails || '');
+  const list = raw.split(',').map((e) => e.trim().toLowerCase()).filter(Boolean);
+  if (list.length === 0) return res.status(400).json({ error: 'Indicá al menos un correo.' });
+  const invalid = list.find((e) => !isValidEmail(e));
+  if (invalid) return res.status(400).json({ error: `Correo inválido: ${invalid}` });
+  await settingsStore().set('notification_emails', list.join(', '));
+  res.json({ ok: true, emails: list.join(', ') });
+});
+
+// ---------------------------------------------------------------------------
 // Protected page(s) — must be registered BEFORE the static middleware
 // ---------------------------------------------------------------------------
 app.get(['/admin', '/admin.html'], requireAuthPage, (req, res) => {
@@ -322,6 +406,12 @@ async function start() {
     primaryEmails: ADMIN_EMAILS,
   });
   await initBreadStore({ databaseUrl: process.env.DATABASE_URL });
+  await initOrderStore({ databaseUrl: process.env.DATABASE_URL });
+  await initSettingsStore({
+    databaseUrl: process.env.DATABASE_URL,
+    seed: { notification_emails: ADMIN_EMAILS[0] || '' },
+  });
+  initMailer();
 
   app.listen(PORT, () => {
     console.log(`Maité Bakery escuchando en http://localhost:${PORT}`);

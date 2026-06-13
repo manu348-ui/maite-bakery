@@ -197,11 +197,11 @@
 <input class="w-12 text-center bg-transparent border-none focus:ring-0 font-body-md" id="qty" min="1" type="number" value="1">
 <button class="p-2 hover:bg-surface-variant rounded transition-colors" onclick="incrementQty()">+</button>
 </div>
-<button class="flex-grow bg-primary-container text-on-primary font-label-md text-label-md uppercase tracking-widest py-md hover:bg-primary transition-colors shadow-sm active:translate-y-[1px]" onclick="window.location.href='checkout.html'">
+<button class="flex-grow bg-primary-container text-on-primary font-label-md text-label-md uppercase tracking-widest py-md hover:bg-primary transition-colors shadow-sm active:translate-y-[1px]" onclick="addToCartAndCheckout()">
                         AÑADIR AL CARRITO
                     </button>
 </div>
-<button onclick="window.location.href='checkout.html'" class="w-full border border-primary text-primary font-label-md text-label-md uppercase tracking-widest py-md hover:bg-surface-container-low transition-colors">
+<button onclick="addToCartAndCheckout()" class="w-full border border-primary text-primary font-label-md text-label-md uppercase tracking-widest py-md hover:bg-surface-container-low transition-colors">
                     RESERVAR PARA RECOGER
                 </button>
 </div>
@@ -275,22 +275,45 @@
         }
     }
 
-    // Carga el pan según ?id= (si no hay id, queda el contenido por defecto)
+    // ----- Carrito (localStorage) -----
+    function getCart() { try { return JSON.parse(localStorage.getItem('mb_cart')) || []; } catch (e) { return []; } }
+    function setCart(c) { localStorage.setItem('mb_cart', JSON.stringify(c)); }
+
+    let currentBread = null;
+
+    function addToCartAndCheckout() {
+        if (!currentBread) { window.location.href = 'index.html'; return; }
+        const qty = Math.max(1, parseInt(document.getElementById('qty').value, 10) || 1);
+        const cart = getCart();
+        const ex = cart.find((i) => i.id === currentBread.id);
+        if (ex) ex.qty += qty;
+        else cart.push({ id: currentBread.id, name: currentBread.name, price: currentBread.price, image_url: currentBread.image_url || '', qty });
+        setCart(cart);
+        window.location.href = 'checkout.html';
+    }
+
+    function applyBread(b) {
+        currentBread = b;
+        document.title = b.name + ' — Maité Bakery';
+        const name = document.getElementById('product-name');
+        const price = document.getElementById('product-price');
+        const desc = document.getElementById('product-description');
+        const img = document.getElementById('product-image');
+        if (name) name.textContent = b.name;
+        if (price) price.textContent = '$' + Number(b.price).toFixed(2);
+        if (desc && b.description) desc.textContent = b.description;
+        if (img && b.image_url) { img.src = b.image_url; img.alt = b.name; }
+    }
+
+    // Carga el pan según ?id= (si no hay id, usa el primero del catálogo)
     (function () {
         const id = new URLSearchParams(location.search).get('id');
-        if (!id) return;
-        fetch('/api/breads/' + encodeURIComponent(id))
+        const url = id ? '/api/breads/' + encodeURIComponent(id) : '/api/breads';
+        fetch(url)
             .then((r) => r.ok ? r.json() : Promise.reject())
-            .then((b) => {
-                document.title = b.name + ' — Maité Bakery';
-                const name = document.getElementById('product-name');
-                const price = document.getElementById('product-price');
-                const desc = document.getElementById('product-description');
-                const img = document.getElementById('product-image');
-                if (name) name.textContent = b.name;
-                if (price) price.textContent = '$' + Number(b.price).toFixed(2);
-                if (desc && b.description) desc.textContent = b.description;
-                if (img && b.image_url) { img.src = b.image_url; img.alt = b.name; }
+            .then((data) => {
+                const b = Array.isArray(data) ? data[0] : data;
+                if (b) applyBread(b);
             })
             .catch(() => { /* deja el contenido estático */ });
     })();

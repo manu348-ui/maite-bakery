@@ -292,10 +292,12 @@ app.post('/api/orders', async (req, res) => {
   const name = String(req.body?.name || '').trim();
   const phone = String(req.body?.phone || '').trim();
   const delivery = String(req.body?.delivery || 'recogida').trim() || 'recogida';
+  const address = String(req.body?.address || '').trim();
   const rawItems = Array.isArray(req.body?.items) ? req.body.items : [];
 
   if (!name) return res.status(400).json({ error: 'Falta el nombre del cliente.' });
   if (!phone) return res.status(400).json({ error: 'Falta el teléfono.' });
+  if (delivery === 'domicilio' && !address) return res.status(400).json({ error: 'Falta la dirección de envío.' });
   if (rawItems.length === 0) return res.status(400).json({ error: 'El carrito está vacío.' });
 
   // Resolver cada ítem contra la base.
@@ -316,6 +318,7 @@ app.post('/api/orders', async (req, res) => {
     customer_name: name,
     phone,
     delivery_method: delivery,
+    address,
     items,
     subtotal,
     tax,

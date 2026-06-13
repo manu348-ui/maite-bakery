@@ -655,7 +655,9 @@
                 const opts = Object.keys(ORDER_LABELS).map((s) => '<option value="' + s + '"' + (s === o.status ? ' selected' : '') + '>' + ORDER_LABELS[s] + '</option>').join('');
                 return '<div class="grid grid-cols-1 md:grid-cols-12 items-center p-md bg-surface-container-low rounded border border-transparent hover:border-outline-variant/30 transition-colors gap-sm">' +
                     '<div class="col-span-3 mb-sm md:mb-0"><div class="font-body-md font-semibold text-primary">' + esc(o.customer_name) + '</div><div class="font-caption text-caption">' + phone + '</div><div class="font-caption text-caption text-outline">#MB-' + o.id + ' · ' + date + '</div></div>' +
-                    '<div class="col-span-4 text-on-surface-variant text-body-md mb-sm md:mb-0">' + items + '</div>' +
+                    '<div class="col-span-4 text-on-surface-variant text-body-md mb-sm md:mb-0">' +
+                        '<div class="font-caption text-caption text-secondary mb-xs flex items-start gap-xs"><span class="material-symbols-outlined text-[14px]">' + (o.delivery_method === 'domicilio' ? 'local_shipping' : 'storefront') + '</span><span>' + ({ recogida: 'Retiro en tienda', domicilio: 'Envío a domicilio' }[o.delivery_method] || esc(o.delivery_method)) + (o.address ? ' — ' + esc(o.address) : '') + '</span></div>' +
+                        items + '</div>' +
                     '<div class="col-span-2 text-center text-primary font-medium mb-sm md:mb-0">$' + Number(o.total).toFixed(2) + '</div>' +
                     '<div class="col-span-3 flex md:justify-end items-center gap-sm">' +
                         '<span class="px-sm py-xs rounded-full font-label-md text-caption uppercase ' + (ORDER_BADGE[o.status] || '') + '">' + (ORDER_LABELS[o.status] || o.status) + '</span>' +

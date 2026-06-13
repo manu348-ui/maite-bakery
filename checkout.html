@@ -154,9 +154,20 @@
 <input checked="" class="text-primary focus:ring-primary h-5 w-5 border-outline-variant bg-transparent" name="entrega" type="radio" value="recogida">
 <div>
 <span class="block font-label-md text-label-md text-on-surface uppercase tracking-wider">Recogida en tienda</span>
-<span class="block font-caption text-caption text-on-surface-variant mt-xs">Gratis • Maité Bakery, Calle Principal 123</span>
+<span class="block font-caption text-caption text-on-surface-variant mt-xs">Gratis • Coordinamos el punto por WhatsApp</span>
 </div>
 </label>
+<label class="flex items-center gap-md p-md bg-surface-container-low rounded-lg border border-transparent cursor-pointer hover:bg-surface-container transition-colors">
+<input class="text-primary focus:ring-primary h-5 w-5 border-outline-variant bg-transparent" name="entrega" type="radio" value="domicilio">
+<div>
+<span class="block font-label-md text-label-md text-on-surface uppercase tracking-wider">Envío a domicilio</span>
+<span class="block font-caption text-caption text-on-surface-variant mt-xs">Coordinamos el costo y el horario por WhatsApp</span>
+</div>
+</label>
+</div>
+<div class="hidden space-y-sm" id="address-wrap">
+<label class="block font-label-md text-label-md text-on-surface uppercase tracking-wider" for="direccion">Dirección de envío</label>
+<input class="w-full bg-surface-bright border-0 border-b border-outline-variant py-sm px-0 text-body-lg font-body-lg text-on-surface placeholder:text-outline focus:ring-0 transition-colors bg-transparent" id="direccion" name="direccion" placeholder="Calle, número, piso/depto, localidad" type="text">
 </div>
 </div>
 <div class="pt-xl">
@@ -233,7 +244,7 @@
 <nav class="flex gap-md font-caption text-caption text-on-surface-variant dark:text-on-surface-variant">
 <a class="hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="index.html">Sustainability</a>
 <a class="hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="index.html">Wholesale</a>
-<a class="hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="index.html">Contact</a>
+<a class="hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="mailto:maite16miranda@gmail.com">Contacto</a>
 <a class="hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer" href="index.html">Terms</a>
 </nav>
 </div>
@@ -298,6 +309,13 @@
 
         renderCheckout();
 
+        document.querySelectorAll('input[name="entrega"]').forEach((radio) => {
+            radio.addEventListener('change', () => {
+                const domicilio = (document.querySelector('input[name="entrega"]:checked') || {}).value === 'domicilio';
+                document.getElementById('address-wrap').classList.toggle('hidden', !domicilio);
+            });
+        });
+
         document.getElementById('checkout-form').addEventListener('submit', async function (e) {
             e.preventDefault();
             const cart = getCart();
@@ -307,13 +325,19 @@
             const name = document.getElementById('nombre').value.trim();
             const phone = document.getElementById('telefono').value.trim();
             const delivery = (document.querySelector('input[name="entrega"]:checked') || {}).value || 'recogida';
+            const address = document.getElementById('direccion').value.trim();
+            if (delivery === 'domicilio' && !address) {
+                alert('Ingresá la dirección de envío.');
+                document.getElementById('direccion').focus();
+                return;
+            }
 
             btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Procesando...';
             btn.disabled = true; btn.classList.add('opacity-70');
             try {
                 const r = await fetch('/api/orders', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, phone, delivery, items: cart.map((it) => ({ id: it.id, qty: it.qty })) }),
+                    body: JSON.stringify({ name, phone, delivery, address, items: cart.map((it) => ({ id: it.id, qty: it.qty })) }),
                 });
                 const d = await r.json().catch(() => ({}));
                 if (r.ok && d.ok) {

@@ -5,6 +5,12 @@ npm-debug.log*
 # Datos locales (fallback sin DB)
 data/
 
+# Documentos de presupuesto (privados, no publicar)
+VALORIZACION-DESARROLLO.md
+Presupuesto-Maite-Bakery.docx
+Presupuesto-Maite-Bakery.pdf
+_docxbuild/
+
 # Herramientas locales / artefactos que no son parte del sitio
 .claude/
 .playwright-mcp/

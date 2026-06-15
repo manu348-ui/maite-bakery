@@ -153,8 +153,8 @@
 <label class="flex items-center gap-md p-md bg-surface-container-low rounded-lg border border-transparent cursor-pointer hover:bg-surface-container transition-colors">
 <input checked="" class="text-primary focus:ring-primary h-5 w-5 border-outline-variant bg-transparent" name="entrega" type="radio" value="recogida">
 <div>
-<span class="block font-label-md text-label-md text-on-surface uppercase tracking-wider">Recogida en tienda</span>
-<span class="block font-caption text-caption text-on-surface-variant mt-xs">Gratis • Coordinamos el punto por WhatsApp</span>
+<span class="block font-label-md text-label-md text-on-surface uppercase tracking-wider">Retiro en el local</span>
+<span class="block font-caption text-caption text-on-surface-variant mt-xs">Te avisamos por WhatsApp cuando esté listo</span>
 </div>
 </label>
 <label class="flex items-center gap-md p-md bg-surface-container-low rounded-lg border border-transparent cursor-pointer hover:bg-surface-container transition-colors">
@@ -168,6 +168,25 @@
 <div class="hidden space-y-sm" id="address-wrap">
 <label class="block font-label-md text-label-md text-on-surface uppercase tracking-wider" for="direccion">Dirección de envío</label>
 <input class="w-full bg-surface-bright border-0 border-b border-outline-variant py-sm px-0 text-body-lg font-body-lg text-on-surface placeholder:text-outline focus:ring-0 transition-colors bg-transparent" id="direccion" name="direccion" placeholder="Calle, número, piso/depto, localidad" type="text">
+</div>
+</div>
+<div class="space-y-md pt-lg">
+<h2 class="font-headline-md text-headline-md text-primary border-b border-outline-variant pb-base">Medio de pago</h2>
+<div class="space-y-sm">
+<label class="flex items-center gap-md p-md bg-surface-container-low rounded-lg border border-transparent cursor-pointer hover:bg-surface-container transition-colors">
+<input checked="" class="text-primary focus:ring-primary h-5 w-5 border-outline-variant bg-transparent" name="pago" type="radio" value="transferencia">
+<div>
+<span class="block font-label-md text-label-md text-on-surface uppercase tracking-wider">Transferencia bancaria</span>
+<span class="block font-caption text-caption text-on-surface-variant mt-xs">Te escribimos por WhatsApp con el alias para transferir y cómo enviarnos el comprobante.</span>
+</div>
+</label>
+<label class="flex items-center gap-md p-md bg-surface-container-low rounded-lg border border-transparent cursor-pointer hover:bg-surface-container transition-colors">
+<input class="text-primary focus:ring-primary h-5 w-5 border-outline-variant bg-transparent" name="pago" type="radio" value="efectivo">
+<div>
+<span class="block font-label-md text-label-md text-on-surface uppercase tracking-wider">Efectivo</span>
+<span class="block font-caption text-caption text-on-surface-variant mt-xs">Pagás al recibir o retirar tu pedido.</span>
+</div>
+</label>
 </div>
 </div>
 <div class="pt-xl">
@@ -326,6 +345,7 @@
             const phone = document.getElementById('telefono').value.trim();
             const delivery = (document.querySelector('input[name="entrega"]:checked') || {}).value || 'recogida';
             const address = document.getElementById('direccion').value.trim();
+            const payment = (document.querySelector('input[name="pago"]:checked') || {}).value || 'efectivo';
             if (delivery === 'domicilio' && !address) {
                 alert('Ingresá la dirección de envío.');
                 document.getElementById('direccion').focus();
@@ -337,12 +357,12 @@
             try {
                 const r = await fetch('/api/orders', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, phone, delivery, address, items: cart.map((it) => ({ id: it.id, qty: it.qty })) }),
+                    body: JSON.stringify({ name, phone, delivery, address, payment, items: cart.map((it) => ({ id: it.id, qty: it.qty })) }),
                 });
                 const d = await r.json().catch(() => ({}));
                 if (r.ok && d.ok) {
                     localStorage.removeItem('mb_cart');
-                    window.location.href = 'confirmacion.html?order=' + d.orderId;
+                    window.location.href = 'confirmacion.html?order=' + d.orderId + '&pay=' + encodeURIComponent(payment) + '&delivery=' + encodeURIComponent(delivery);
                     return;
                 }
                 alert(d.error || 'No se pudo procesar el pedido.');

@@ -144,17 +144,21 @@
 <span class="text-on-surface-variant">Fecha:</span>
 <span class="" id="order-date">10 de Junio, 2026</span>
 </li>
-<li class="flex flex-col mt-sm pt-sm border-t border-outline-variant/20">
-<span class="text-on-surface-variant mb-xs">Lugar de Recogida:</span>
-<span class="text-primary font-medium">Maité Bakery, Calle Principal 123</span>
+<li class="flex justify-between mt-sm pt-sm border-t border-outline-variant/20">
+<span class="text-on-surface-variant">Entrega:</span>
+<span class="text-primary font-medium" id="order-delivery">Retiro en el local</span>
+</li>
+<li class="flex justify-between">
+<span class="text-on-surface-variant">Pago:</span>
+<span class="text-primary font-medium" id="order-payment">—</span>
 </li>
 </ul>
 </div>
 <div class="max-w-lg mb-xl flex items-start gap-md text-left bg-surface-container-lowest p-md rounded-lg border border-outline-variant/20">
 <span class="material-symbols-outlined text-primary text-3xl mt-1">info</span>
 <div>
-<h3 class="font-label-md text-label-md text-primary mb-xs">Instrucciones de Recogida</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Te avisaremos por SMS cuando tu pedido esté listo para recoger. El tiempo estimado de horneado es de 4 horas.</p>
+<h3 class="font-label-md text-label-md text-primary mb-xs">¿Qué sigue?</h3>
+<p class="font-body-md text-body-md text-on-surface-variant" id="next-steps">Te contactamos por WhatsApp para coordinar la entrega y el pago.</p>
 </div>
 </div>
 <div class="flex flex-col sm:flex-row gap-md justify-center w-full">
@@ -184,9 +188,26 @@
 </footer>
 <script>
     (function () {
-        const id = new URLSearchParams(location.search).get('order');
+        const q = new URLSearchParams(location.search);
+        const id = q.get('order');
+        const pay = q.get('pay');
+        const delivery = q.get('delivery');
         if (id) document.getElementById('order-number').textContent = '#MB-' + id;
         document.getElementById('order-date').textContent = new Date().toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+        const deliveryLabels = { recogida: 'Retiro en el local', domicilio: 'Envío a domicilio' };
+        const paymentLabels = { transferencia: 'Transferencia bancaria', efectivo: 'Efectivo' };
+        if (delivery && deliveryLabels[delivery]) document.getElementById('order-delivery').textContent = deliveryLabels[delivery];
+        if (pay && paymentLabels[pay]) document.getElementById('order-payment').textContent = paymentLabels[pay];
+
+        const steps = document.getElementById('next-steps');
+        if (pay === 'transferencia') {
+            steps.textContent = 'Te vamos a escribir por WhatsApp con el alias para que hagas la transferencia, y te indicamos cómo enviarnos el comprobante.';
+        } else if (pay === 'efectivo') {
+            steps.textContent = delivery === 'domicilio'
+                ? 'Pagás en efectivo al recibir tu pedido. Coordinamos el envío por WhatsApp.'
+                : 'Pagás en efectivo al retirar tu pedido. Te avisamos por WhatsApp cuando esté listo.';
+        }
     })();
 </script>
 

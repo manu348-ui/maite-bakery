@@ -64,7 +64,10 @@ app.use(express.json({ limit: '4mb' })); // 4mb: deja margen para fotos en data 
 app.use(cookieParser());
 
 function issueSession(res, email) {
-  const token = jwt.sign({ email }, SESSION_SECRET, {
+  // `t:'sess'` marca el token como sesión. getSession() lo exige, así ningún
+  // otro token firmado con el mismo secreto (p. ej. el de baja del newsletter,
+  // p:'unsub') puede colarse como una sesión de administrador.
+  const token = jwt.sign({ email, t: 'sess' }, SESSION_SECRET, {
     expiresIn: `${SESSION_TTL_HOURS}h`,
   });
   res.cookie(SESSION_COOKIE, token, {
@@ -80,7 +83,11 @@ function getSession(req) {
   const token = req.cookies?.[SESSION_COOKIE];
   if (!token) return null;
   try {
-    return jwt.verify(token, SESSION_SECRET);
+    const payload = jwt.verify(token, SESSION_SECRET);
+    // Solo aceptamos tokens emitidos como sesión, con email. Cualquier otro
+    // token válido firmado con el secreto (baja del newsletter, etc.) se rechaza.
+    if (payload?.t !== 'sess' || !payload.email) return null;
+    return payload;
   } catch {
     return null;
   }
@@ -154,6 +161,7 @@ function makeRateLimiter({ windowMs, max, message }) {
 }
 const rateLimitSubscribe = makeRateLimiter({ windowMs: 10 * 60 * 1000, max: 6, message: 'Demasiadas suscripciones desde esta conexión. Probá más tarde.' });
 const rateLimitCampaign = makeRateLimiter({ windowMs: 60 * 60 * 1000, max: 12, message: 'Demasiados envíos seguidos. Esperá un rato.' });
+const rateLimitOrder = makeRateLimiter({ windowMs: 10 * 60 * 1000, max: 12, message: 'Demasiados pedidos seguidos. Esperá unos minutos.' });
 
 // ---------------------------------------------------------------------------
 // Auth API
@@ -310,11 +318,12 @@ const TAX_RATE = 0.10;
 
 // Crear un pedido (público, desde el checkout). Los totales se recalculan en el
 // servidor a partir de los precios reales de la base (no se confía en el cliente).
-app.post('/api/orders', async (req, res) => {
-  const name = String(req.body?.name || '').trim();
-  const phone = String(req.body?.phone || '').trim();
+app.post('/api/orders', rateLimitOrder, async (req, res) => {
+  // Topes de longitud: evita guardar payloads enormes y limita el abuso.
+  const name = String(req.body?.name || '').trim().slice(0, 120);
+  const phone = String(req.body?.phone || '').trim().slice(0, 40);
   const delivery = String(req.body?.delivery || 'recogida').trim() || 'recogida';
-  const address = String(req.body?.address || '').trim();
+  const address = String(req.body?.address || '').trim().slice(0, 300);
   const payment = String(req.body?.payment || '').trim();
   const rawItems = Array.isArray(req.body?.items) ? req.body.items : [];
 
@@ -323,6 +332,7 @@ app.post('/api/orders', async (req, res) => {
   if (delivery === 'domicilio' && !address) return res.status(400).json({ error: 'Falta la dirección de envío.' });
   if (!['transferencia', 'efectivo'].includes(payment)) return res.status(400).json({ error: 'Elegí un medio de pago.' });
   if (rawItems.length === 0) return res.status(400).json({ error: 'El carrito está vacío.' });
+  if (rawItems.length > 60) return res.status(400).json({ error: 'El pedido tiene demasiados productos.' });
 
   // Resolver cada ítem contra la base.
   const items = [];
@@ -507,6 +517,11 @@ const BLOCKED = [
   /^\/node_modules(\/|$)/i,
   /^\/memory(\/|$)/i,
   /^\/outbound\.txt$/i,
+  /^\/lib(\/|$)/i,       // código del servidor (stores, mailer)
+  /^\/tools(\/|$)/i,     // utilidades (hash de contraseña)
+  /^\/render\.yaml$/i,   // infraestructura + email del admin
+  /^\/Procfile$/i,
+  /^\/README\.md$/i,
 ];
 app.use((req, res, next) => {
   if (BLOCKED.some((re) => re.test(req.path))) {

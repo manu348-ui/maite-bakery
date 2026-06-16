@@ -63,6 +63,32 @@ app.disable('x-powered-by');
 app.use(express.json({ limit: '4mb' })); // 4mb: deja margen para fotos en data URL
 app.use(cookieParser());
 
+// Cabeceras de seguridad para todas las respuestas.
+const CSP = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'none'",          // nadie puede embeber el sitio (anti-clickjacking)
+  "form-action 'self'",
+  // Tailwind Play CDN usa eval y hay handlers inline → unsafe-inline/eval inevitables.
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://accounts.google.com",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com",
+  "font-src 'self' https://fonts.gstatic.com",
+  "img-src 'self' data: https://images.unsplash.com https://lh3.googleusercontent.com",
+  "connect-src 'self' https://accounts.google.com",
+  "frame-src https://accounts.google.com",
+].join('; ');
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', CSP);
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  if (IS_PROD) {
+    res.setHeader('Strict-Transport-Security', 'max-age=15552000; includeSubDomains');
+  }
+  next();
+});
+
 function issueSession(res, email) {
   // `t:'sess'` marca el token como sesión. getSession() lo exige, así ningún
   // otro token firmado con el mismo secreto (p. ej. el de baja del newsletter,
@@ -541,6 +567,19 @@ app.use(
 
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Manejador de errores: registra el detalle en el servidor y responde genérico
+// (no expone trazas ni mensajes internos al cliente).
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  console.error('Error no controlado:', err);
+  if (res.headersSent) return;
+  const wantsJson = req.path.startsWith('/api/');
+  res.status(500);
+  return wantsJson
+    ? res.json({ error: 'Ocurrió un error. Probá de nuevo en un momento.' })
+    : res.send('Ocurrió un error. Probá de nuevo en un momento.');
 });
 
 async function start() {
